@@ -6,37 +6,39 @@
     <title>NFL Franchise Manager 2026</title>
     <style>
         :root {
-            --bg-main: #0b132b;
-            --bg-card: #1c2541;
-            --bg-sub: #3a506b;
-            --primary: #00b4d8;
-            --primary-hover: #0077b6;
+            --bg-main: #070a13;
+            --bg-card: #0f172a;
+            --bg-sub: #1e293b;
+            --primary: #0284c7;
+            --primary-glow: #00f0ff;
             --accent: #10b981;
             --danger: #ef4444;
             --warning: #f59e0b;
-            --gold: #fbbf24;
+            --purple: #8b5cf6;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
         }
         * { box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background-color: var(--bg-main);
+            background: radial-gradient(circle at top, #0f172a 0%, #070a13 100%);
             color: var(--text-main);
             margin: 0;
             padding: 15px;
+            min-height: 100vh;
         }
         .container {
             max-width: 1240px;
             margin: 0 auto;
-            background-color: var(--bg-card);
-            padding: 22px;
-            border-radius: 14px;
-            box-shadow: 0 12px 35px rgba(0,0,0,0.6);
-            border: 1px solid #1e293b;
+            background-color: rgba(15, 23, 42, 0.92);
+            backdrop-filter: blur(12px);
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.15), 0 15px 35px rgba(0,0,0,0.7);
+            border: 1px solid rgba(56, 189, 248, 0.25);
         }
-        h1, h2, h3, h4 { margin-top: 0; color: #38bdf8; }
-        .subtitle { color: var(--text-muted); font-size: 0.95em; margin-bottom: 15px; }
+        h1, h2, h3, h4 { margin-top: 0; color: #38bdf8; text-shadow: 0 0 10px rgba(56, 189, 248, 0.3); }
+        .subtitle { color: var(--text-muted); font-size: 0.95em; margin-bottom: 18px; }
         
         /* Banner Notification System */
         #notification-banner {
@@ -48,6 +50,7 @@
             text-align: center;
             font-size: 0.95em;
             animation: fadeIn 0.3s ease-in-out;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-6px); }
@@ -60,15 +63,15 @@
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 12px;
             margin-bottom: 20px;
-            background: linear-gradient(135deg, #1e293b, #0f172a);
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
             padding: 16px;
-            border-radius: 10px;
-            border: 1px solid #334155;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+            border-radius: 12px;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
         }
         .stat-box { text-align: center; }
-        .stat-box span { font-size: 0.78em; color: var(--text-muted); text-transform: uppercase; display: block; font-weight: 600; }
-        .stat-box strong { font-size: 1.3em; color: #38bdf8; }
+        .stat-box span { font-size: 0.78em; color: var(--text-muted); text-transform: uppercase; display: block; font-weight: 600; letter-spacing: 0.5px; }
+        .stat-box strong { font-size: 1.3em; color: #38bdf8; text-shadow: 0 0 8px rgba(56, 189, 248, 0.4); }
         
         .nav-buttons {
             display: flex;
@@ -78,29 +81,29 @@
             justify-content: center;
         }
         button {
-            background-color: var(--primary);
+            background: linear-gradient(135deg, #0284c7, #0369a1);
             color: white;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 6px;
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            padding: 10px 18px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
             transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
         }
-        button:hover { background-color: var(--primary-hover); transform: translateY(-1px); }
-        button.btn-success { background-color: var(--accent); }
-        button.btn-success:hover { background-color: #059669; }
-        button.btn-danger { background-color: var(--danger); }
-        button.btn-danger:hover { background-color: #dc2626; }
-        button.btn-warning { background-color: var(--warning); color: #000; }
-        button.btn-warning:hover { background-color: #d97706; }
-        
+        button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 240, 255, 0.4); filter: brightness(1.1); }
+        button.btn-success { background: linear-gradient(135deg, #10b981, #059669); border-color: #34d399; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); }
+        button.btn-danger { background: linear-gradient(135deg, #ef4444, #dc2626); border-color: #f87171; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3); }
+        button.btn-warning { background: linear-gradient(135deg, #f59e0b, #d97706); border-color: #fbbf24; color: #000; font-weight: 700; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3); }
+        button.btn-purple { background: linear-gradient(135deg, #8b5cf6, #6d28d9); border-color: #c084fc; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3); }
+
         .card {
-            background: #0f172a;
-            padding: 18px;
-            border-radius: 10px;
+            background: rgba(15, 23, 42, 0.95);
+            padding: 20px;
+            border-radius: 12px;
             margin-bottom: 15px;
-            border: 1px solid #334155;
+            border: 1px solid rgba(51, 65, 85, 0.8);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
         }
         
         .team-grid {
@@ -113,12 +116,13 @@
         }
         .division-header {
             grid-column: 1 / -1;
-            background: #334155;
+            background: linear-gradient(90deg, #334155, #1e293b);
             padding: 6px 12px;
-            border-radius: 4px;
+            border-radius: 6px;
             font-weight: bold;
             color: #f1f5f9;
             margin-top: 10px;
+            border-left: 4px solid #38bdf8;
         }
         
         .player-item {
@@ -128,10 +132,12 @@
             padding: 10px 14px;
             border-bottom: 1px solid #334155;
             font-size: 0.9em;
-            border-radius: 6px;
-            margin-bottom: 4px;
+            border-radius: 8px;
+            margin-bottom: 6px;
             background: #1e293b;
+            transition: all 0.2s ease;
         }
+        .player-item:hover { background: #334155; }
         .player-ovr {
             padding: 2px 7px;
             border-radius: 4px;
@@ -139,9 +145,9 @@
             font-size: 0.85em;
             margin-right: 6px;
         }
-        .ovr-gold { background: #d97706; color: #fff; }
-        .ovr-green { background: #059669; color: #fff; }
-        .ovr-blue { background: #0284c7; color: #fff; }
+        .ovr-gold { background: linear-gradient(135deg, #f59e0b, #b45309); color: #fff; }
+        .ovr-green { background: linear-gradient(135deg, #10b981, #047857); color: #fff; }
+        .ovr-blue { background: linear-gradient(135deg, #0284c7, #1d4ed8); color: #fff; }
 
         .stat-badge {
             font-size: 0.78em;
@@ -149,10 +155,11 @@
             margin-top: 3px;
         }
 
-        /* Analyst Green Highlight */
+        /* Analyst Neon Green Highlight */
         .analyst-highlight {
             background: rgba(16, 185, 129, 0.22) !important;
             border: 2px solid #10b981 !important;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
         }
         .analyst-badge {
             background: #10b981;
@@ -167,7 +174,8 @@
         .modal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
+            background: rgba(0,0,0,0.88);
+            backdrop-filter: blur(6px);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -175,13 +183,14 @@
         }
         .modal-content {
             background: var(--bg-card);
-            padding: 22px;
-            border-radius: 10px;
+            padding: 24px;
+            border-radius: 14px;
             max-width: 820px;
             width: 94%;
             max-height: 88vh;
             overflow-y: auto;
             border: 1px solid #38bdf8;
+            box-shadow: 0 0 35px rgba(0, 240, 255, 0.2);
         }
 
         /* Trade Center Grid */
@@ -193,7 +202,7 @@
         .trade-column {
             background: #0f172a;
             padding: 12px;
-            border-radius: 8px;
+            border-radius: 10px;
             border: 1px solid #334155;
             max-height: 480px;
             overflow-y: auto;
@@ -227,27 +236,29 @@
             margin-bottom: 10px;
         }
 
-        /* Game Drive Screen & Field Graphics */
+        /* Game Screen & Graphic Turf Field */
         #game-screen {
             background: #022c22;
             border: 2px solid #10b981;
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 12px;
             display: none;
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.25);
         }
         .field-container {
-            background: #064e3b;
-            border: 2px solid #34d399;
+            background: repeating-linear-gradient(90deg, #064e3b 0px, #064e3b 40px, #047857 40px, #047857 80px);
+            border: 3px solid #34d399;
             padding: 15px;
-            border-radius: 8px;
+            border-radius: 10px;
             margin-bottom: 15px;
+            position: relative;
         }
         .field-bar-outer {
             width: 100%;
-            height: 22px;
-            background: #022c22;
-            border-radius: 11px;
-            border: 1px solid #059669;
+            height: 24px;
+            background: rgba(0,0,0,0.6);
+            border-radius: 12px;
+            border: 1px solid #34d399;
             overflow: hidden;
             margin: 10px 0;
             position: relative;
@@ -256,28 +267,49 @@
             height: 100%;
             background: linear-gradient(90deg, #10b981, #38bdf8);
             width: 20%;
-            transition: width 0.4s ease;
+            transition: width 0.4s ease, background 0.4s ease;
+        }
+        .field-yard-lines {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75em;
+            color: #a7f3d0;
+            font-weight: bold;
+            padding: 0 2px;
         }
         .game-scoreboard {
             display: flex;
             justify-content: space-between;
             align-items: center;
             background: #000;
-            padding: 12px 20px;
-            border-radius: 8px;
+            padding: 14px 22px;
+            border-radius: 10px;
             border: 1px solid #10b981;
             margin-bottom: 15px;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
         }
         .score-team { text-align: center; }
         .score-team h3 { margin: 0; color: #f8fafc; font-size: 1.1em; }
-        .score-num { font-size: 2em; font-weight: bold; color: #34d399; }
+        .score-num { font-size: 2.2em; font-weight: bold; color: #34d399; text-shadow: 0 0 10px #34d399; }
+
+        .possession-badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.78em;
+            font-weight: bold;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 4px;
+        }
+        .pos-offense { background: #0284c7; color: #fff; box-shadow: 0 0 10px #0284c7; }
+        .pos-defense { background: #ef4444; color: #fff; box-shadow: 0 0 10px #ef4444; }
 
         .log-box {
             background: #000;
             color: #4ade80;
             font-family: 'Courier New', monospace;
             padding: 12px;
-            border-radius: 6px;
+            border-radius: 8px;
             height: 160px;
             overflow-y: auto;
             margin-top: 15px;
@@ -311,7 +343,7 @@
 
 <div class="container">
     <h1>🏈 NFL Franchise Manager 2026</h1>
-    <p class="subtitle">Real NFL Depth Charts • Madden 27 Ratings • Dynamic Drive Gameplay • In-Draft Trading</p>
+    <p class="subtitle">Real NFL Depth Charts • Madden 27 Ratings • Playable Offense & Defense Engine • Draft & Trades</p>
 
     <!-- IN-PAGE BANNER FOR MESSAGES -->
     <div id="notification-banner"></div>
@@ -323,7 +355,7 @@
         <div class="team-grid" id="team-choices"></div>
     </div>
 
-    <!-- MAIN GAME DASHBOARD (PERSISTENT RATINGS DISPLAY) -->
+    <!-- MAIN GAME DASHBOARD -->
     <div id="main-interface" style="display:none;">
         <div class="dashboard">
             <div class="stat-box"><span>Franchise</span><strong id="dash-team">-</strong></div>
@@ -345,7 +377,7 @@
 
         <div id="content-view" class="card"></div>
 
-        <!-- DYNAMIC PLAY-BY-PLAY GAMEPLAY ENGINE -->
+        <!-- DYNAMIC PLAYABLE OFFENSE & DEFENSE GAMEPLAY ENGINE -->
         <div id="game-screen">
             <div class="game-scoreboard">
                 <div class="score-team">
@@ -353,8 +385,9 @@
                     <div class="score-num" id="game-user-score">0</div>
                 </div>
                 <div style="text-align:center;">
-                    <div style="color:#38bdf8; font-size:0.85em; text-transform:uppercase;" id="game-qtr-clock">Q1 • 15:00</div>
-                    <div style="color:#94a3b8; font-size:0.8em;" id="game-down-dist">1st & 10</div>
+                    <div id="possession-indicator" class="possession-badge pos-offense">ATTACKING (OFFENSE) 🏈</div>
+                    <div style="color:#38bdf8; font-size:0.85em; text-transform:uppercase;" id="game-qtr-clock">Q1 • 05:00</div>
+                    <div style="color:#94a3b8; font-size:0.82em;" id="game-down-dist">1st & 10</div>
                 </div>
                 <div class="score-team">
                     <h3 id="game-opp-team-name">OPPONENT</h3>
@@ -363,23 +396,21 @@
             </div>
 
             <div class="field-container">
-                <div style="display:flex; justify-style:space-between; font-size:0.85em; color:#6ee7b7; font-weight:bold;">
-                    <span>OWN GOAL LINE</span>
+                <div style="display:flex; justify-content:space-between; font-size:0.85em; color:#6ee7b7; font-weight:bold;">
+                    <span>OWN ENDZONE (0)</span>
                     <span id="field-ball-loc">Ball on OWN 20</span>
-                    <span>OPP GOAL LINE</span>
+                    <span>OPP ENDZONE (100)</span>
                 </div>
                 <div class="field-bar-outer">
                     <div id="field-progress-bar" class="field-bar-inner"></div>
                 </div>
+                <div class="field-yard-lines">
+                    <span>G</span><span>10</span><span>20</span><span>30</span><span>40</span><span>50</span><span>40</span><span>30</span><span>20</span><span>10</span><span>G</span>
+                </div>
             </div>
 
-            <div style="display: flex; gap: 8px; flex-wrap: wrap;" id="play-call-actions">
-                <button onclick="executeInteractivePlay('SHORT_PASS')" style="background:#0284c7;">🎯 Short West Coast Pass</button>
-                <button onclick="executeInteractivePlay('DEEP_PASS')" style="background:#0369a1;">🚀 Deep Shotgun Pass</button>
-                <button onclick="executeInteractivePlay('POWER_RUN')" style="background:#059669;">🚜 Power Inside Run</button>
-                <button onclick="executeInteractivePlay('PLAY_ACTION')" style="background:#d97706;">⚡ Play Action Pass</button>
-                <button onclick="executeInteractivePlay('SPECIAL_TEAMS')" class="btn-warning">🏈 Kick Field Goal / Punt</button>
-            </div>
+            <h4 id="play-mode-title" style="margin-bottom:10px; color:#38bdf8;">Call Your Play (Offense):</h4>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;" id="play-call-actions"></div>
 
             <div class="log-box" id="game-log">Kickoff! Game initialized...<br></div>
         </div>
@@ -399,20 +430,14 @@
         </div>
         <p style="color:#cbd5e1; font-size:0.85em; margin-top:0;" id="draft-subtitle">Select 1 rookie prospect per round (3 Rounds Total).</p>
 
-        <!-- Team Analyst Box -->
         <div id="analyst-box" class="analyst-box">
             <strong>🤖 Team Analyst Recommendation:</strong> <span id="analyst-text">Analyzing roster depth...</span>
         </div>
 
         <div id="draft-status-msg" style="display:none; padding:8px; background:#10b981; color:white; border-radius:6px; margin-bottom:10px; text-align:center; font-weight:bold;"></div>
         
-        <!-- Tab 1: Draft Prospects -->
         <div id="draft-prospects-list"></div>
-
-        <!-- Tab 2: In-Draft Pick Trading -->
         <div id="draft-trade-view" style="display:none;"></div>
-
-        <!-- Tab 3: Roster Preview -->
         <div id="draft-roster-preview" style="display:none;"></div>
     </div>
 </div>
@@ -548,15 +573,16 @@
     // Lineup Slot
     let startingLineup = { QB: null, RB: null, WR1: null, WR2: null, TE: null, DEF: null, K: null };
 
-    // Interactive Game Drive State
+    // Interactive Game Engine State (Playable Offense & Defense)
     let gameEngine = {
         active: false,
         opponent: null,
+        mode: 'OFFENSE', // 'OFFENSE' or 'DEFENSE'
         userScore: 0,
         oppScore: 0,
         quarter: 1,
         clockSecs: 300,
-        ballLoc: 20, // Yards from user endzone
+        ballLoc: 20, // 0 = User Endzone, 100 = Opponent Endzone
         down: 1,
         dist: 10,
         userRating: 75,
@@ -862,7 +888,7 @@
         const tradeView = document.getElementById('draft-trade-view');
         const otherTeams = allTeams.filter(t => t.name !== userTeam.name);
 
-        const pickValues = { 1: 180, 2: 105, 3: 60 }; // 1.5x Multiplier during draft
+        const pickValues = { 1: 180, 2: 105, 3: 60 };
         const currentPickVal = pickValues[draftRound];
 
         let html = `<h3>🔄 Trade Round ${draftRound} Pick (Draft Day Value: ${currentPickVal} PTS)</h3>`;
@@ -920,7 +946,7 @@
             return;
         }
 
-        if (pickVal >= playerVal * 0.85) { // Bonus acceptance rate
+        if (pickVal >= playerVal * 0.85) {
             partnerTeam.roster.splice(targetPlayerIdx, 1);
             userTeam.roster.push(targetPlayer);
 
@@ -929,7 +955,6 @@
             autoSetBestLineup();
             updateDashboard();
 
-            // Advance to next draft round
             draftRound++;
             switchDraftTab('prospects');
             if (draftRound <= 3) {
@@ -1241,7 +1266,7 @@
         }
     }
 
-    // ---------------- DYNAMIC INTERACTIVE GAMEPLAY ENGINE ----------------
+    // ---------------- FULLY INTERACTIVE OFFENSE & DEFENSE ENGINE ----------------
     function startMatch() {
         if (userTeam.roster.length > 22) {
             notify('Roster exceeds 22 players! Release players before playing.', true);
@@ -1259,11 +1284,12 @@
         gameEngine = {
             active: true,
             opponent: opponent,
+            mode: 'OFFENSE',
             userScore: 0,
             oppScore: 0,
             quarter: 1,
             clockSecs: 300,
-            ballLoc: 20, // Yards from user endzone
+            ballLoc: 20, // 0 = User Endzone, 100 = Opponent Endzone
             down: 1,
             dist: 10,
             userRating: userRating,
@@ -1273,7 +1299,32 @@
         document.getElementById('game-user-team-name').innerText = userTeam.name;
         document.getElementById('game-opp-team-name').innerText = opponent.name;
         document.getElementById('game-log').innerHTML = `Kickoff! Game started against ${opponent.name}. Starting Rating: ${userRating} OVR vs ${oppRating} OVR.<br>`;
+        renderPlayCallButtons();
         updateGameDisplay();
+    }
+
+    function renderPlayCallButtons() {
+        const container = document.getElementById('play-call-actions');
+        const modeTitle = document.getElementById('play-mode-title');
+
+        if (gameEngine.mode === 'OFFENSE') {
+            modeTitle.innerText = "Call Your Play (Offense - You Have The Ball):";
+            container.innerHTML = `
+                <button onclick="executePlay('OFFENSE', 'SHORT_PASS')" style="background:#0284c7;">🎯 Short Pass</button>
+                <button onclick="executePlay('OFFENSE', 'DEEP_PASS')" style="background:#0369a1;">🚀 Deep Pass Bomb</button>
+                <button onclick="executePlay('OFFENSE', 'POWER_RUN')" style="background:#059669;">🚜 Power Inside Run</button>
+                <button onclick="executePlay('OFFENSE', 'PLAY_ACTION')" style="background:#d97706;">⚡ Play Action Pass</button>
+                <button onclick="executePlay('OFFENSE', 'SPECIAL_TEAMS')" class="btn-warning">🏈 Kick FG / Punt</button>
+            `;
+        } else {
+            modeTitle.innerText = "Call Your Defensive Scheme (Defense - Opponent Has The Ball):";
+            container.innerHTML = `
+                <button onclick="executePlay('DEFENSE', 'BLITZ')" class="btn-danger">⚡ Heavy LB Blitz</button>
+                <button onclick="executePlay('DEFENSE', 'ZONE')" style="background:#0284c7;">🔒 Lockdown Zone</button>
+                <button onclick="executePlay('DEFENSE', 'RUN_STUFF')" style="background:#059669;">🧱 Run Stuff Box Stack</button>
+                <button onclick="executePlay('DEFENSE', 'MAN_COVERAGE')" class="btn-purple">🦅 Man-to-Man Coverage</button>
+            `;
+        }
     }
 
     function updateGameDisplay() {
@@ -1283,6 +1334,15 @@
         const mins = Math.floor(gameEngine.clockSecs / 60);
         const secs = (gameEngine.clockSecs % 60).toString().padStart(2, '0');
         document.getElementById('game-qtr-clock').innerText = `Q${gameEngine.quarter} • ${mins}:${secs}`;
+
+        const posBadge = document.getElementById('possession-indicator');
+        if (gameEngine.mode === 'OFFENSE') {
+            posBadge.innerText = 'ATTACKING (OFFENSE) 🏈';
+            posBadge.className = 'possession-badge pos-offense';
+        } else {
+            posBadge.innerText = 'DEFENDING (DEFENSE) 🛡️';
+            posBadge.className = 'possession-badge pos-defense';
+        }
 
         const fieldDesc = gameEngine.ballLoc < 50 ? `OWN ${gameEngine.ballLoc}` : `OPP ${100 - gameEngine.ballLoc}`;
         document.getElementById('field-ball-loc').innerText = `Ball on ${fieldDesc}`;
@@ -1298,112 +1358,197 @@
         return "4th";
     }
 
-    function executeInteractivePlay(playType) {
+    function executePlay(mode, choice) {
         if (!gameEngine.active) return;
 
         const log = document.getElementById('game-log');
         const qb = startingLineup.QB || { name: "Quarterback", ovr: 75 };
         const rb = startingLineup.RB || { name: "Running Back", ovr: 75 };
         const wr1 = startingLineup.WR1 || { name: "Receiver", ovr: 75 };
+        const def = startingLineup.DEF || { name: "Defensive Leader", ovr: 75 };
         const kicker = startingLineup.K || { name: "Kicker", ovr: 75 };
 
-        let yardsGained = 0;
         let playMsg = "";
         const roll = Math.random();
-        const ratDiff = (gameEngine.userRating - gameEngine.oppRating) * 0.1;
 
-        if (playType === 'SHORT_PASS') {
-            if (roll < 0.72 + (qb.ovr - 75)*0.005) {
-                yardsGained = Math.floor(Math.random() * 8) + 4;
-                playMsg = `-> ${qb.name} completes quick pass to ${wr1.name} for +${yardsGained} yards.`;
-            } else {
-                yardsGained = 0;
-                playMsg = `-> Incomplete pass thrown by ${qb.name}.`;
-            }
-        } 
-        else if (playType === 'DEEP_PASS') {
-            if (roll < 0.40 + (qb.ovr - 75)*0.008 + ratDiff*0.02) {
-                yardsGained = Math.floor(Math.random() * 25) + 18;
-                playMsg = `-> DEEP BOMB EXECUTED! ${qb.name} launches downfield to ${wr1.name} for +${yardsGained} yards!`;
-            } else if (roll > 0.90) {
-                yardsGained = -7;
-                playMsg = `-> SACKED! Opponent defense breaks through for -7 yards.`;
-            } else {
-                yardsGained = 0;
-                playMsg = `-> Deep pass falls incomplete in coverage.`;
-            }
-        }
-        else if (playType === 'POWER_RUN') {
-            yardsGained = Math.floor(Math.random() * 8) + (roll > 0.4 ? 2 : -1);
-            playMsg = `-> ${rb.name} powers through the line for +${yardsGained} yards.`;
-        }
-        else if (playType === 'PLAY_ACTION') {
-            if (roll < 0.55 + (qb.ovr - 75)*0.006) {
-                yardsGained = Math.floor(Math.random() * 16) + 10;
-                playMsg = `-> FAKE HANDOFF! ${qb.name} finds open receiver for +${yardsGained} yards!`;
-            } else {
-                yardsGained = -4;
-                playMsg = `-> Play action blown up by defense! -4 yards.`;
-            }
-        }
-        else if (playType === 'SPECIAL_TEAMS') {
-            if (gameEngine.ballLoc >= 60) { // Field goal range
-                const fgDist = 100 - gameEngine.ballLoc + 17;
-                if (roll < 0.82 + (kicker.ovr - 75)*0.005) {
-                    gameEngine.userScore += 3;
-                    playMsg = `-> FIELD GOAL GOOD! ${kicker.name} drills ${fgDist}-yard FG (+3 PTS)!`;
+        if (mode === 'OFFENSE') {
+            let yardsGained = 0;
+            let isTurnover = false;
+
+            if (choice === 'SHORT_PASS') {
+                if (roll < 0.75 + (qb.ovr - 75)*0.005) {
+                    yardsGained = Math.floor(Math.random() * 8) + 4;
+                    playMsg = `-> ${qb.name} completes pass to ${wr1.name} for +${yardsGained} yards.`;
+                } else if (roll > 0.94) {
+                    isTurnover = true;
+                    playMsg = `-> INTERCEPTED! Opponent defensive back picks off ${qb.name}! Possession switches to DEFENSE.`;
                 } else {
-                    playMsg = `-> MISSED FG! ${kicker.name}'s kick sails wide.`;
+                    playMsg = `-> Incomplete pass thrown by ${qb.name}.`;
                 }
-            } else {
-                playMsg = `-> Punt executed. Opponent takes over on possession.`;
+            } 
+            else if (choice === 'DEEP_PASS') {
+                if (roll < 0.42 + (qb.ovr - 75)*0.008) {
+                    yardsGained = Math.floor(Math.random() * 25) + 20;
+                    playMsg = `-> DEEP BOMB EXECUTED! ${qb.name} launches downfield to ${wr1.name} for +${yardsGained} yards!`;
+                } else if (roll > 0.88) {
+                    isTurnover = true;
+                    playMsg = `-> INTERCEPTED DOWNFIELD! Opponent picks off ${qb.name}! Possession switches to DEFENSE.`;
+                } else if (roll > 0.80) {
+                    yardsGained = -7;
+                    playMsg = `-> SACKED! Opponent rush gets to ${qb.name} for -7 yards.`;
+                } else {
+                    playMsg = `-> Deep pass falls incomplete in coverage.`;
+                }
             }
-            // Reset drive after special teams
-            gameEngine.oppScore += (Math.random() < 0.45 ? 3 : (Math.random() < 0.3 ? 7 : 0));
-            gameEngine.ballLoc = 25;
-            gameEngine.down = 1;
-            gameEngine.dist = 10;
-        }
+            else if (choice === 'POWER_RUN') {
+                if (roll > 0.96) {
+                    isTurnover = true;
+                    playMsg = `-> FUMBLE! ${rb.name} coughs up the ball and opponent recovers! Possession switches to DEFENSE.`;
+                } else {
+                    yardsGained = Math.floor(Math.random() * 8) + (roll > 0.4 ? 2 : -1);
+                    playMsg = `-> ${rb.name} powers through the line for +${yardsGained} yards.`;
+                }
+            }
+            else if (choice === 'PLAY_ACTION') {
+                if (roll < 0.58 + (qb.ovr - 75)*0.006) {
+                    yardsGained = Math.floor(Math.random() * 16) + 10;
+                    playMsg = `-> FAKE HANDOFF! ${qb.name} finds receiver for +${yardsGained} yards!`;
+                } else {
+                    yardsGained = -4;
+                    playMsg = `-> Play action blown up by defense! -4 yards.`;
+                }
+            }
+            else if (choice === 'SPECIAL_TEAMS') {
+                if (gameEngine.ballLoc >= 60) {
+                    const fgDist = 100 - gameEngine.ballLoc + 17;
+                    if (roll < 0.85 + (kicker.ovr - 75)*0.005) {
+                        gameEngine.userScore += 7;
+                        playMsg = `-> FIELD GOAL GOOD! ${kicker.name} drills ${fgDist}-yard FG (+3 PTS)!`;
+                    } else {
+                        playMsg = `-> MISSED FG! Kick sails wide.`;
+                    }
+                } else {
+                    playMsg = `-> Punt executed cleanly. Opponent takes over on possession.`;
+                }
+                isTurnover = true;
+            }
 
-        if (playType !== 'SPECIAL_TEAMS') {
-            gameEngine.ballLoc += yardsGained;
-            if (gameEngine.ballLoc < 1) gameEngine.ballLoc = 1;
-
-            // Check Touchdown
-            if (gameEngine.ballLoc >= 100) {
-                gameEngine.userScore += 7;
-                playMsg += ` TOUCHDOWN ${userTeam.name} (+7 PTS)!`;
-                gameEngine.ballLoc = 25;
+            if (isTurnover) {
+                gameEngine.mode = 'DEFENSE';
+                gameEngine.ballLoc = 100 - gameEngine.ballLoc;
                 gameEngine.down = 1;
                 gameEngine.dist = 10;
+            } else if (choice !== 'SPECIAL_TEAMS') {
+                gameEngine.ballLoc += yardsGained;
+                if (gameEngine.ballLoc < 1) gameEngine.ballLoc = 1;
 
-                // Opponent counter drive simulation
-                if (Math.random() < 0.45 + (gameEngine.oppRating - gameEngine.userRating)*0.01) {
-                    gameEngine.oppScore += 7;
-                    playMsg += ` [Opponent answered with TD +7]`;
-                }
-            } else {
-                // Down advancement
-                gameEngine.dist -= yardsGained;
-                if (gameEngine.dist <= 0) {
+                if (gameEngine.ballLoc >= 100) {
+                    gameEngine.userScore += 7;
+                    playMsg += ` TOUCHDOWN ${userTeam.name} (+7 PTS)!`;
+                    gameEngine.mode = 'DEFENSE';
+                    gameEngine.ballLoc = 25;
                     gameEngine.down = 1;
                     gameEngine.dist = 10;
-                    playMsg += ` FIRST DOWN!`;
                 } else {
-                    gameEngine.down++;
-                    if (gameEngine.down > 4) {
-                        playMsg += ` TURNOVER ON DOWNS!`;
-                        gameEngine.oppScore += (Math.random() < 0.5 ? 3 : 0);
-                        gameEngine.ballLoc = 25;
+                    gameEngine.dist -= yardsGained;
+                    if (gameEngine.dist <= 0) {
                         gameEngine.down = 1;
                         gameEngine.dist = 10;
+                        playMsg += ` FIRST DOWN!`;
+                    } else {
+                        gameEngine.down++;
+                        if (gameEngine.down > 4) {
+                            playMsg += ` TURNOVER ON DOWNS! Possession switches to DEFENSE.`;
+                            gameEngine.mode = 'DEFENSE';
+                            gameEngine.ballLoc = 100 - gameEngine.ballLoc;
+                            gameEngine.down = 1;
+                            gameEngine.dist = 10;
+                        }
+                    }
+                }
+            }
+        } 
+        else { // DEFENSE MODE (PLAYABLE DEFENSE)
+            let oppYards = 0;
+            let forcedTurnover = false;
+
+            if (choice === 'BLITZ') {
+                if (roll < 0.35) {
+                    oppYards = -8;
+                    playMsg = `-> HEAVY BLITZ SUCCESS! ${def.name} sacks the opponent QB for -8 yards!`;
+                } else if (roll < 0.65) {
+                    oppYards = 0;
+                    playMsg = `-> Blitz forces early throw! Incomplete pass.`;
+                } else {
+                    oppYards = Math.floor(Math.random() * 15) + 12;
+                    playMsg = `-> Opponent beat the blitz! Quick pass for +${oppYards} yards.`;
+                }
+            } 
+            else if (choice === 'ZONE') {
+                if (roll < 0.70) {
+                    oppYards = Math.floor(Math.random() * 5) + 1;
+                    playMsg = `-> Solid Zone Coverage! Opponent held to +${oppYards} yards.`;
+                } else {
+                    oppYards = 12;
+                    playMsg = `-> Opponent QB finds gap in zone for +12 yards.`;
+                }
+            } 
+            else if (choice === 'RUN_STUFF') {
+                oppYards = Math.floor(Math.random() * 4) - 2;
+                playMsg = `-> BOX STACKED! Defensive line stops run for ${oppYards} yards.`;
+            } 
+            else if (choice === 'MAN_COVERAGE') {
+                const intChance = 0.15 + (def.ovr - 75) * 0.008;
+                if (roll < intChance) {
+                    forcedTurnover = true;
+                    playMsg = `-> TURNOVER FORCED! ${def.name} INTERCEPTS the pass! OFFENSE TAKE OVER!`;
+                } else if (roll < 0.60) {
+                    oppYards = Math.floor(Math.random() * 6) + 2;
+                    playMsg = `-> Tight man coverage, pass completed for +${oppYards} yards.`;
+                } else {
+                    oppYards = 15;
+                    playMsg = `-> Receiver wins route vs man coverage for +15 yards.`;
+                }
+            }
+
+            if (forcedTurnover) {
+                gameEngine.mode = 'OFFENSE';
+                gameEngine.ballLoc = 100 - gameEngine.ballLoc;
+                gameEngine.down = 1;
+                gameEngine.dist = 10;
+            } else {
+                gameEngine.ballLoc += oppYards;
+                if (gameEngine.ballLoc < 1) gameEngine.ballLoc = 1;
+
+                if (gameEngine.ballLoc >= 100) {
+                    gameEngine.oppScore += 7;
+                    playMsg += ` OPPONENT TOUCHDOWN (+7 PTS).`;
+                    gameEngine.mode = 'OFFENSE';
+                    gameEngine.ballLoc = 25;
+                    gameEngine.down = 1;
+                    gameEngine.dist = 10;
+                } else {
+                    gameEngine.dist -= oppYards;
+                    if (gameEngine.dist <= 0) {
+                        gameEngine.down = 1;
+                        gameEngine.dist = 10;
+                        playMsg += ` Opponent picked up FIRST DOWN.`;
+                    } else {
+                        gameEngine.down++;
+                        if (gameEngine.down > 4) {
+                            playMsg += ` DEFENSIVE STOP ON 4TH DOWN! You regain possession on OFFENSE!`;
+                            gameEngine.mode = 'OFFENSE';
+                            gameEngine.ballLoc = 100 - gameEngine.ballLoc;
+                            gameEngine.down = 1;
+                            gameEngine.dist = 10;
+                        }
                     }
                 }
             }
         }
 
-        // Clock Progression
-        gameEngine.clockSecs -= 35;
+        // Clock & Quarters
+        gameEngine.clockSecs -= 30;
         if (gameEngine.clockSecs <= 0) {
             gameEngine.quarter++;
             gameEngine.clockSecs = 300;
@@ -1412,9 +1557,9 @@
         log.innerHTML += playMsg + '<br>';
         log.scrollTop = log.scrollHeight;
 
+        renderPlayCallButtons();
         updateGameDisplay();
 
-        // Check Game End
         if (gameEngine.quarter > 4) {
             finishGame();
         }
