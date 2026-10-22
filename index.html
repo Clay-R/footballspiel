@@ -467,7 +467,7 @@
 
 <div class="container">
     <h1>🏈 NFL Franchise Manager 2026</h1>
-    <p class="subtitle">Madden / Topps Trading Cards • Drag & Drop Lineups • Accurate Rosters • Offense & Defense</p>
+    <p class="subtitle">Madden / Topps Trading Cards • Strict Position Constraints • Active 2026 NFL Rosters</p>
 
     <!-- IN-PAGE BANNER FOR MESSAGES -->
     <div id="notification-banner"></div>
@@ -492,7 +492,7 @@
         </div>
 
         <div class="nav-buttons">
-            <button onclick="showSection('lineup')" class="btn-warning">🏈 Set Starting Lineup (Drag & Drop)</button>
+            <button onclick="showSection('lineup')" class="btn-warning">🏈 Set Starting Lineup (Strict Position Check)</button>
             <button onclick="showSection('roster')">📋 Roster Trading Cards</button>
             <button onclick="showSection('trade')">🔄 32-Team Trade Center</button>
             <button onclick="showSection('free-agency')">💼 Free Agency Market</button>
@@ -520,7 +520,7 @@
             </div>
 
             <div class="field-container">
-                <div style="display:flex; justify-content:space-between; font-size:0.85em; color:#6ee7b7; font-weight:bold;">
+                <div style="display:flex; justify-style:space-between; font-size:0.85em; color:#6ee7b7; font-weight:bold;">
                     <span>OWN ENDZONE (0)</span>
                     <span id="field-ball-loc">Ball on OWN 20</span>
                     <span>OPP ENDZONE (100)</span>
@@ -593,6 +593,17 @@
         "S": "Safety",
         "K": "Kicker",
         "P": "Punter"
+    };
+
+    // STRICT POSITION CONSTRAINTS FOR STARTING SLOTS
+    const POS_SLOTS = {
+        "QB": ["QB"],
+        "RB": ["RB"],
+        "WR1": ["WR"],
+        "WR2": ["WR"],
+        "TE": ["TE"],
+        "DEF": ["DE", "DT", "LB", "CB", "S"],
+        "K": ["K", "P"]
     };
 
     function getPosFull(posCode) {
@@ -689,25 +700,25 @@
         "NFC West": ["Arizona Cardinals", "Los Angeles Rams", "San Francisco 49ers", "Seattle Seahawks"]
     };
 
-    // ACCURATE 32 NFL TEAM DEPTH CHARTS INCLUDING ELITE DEFENSIVE STARS
+    // ACCURATE 2026 ACTIVE ROSTERS (DEXTER LAWRENCE ON BENGALS, DANIEL JONES ON COLTS)
     const pdfDepthCharts = {
+        "Cincinnati Bengals": [{n:"Joe Burrow",p:"QB",o:94,s:45.0},{n:"Chase Brown",p:"RB",o:82,s:3.0},{n:"Ja'Marr Chase",p:"WR",o:95,s:18.0},{n:"Tee Higgins",p:"WR",o:87,s:12.0},{n:"Dexter Lawrence II",p:"DT",o:96,s:22.0},{n:"Trey Hendrickson",p:"DE",o:92,s:16.0},{n:"Logan Wilson",p:"LB",o:84,s:7.0},{n:"Mike Gesicki",p:"TE",o:79,s:3.5},{n:"Evan McPherson",p:"K",o:81,s:3.0}],
+        "Indianapolis Colts": [{n:"Daniel Jones",p:"QB",o:76,s:12.0},{n:"Anthony Richardson",p:"QB",o:82,s:5.0},{n:"Jonathan Taylor",p:"RB",o:90,s:12.0},{n:"Alec Pierce",p:"WR",o:79,s:3.0},{n:"Josh Downs",p:"WR",o:81,s:3.5},{n:"Keenan Allen",p:"WR",o:85,s:10.0},{n:"DeForest Buckner",p:"DT",o:89,s:16.0},{n:"Zaire Franklin",p:"LB",o:84,s:6.0},{n:"Tyler Warren",p:"TE",o:80,s:3.0},{n:"Spencer Shrader",p:"K",o:75,s:1.5}],
         "Buffalo Bills": [{n:"Josh Allen",p:"QB",o:98,s:43.0},{n:"James Cook",p:"RB",o:88,s:8.0},{n:"Ray Davis",p:"RB",o:77,s:2.0},{n:"Ty Johnson",p:"RB",o:75,s:1.5},{n:"DJ Moore",p:"WR",o:89,s:16.0},{n:"Khalil Shakir",p:"WR",o:81,s:4.0},{n:"Keon Coleman",p:"WR",o:81,s:3.0},{n:"Dalton Kincaid",p:"TE",o:85,s:4.0},{n:"Dawson Knox",p:"TE",o:79,s:6.0},{n:"Ed Oliver",p:"DT",o:88,s:12.0},{n:"Matt Milano",p:"LB",o:87,s:10.0},{n:"Taron Johnson",p:"CB",o:86,s:8.0},{n:"Tyler Bass",p:"K",o:78,s:2.5}],
         "Miami Dolphins": [{n:"Tua Tagovailoa",p:"QB",o:86,s:30.0},{n:"De'Von Achane",p:"RB",o:88,s:6.0},{n:"Tyreek Hill",p:"WR",o:98,s:28.0},{n:"Jaylen Waddle",p:"WR",o:88,s:14.0},{n:"Malik Washington",p:"WR",o:75,s:2.0},{n:"Jalen Ramsey",p:"CB",o:92,s:20.0},{n:"Bradley Chubb",p:"DE",o:86,s:12.0},{n:"Jevon Holland",p:"S",o:86,s:7.0},{n:"Riley Patterson",p:"K",o:75,s:1.5}],
         "New York Jets": [{n:"Geno Smith",p:"QB",o:83,s:22.0},{n:"Breece Hall",p:"RB",o:90,s:9.0},{n:"Braelon Allen",p:"RB",o:78,s:2.5},{n:"Garrett Wilson",p:"WR",o:89,s:7.0},{n:"Adonai Mitchell",p:"WR",o:77,s:2.5},{n:"Sauce Gardner",p:"CB",o:95,s:10.0},{n:"Quinnen Williams",p:"DT",o:94,s:21.0},{n:"CJ Mosley",p:"LB",o:88,s:12.0},{n:"Mason Taylor",p:"TE",o:72,s:1.5},{n:"Blake Grupe",p:"K",o:76,s:1.8}],
         "New England Patriots": [{n:"Drake Maye",p:"QB",o:80,s:4.5},{n:"Rhamondre Stevenson",p:"RB",o:83,s:6.0},{n:"TreVeyon Henderson",p:"RB",o:81,s:3.0},{n:"A.J. Brown",p:"WR",o:93,s:20.0},{n:"Romeo Doubs",p:"WR",o:81,s:5.0},{n:"DeMario Douglas",p:"WR",o:78,s:2.5},{n:"Christian Barmore",p:"DT",o:86,s:8.0},{n:"Hunter Henry",p:"TE",o:80,s:5.0},{n:"Andy Borregales",p:"K",o:74,s:1.5}],
         "Dallas Cowboys": [{n:"Dak Prescott",p:"QB",o:90,s:40.0},{n:"Javonte Williams",p:"RB",o:81,s:6.0},{n:"CeeDee Lamb",p:"WR",o:96,s:22.0},{n:"George Pickens",p:"WR",o:84,s:10.0},{n:"Micah Parsons",p:"LB",o:98,s:25.0},{n:"Trevon Diggs",p:"CB",o:87,s:12.0},{n:"DeMarcus Lawrence",p:"DE",o:86,s:11.0},{n:"Jake Ferguson",p:"TE",o:82,s:5.0},{n:"Brandon Aubrey",p:"K",o:88,s:4.0}],
         "Philadelphia Eagles": [{n:"Jalen Hurts",p:"QB",o:90,s:30.0},{n:"Saquon Barkley",p:"RB",o:92,s:12.0},{n:"Tank Bigsby",p:"RB",o:78,s:2.5},{n:"DeVonta Smith",p:"WR",o:89,s:15.0},{n:"Dontayvion Wicks",p:"WR",o:77,s:2.2},{n:"Jalen Carter",p:"DT",o:89,s:6.0},{n:"Darius Slay",p:"CB",o:86,s:10.0},{n:"CJ Gardner-Johnson",p:"S",o:85,s:7.0},{n:"Dallas Goedert",p:"TE",o:85,s:9.0},{n:"Jake Elliott",p:"K",o:84,s:3.5}],
-        "New York Giants": [{n:"Jaxson Dart",p:"QB",o:77,s:3.0},{n:"Jameis Winston",p:"QB",o:75,s:2.5},{n:"Cam Skattebo",p:"RB",o:79,s:2.0},{n:"Najee Harris",p:"RB",o:82,s:6.0},{n:"Malik Nabers",p:"WR",o:87,s:4.0},{n:"Darnell Mooney",p:"WR",o:80,s:6.0},{n:"Dexter Lawrence",p:"DT",o:96,s:22.0},{n:"Brian Burns",p:"DE",o:88,s:15.0},{n:"Kayvon Thibodeaux",p:"LB",o:84,s:6.0},{n:"Isaiah Likely",p:"TE",o:81,s:4.0},{n:"Dominic Zvada",p:"K",o:75,s:1.5}],
+        "New York Giants": [{n:"Jaxson Dart",p:"QB",o:77,s:3.0},{n:"Jameis Winston",p:"QB",o:75,s:2.5},{n:"Cam Skattebo",p:"RB",o:79,s:2.0},{n:"Najee Harris",p:"RB",o:82,s:6.0},{n:"Malik Nabers",p:"WR",o:87,s:4.0},{n:"Darnell Mooney",p:"WR",o:80,s:6.0},{n:"Brian Burns",p:"DE",o:88,s:15.0},{n:"Kayvon Thibodeaux",p:"LB",o:84,s:6.0},{n:"Isaiah Likely",p:"TE",o:81,s:4.0},{n:"Dominic Zvada",p:"K",o:75,s:1.5}],
         "Washington Commanders": [{n:"Jayden Daniels",p:"QB",o:83,s:5.0},{n:"Rachaad White",p:"RB",o:81,s:4.0},{n:"Terry McLaurin",p:"WR",o:89,s:15.0},{n:"Stefon Diggs",p:"WR",o:87,s:12.0},{n:"Frankie Luvu",p:"LB",o:85,s:7.0},{n:"Jonathan Allen",p:"DT",o:86,s:10.0},{n:"Chig Okonkwo",p:"TE",o:78,s:3.0},{n:"Drew Stevens",p:"K",o:75,s:1.5}],
         "Baltimore Ravens": [{n:"Lamar Jackson",p:"QB",o:95,s:40.0},{n:"Derrick Henry",p:"RB",o:92,s:8.0},{n:"Justice Hill",p:"RB",o:78,s:3.0},{n:"Zay Flowers",p:"WR",o:86,s:5.0},{n:"Rashod Bateman",p:"WR",o:79,s:4.0},{n:"Roquan Smith",p:"LB",o:95,s:18.0},{n:"Kyle Hamilton",p:"S",o:93,s:8.0},{n:"Nnamdi Madubuike",p:"DT",o:90,s:14.0},{n:"Mark Andrews",p:"TE",o:90,s:12.0},{n:"Tyler Loop",p:"K",o:78,s:2.0}],
-        "Cincinnati Bengals": [{n:"Joe Burrow",p:"QB",o:94,s:45.0},{n:"Chase Brown",p:"RB",o:82,s:3.0},{n:"Ja'Marr Chase",p:"WR",o:95,s:18.0},{n:"Tee Higgins",p:"WR",o:87,s:12.0},{n:"Trey Hendrickson",p:"DE",o:92,s:16.0},{n:"Logan Wilson",p:"LB",o:84,s:7.0},{n:"Mike Gesicki",p:"TE",o:79,s:3.5},{n:"Evan McPherson",p:"K",o:81,s:3.0}],
         "Cleveland Browns": [{n:"Deshaun Watson",p:"QB",o:77,s:23.0},{n:"Shedeur Sanders",p:"QB",o:76,s:3.0},{n:"Quinshon Judkins",p:"RB",o:82,s:3.5},{n:"KC Concepcion",p:"WR",o:78,s:2.5},{n:"Jerry Jeudy",p:"WR",o:81,s:7.0},{n:"Myles Garrett",p:"DE",o:98,s:25.0},{n:"Denzel Ward",p:"CB",o:90,s:15.0},{n:"Jeremiah Owusu-Koramoah",p:"LB",o:87,s:9.0},{n:"Harold Fannin Jr.",p:"TE",o:78,s:2.2},{n:"Andre Szmyt",p:"K",o:74,s:1.5}],
         "Pittsburgh Steelers": [{n:"Aaron Rodgers",p:"QB",o:88,s:25.0},{n:"Jaylen Warren",p:"RB",o:83,s:4.0},{n:"Michael Pittman Jr.",p:"WR",o:86,s:14.0},{n:"DK Metcalf",p:"WR",o:88,s:16.0},{n:"TJ Watt",p:"LB",o:97,s:24.0},{n:"Cameron Heyward",p:"DT",o:90,s:14.0},{n:"Minkah Fitzpatrick",p:"S",o:91,s:15.0},{n:"Pat Freiermuth",p:"TE",o:81,s:6.0},{n:"Chris Boswell",p:"K",o:83,s:3.5}],
         "Chicago Bears": [{n:"Caleb Williams",p:"QB",o:82,s:5.0},{n:"D'Andre Swift",p:"RB",o:81,s:8.0},{n:"Rome Odunze",p:"WR",o:84,s:3.5},{n:"Luther Burden III",p:"WR",o:81,s:3.0},{n:"Jaylon Johnson",p:"CB",o:92,s:18.0},{n:"Montez Sweat",p:"DE",o:87,s:12.0},{n:"Tremaine Edmunds",p:"LB",o:84,s:10.0},{n:"Colston Loveland",p:"TE",o:80,s:2.5},{n:"Cole Kmet",p:"TE",o:81,s:7.0},{n:"Cairo Santos",p:"K",o:78,s:2.2}],
         "Detroit Lions": [{n:"Jared Goff",p:"QB",o:87,s:32.0},{n:"Jahmyr Gibbs",p:"RB",o:89,s:5.0},{n:"Isiah Pacheco",p:"RB",o:84,s:3.5},{n:"Amon-Ra St. Brown",p:"WR",o:93,s:18.0},{n:"Jameson Williams",p:"WR",o:82,s:4.0},{n:"Aidan Hutchinson",p:"DE",o:93,s:12.0},{n:"Brian Branch",p:"S",o:88,s:4.0},{n:"Jack Campbell",p:"LB",o:83,s:3.0},{n:"Sam LaPorta",p:"TE",o:87,s:6.0},{n:"Jake Bates",p:"K",o:77,s:1.8}],
         "Green Bay Packers": [{n:"Jordan Love",p:"QB",o:88,s:28.0},{n:"Josh Jacobs",p:"RB",o:88,s:11.0},{n:"Christian Watson",p:"WR",o:81,s:4.0},{n:"Jayden Reed",p:"WR",o:82,s:3.0},{n:"Rashan Gary",p:"LB",o:87,s:14.0},{n:"Jaire Alexander",p:"CB",o:89,s:16.0},{n:"Xavier McKinney",p:"S",o:88,s:11.0},{n:"Tucker Kraft",p:"TE",o:80,s:2.5},{n:"Trey Smack",p:"K",o:75,s:1.5}],
         "Minnesota Vikings": [{n:"Kyler Murray",p:"QB",o:86,s:32.0},{n:"J.J. McCarthy",p:"QB",o:78,s:3.0},{n:"Aaron Jones Sr.",p:"RB",o:86,s:7.0},{n:"Justin Jefferson",p:"WR",o:98,s:28.0},{n:"Jordan Addison",p:"WR",o:83,s:4.0},{n:"Andrew Van Ginkel",p:"LB",o:86,s:8.0},{n:"Jonathan Greenard",p:"DE",o:85,s:9.0},{n:"Harrison Smith",p:"S",o:85,s:8.0},{n:"T.J. Hockenson",p:"TE",o:88,s:11.0},{n:"Will Reichard",p:"K",o:76,s:1.8}],
-        "Indianapolis Colts": [{n:"Daniel Jones",p:"QB",o:76,s:12.0},{n:"Anthony Richardson",p:"QB",o:82,s:5.0},{n:"Jonathan Taylor",p:"RB",o:90,s:12.0},{n:"Alec Pierce",p:"WR",o:79,s:3.0},{n:"Josh Downs",p:"WR",o:81,s:3.5},{n:"Keenan Allen",p:"WR",o:85,s:10.0},{n:"DeForest Buckner",p:"DT",o:89,s:16.0},{n:"Zaire Franklin",p:"LB",o:84,s:6.0},{n:"Tyler Warren",p:"TE",o:80,s:3.0},{n:"Spencer Shrader",p:"K",o:75,s:1.5}],
         "Jacksonville Jaguars": [{n:"Trevor Lawrence",p:"QB",o:85,s:30.0},{n:"Bhayshul Tuten",p:"RB",o:77,s:2.2},{n:"Jakobi Meyers",p:"WR",o:82,s:8.0},{n:"Brian Thomas Jr.",p:"WR",o:83,s:3.5},{n:"Travis Hunter",p:"WR",o:85,s:5.0},{n:"Josh Hines-Allen",p:"DE",o:89,s:15.0},{n:"Foyesade Oluokun",p:"LB",o:86,s:9.0},{n:"Brenton Strange",p:"TE",o:75,s:2.0},{n:"Cam Little",p:"K",o:77,s:1.8}],
         "Houston Texans": [{n:"C.J. Stroud",p:"QB",o:91,s:6.0},{n:"David Montgomery",p:"RB",o:85,s:6.0},{n:"Nico Collins",p:"WR",o:89,s:12.0},{n:"Tank Dell",p:"WR",o:84,s:3.0},{n:"Danielle Hunter",p:"DE",o:90,s:17.0},{n:"Will Anderson Jr.",p:"DE",o:89,s:7.0},{n:"Derek Stingley Jr.",p:"CB",o:90,s:8.0},{n:"Dalton Schultz",p:"TE",o:81,s:7.0},{n:"Ka'imi Fairbairn",p:"K",o:82,s:3.0}],
         "Tennessee Titans": [{n:"Cam Ward",p:"QB",o:79,s:4.0},{n:"Tony Pollard",p:"RB",o:82,s:7.0},{n:"Tyjae Spears",p:"RB",o:78,s:2.5},{n:"Wan'Dale Robinson",p:"WR",o:78,s:3.0},{n:"Calvin Ridley",p:"WR",o:84,s:12.0},{n:"Jeffery Simmons",p:"DT",o:89,s:16.0},{n:"L'Jarius Sneed",p:"CB",o:87,s:14.0},{n:"Gunnar Helm",p:"TE",o:74,s:1.5},{n:"Joey Slye",p:"K",o:75,s:1.8}],
@@ -885,17 +896,27 @@
         return Math.round(sum / team.roster.length);
     }
 
+    /* STRICT & UNIQUE AUTO-LINEUP ASSIGNMENT */
     function autoSetBestLineup() {
         if (!userTeam) return;
+        startingLineup = { QB: null, RB: null, WR1: null, WR2: null, TE: null, DEF: null, K: null };
+        const usedNames = new Set();
+
         const findBest = (posList) => {
-            return userTeam.roster.filter(p => posList.includes(p.pos)).sort((a,b) => b.ovr - a.ovr)[0] || userTeam.roster[0];
+            const eligible = userTeam.roster
+                .filter(p => posList.includes(p.pos) && !usedNames.has(p.name))
+                .sort((a,b) => b.ovr - a.ovr);
+            if (eligible.length > 0) {
+                usedNames.add(eligible[0].name);
+                return eligible[0];
+            }
+            return null;
         };
-        const wrs = userTeam.roster.filter(p => p.pos === "WR").sort((a,b) => b.ovr - a.ovr);
 
         startingLineup.QB = findBest(["QB"]);
         startingLineup.RB = findBest(["RB"]);
-        startingLineup.WR1 = wrs[0] || findBest(["WR"]);
-        startingLineup.WR2 = wrs[1] || userTeam.roster[1] || wrs[0];
+        startingLineup.WR1 = findBest(["WR"]);
+        startingLineup.WR2 = findBest(["WR"]);
         startingLineup.TE = findBest(["TE"]);
         startingLineup.DEF = findBest(["DE","DT","LB","CB","S"]);
         startingLineup.K = findBest(["K","P"]);
@@ -905,10 +926,17 @@
         if (!team) return 75;
         let l = customLineup;
         if (team !== userTeam) {
-            const best = (posList) => team.roster.filter(p => posList.includes(p.pos)).sort((a,b) => b.ovr - a.ovr)[0] || team.roster[0];
-            const wrs = team.roster.filter(p => p.pos === "WR").sort((a,b) => b.ovr - a.ovr);
+            const usedNames = new Set();
+            const best = (posList) => {
+                const candidates = team.roster.filter(p => posList.includes(p.pos) && !usedNames.has(p.name)).sort((a,b) => b.ovr - a.ovr);
+                if (candidates.length > 0) {
+                    usedNames.add(candidates[0].name);
+                    return candidates[0];
+                }
+                return team.roster[0];
+            };
             l = {
-                QB: best(["QB"]), RB: best(["RB"]), WR1: wrs[0] || best(["WR"]), WR2: wrs[1] || best(["WR"]),
+                QB: best(["QB"]), RB: best(["RB"]), WR1: best(["WR"]), WR2: best(["WR"]),
                 TE: best(["TE"]), DEF: best(["DE","DT","LB","CB","S"]), K: best(["K","P"])
             };
         }
@@ -933,11 +961,11 @@
         document.getElementById('dash-week').innerText = currentWeek;
     }
 
-    /* ---------------- DRAG & DROP STARTING LINEUP ENGINE ---------------- */
+    /* ---------------- DRAG & DROP STARTING LINEUP ENGINE WITH POSITION CHECKS ---------------- */
     function renderLineupScreen() {
         const view = document.getElementById('content-view');
         let html = `<h2>🏈 Starting Lineup & Drag-and-Drop Pitch</h2>`;
-        html += `<p style="font-size:0.88em; color:#cbd5e1;">Drag any Madden Player Trading Card from below and <strong>Drop into a Starting Position Slot</strong>, or use the quick selection dropdown.</p>`;
+        html += `<p style="font-size:0.88em; color:#cbd5e1;">Drag any Madden Player Trading Card from below into a valid position slot. <strong>Note: Players can only play their correct position and cannot occupy multiple spots!</strong></p>`;
 
         const slots = [
             { id: "QB", label: "Starting Quarterback", posList: ["QB"] },
@@ -952,8 +980,9 @@
         html += `<div class="lineup-slots-container">`;
         slots.forEach(slot => {
             const currentSelected = startingLineup[slot.id];
-            const eligiblePlayers = userTeam.roster.filter(p => slot.posList.includes(p.pos)).sort((a,b) => b.ovr - a.ovr);
-            const playerOptions = eligiblePlayers.length > 0 ? eligiblePlayers : userTeam.roster;
+            const eligiblePlayers = userTeam.roster
+                .filter(p => slot.posList.includes(p.pos))
+                .sort((a,b) => b.ovr - a.ovr);
 
             html += `
                 <div class="lineup-drop-slot" ondragover="handleLineupDragOver(event)" ondragleave="handleLineupDragLeave(event)" ondrop="handleLineupDrop(event, '${slot.id}')">
@@ -961,13 +990,14 @@
                         🎯 ${slot.label}
                     </label>
                     <select onchange="updateLineupSlot('${slot.id}', this.value)" style="margin-bottom:8px;">
-                        ${playerOptions.map((p) => `
+                        ${eligiblePlayers.length === 0 ? `<option value="">No eligible ${slot.label} on roster</option>` : ''}
+                        ${eligiblePlayers.map((p) => `
                             <option value="${userTeam.roster.indexOf(p)}" ${currentSelected === p ? 'selected' : ''}>
                                 ${p.name} (${getPosFull(p.pos)}) - ${p.ovr} OVR
                             </option>
                         `).join('')}
                     </select>
-                    ${currentSelected ? renderMaddenCard(currentSelected) : '<p style="font-size:0.8em; color:#94a3b8; text-align:center;">Drop Card Here</p>'}
+                    ${currentSelected ? renderMaddenCard(currentSelected) : '<p style="font-size:0.8em; color:#94a3b8; text-align:center;">Drop Eligible Card Here</p>'}
                 </div>
             `;
         });
@@ -975,17 +1005,17 @@
 
         html += `<h3 style="margin-top:20px;">📋 Roster Player Cards (Drag to Position Slot)</h3>`;
         html += `<div class="card-grid-container">`;
-        userTeam.roster.slice().sort((a,b) => b.ovr - a.ovr).forEach((p, rIdx) => {
+        userTeam.roster.slice().sort((a,b) => b.ovr - a.ovr).forEach((p) => {
             const realIdx = userTeam.roster.indexOf(p);
             html += renderMaddenCard(p, {
                 draggable: true,
                 rosterIdx: realIdx,
-                actionBtnHtml: `<button onclick="notify('Drag this card onto a slot above!')" style="background:#334155; font-size:0.75em;">🖐️ Drag Card</button>`
+                actionBtnHtml: `<button onclick="notify('Drag this card onto a matching slot above!')" style="background:#334155; font-size:0.75em;">🖐️ Drag Card</button>`
             });
         });
         html += `</div>`;
 
-        html += `<button onclick="autoSetBestLineup(); renderLineupScreen(); updateDashboard(); notify('Auto-assigned highest rated starters!');" class="btn-success" style="width:100%; margin-top:20px; padding:12px; font-weight:bold;">⚡ Auto-Set Best Starters</button>`;
+        html += `<button onclick="autoSetBestLineup(); renderLineupScreen(); updateDashboard(); notify('Auto-assigned highest rated starters uniquely!');" class="btn-success" style="width:100%; margin-top:20px; padding:12px; font-weight:bold;">⚡ Auto-Set Best Starters</button>`;
 
         view.innerHTML = html;
     }
@@ -1008,19 +1038,34 @@
         event.currentTarget.classList.remove('drag-over');
         const rosterIdx = parseInt(event.dataTransfer.getData("text/plain"));
         if (!isNaN(rosterIdx) && userTeam.roster[rosterIdx]) {
-            const player = userTeam.roster[rosterIdx];
-            startingLineup[slotId] = player;
-            updateDashboard();
-            renderLineupScreen();
-            notify(`Assigned ${player.name} as starting ${getPosFull(slotId)}! New Starter OVR: ${calculateLineupRating()}`);
+            updateLineupSlot(slotId, rosterIdx);
         }
     }
 
     function updateLineupSlot(slotId, rosterIndex) {
-        startingLineup[slotId] = userTeam.roster[parseInt(rosterIndex)];
+        if (rosterIndex === "" || rosterIndex === null || rosterIndex === undefined) return;
+        const player = userTeam.roster[parseInt(rosterIndex)];
+        if (!player) return;
+
+        // 1. STRICT POSITION CHECK
+        const allowed = POS_SLOTS[slotId] || [];
+        if (!allowed.includes(player.pos)) {
+            notify(`Position Mismatch! ${player.name} (${getPosFull(player.pos)}) cannot play ${slotId}.`, true);
+            renderLineupScreen();
+            return;
+        }
+
+        // 2. UNIQUENESS CHECK: Remove player from any other starting slot if currently placed there
+        for (const [s, p] of Object.entries(startingLineup)) {
+            if (p && p.name === player.name) {
+                startingLineup[s] = null;
+            }
+        }
+
+        startingLineup[slotId] = player;
         updateDashboard();
         renderLineupScreen();
-        notify(`Updated starting ${slotId}! New Starter Rating: ${calculateLineupRating()} OVR.`);
+        notify(`Assigned ${player.name} as starting ${slotId}! New Starter OVR: ${calculateLineupRating()}`);
     }
 
     // ---------------- DRAFT & IN-DRAFT TRADING ----------------
