@@ -25,7 +25,7 @@
             padding: 15px;
         }
         .container {
-            max-width: 1100px;
+            max-width: 1150px;
             margin: 0 auto;
             background-color: var(--bg-card);
             padding: 20px;
@@ -33,7 +33,24 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         h1, h2, h3 { margin-top: 0; color: #38bdf8; }
-        .subtitle { color: var(--text-muted); font-size: 0.95em; margin-bottom: 20px; }
+        .subtitle { color: var(--text-muted); font-size: 0.95em; margin-bottom: 15px; }
+        
+        /* Notification Banner (No Browser Popups) */
+        #notification-banner {
+            display: none;
+            padding: 12px 18px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-weight: 600;
+            text-align: center;
+            font-size: 0.95em;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .dashboard {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -46,6 +63,7 @@
         .stat-box { text-align: center; }
         .stat-box span { font-size: 0.8em; color: var(--text-muted); text-transform: uppercase; display: block; }
         .stat-box strong { font-size: 1.25em; color: #38bdf8; }
+        
         .nav-buttons {
             display: flex;
             flex-wrap: wrap;
@@ -68,6 +86,7 @@
         button.btn-success:hover { background-color: #059669; }
         button.btn-danger { background-color: var(--danger); }
         button.btn-danger:hover { background-color: #dc2626; }
+        
         .card {
             background: #0f172a;
             padding: 18px;
@@ -75,11 +94,12 @@
             margin-bottom: 15px;
             border: 1px solid #334155;
         }
+        
         .team-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
             gap: 12px;
-            max-height: 500px;
+            max-height: 520px;
             overflow-y: auto;
             padding-right: 5px;
         }
@@ -92,26 +112,52 @@
             color: #f1f5f9;
             margin-top: 10px;
         }
+        
         .player-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             border-bottom: 1px solid #334155;
             font-size: 0.9em;
+            border-radius: 6px;
+            margin-bottom: 4px;
         }
         .player-item:last-child { border-bottom: none; }
         .player-ovr {
             background: #0284c7;
+            color: white;
             padding: 2px 6px;
             border-radius: 4px;
             font-weight: bold;
             font-size: 0.85em;
+            margin-right: 6px;
         }
+        .stat-badge {
+            font-size: 0.78em;
+            color: #94a3b8;
+            margin-top: 3px;
+        }
+
+        /* Analyst Pick Highlight (Green) */
+        .analyst-highlight {
+            background: rgba(16, 185, 129, 0.18) !important;
+            border: 2px solid #10b981 !important;
+        }
+        .analyst-badge {
+            background: #10b981;
+            color: #022c22;
+            font-weight: bold;
+            font-size: 0.75em;
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin-left: 6px;
+        }
+
         .modal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.85);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -119,14 +165,15 @@
         }
         .modal-content {
             background: var(--bg-card);
-            padding: 25px;
+            padding: 22px;
             border-radius: 10px;
-            max-width: 650px;
-            width: 90%;
-            max-height: 85vh;
+            max-width: 750px;
+            width: 92%;
+            max-height: 88vh;
             overflow-y: auto;
             border: 1px solid #38bdf8;
         }
+
         .trade-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -141,6 +188,7 @@
             border: 1px solid #475569;
             margin-bottom: 10px;
         }
+
         #game-screen {
             background: #022c22;
             border: 2px solid #10b981;
@@ -158,20 +206,35 @@
             overflow-y: auto;
             margin-top: 15px;
         }
+
+        .analyst-box {
+            background: #064e3b;
+            border: 1px solid #10b981;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            color: #ecfdf5;
+            font-size: 0.9em;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h1>🏈 NFL Franchise Manager 2026</h1>
-    <p class="subtitle">Real Rosters • 32 Teams • Draft • Trades • Salary Cap</p>
+    <p class="subtitle">Madden 27 Ratings • Depth Chart Rosters • 32 Teams • Draft • Trades • Salary Cap</p>
 
+    <!-- IN-PAGE BANNER FOR SUCCESS/ERROR MESSAGES -->
+    <div id="notification-banner"></div>
+
+    <!-- SELECT 32 TEAMS -->
     <div id="team-select-screen" class="card">
         <h2>Choose Your NFL Franchise</h2>
-        <p style="color:#cbd5e1; font-size:0.9em;">Select from all 32 teams to take full control of their official roster.</p>
+        <p style="color:#cbd5e1; font-size:0.9em;">Select any of the 32 official teams to manage their full 22-player roster.</p>
         <div class="team-grid" id="team-choices"></div>
     </div>
 
+    <!-- MAIN GAME DASHBOARD -->
     <div id="main-interface" style="display:none;">
         <div class="dashboard">
             <div class="stat-box"><span>Team</span><strong id="dash-team">-</strong></div>
@@ -182,7 +245,7 @@
         </div>
 
         <div class="nav-buttons">
-            <button onclick="showSection('roster')">📋 Roster & Cuts</button>
+            <button onclick="showSection('roster')">📋 Roster & Category Stats</button>
             <button onclick="showSection('trade')">🔄 32-Team Trade Center</button>
             <button onclick="showSection('free-agency')">💼 Free Agency Market</button>
             <button onclick="startMatch()" class="btn-success">🏈 Play Week Game</button>
@@ -190,6 +253,7 @@
 
         <div id="content-view" class="card"></div>
 
+        <!-- GAME SIMULATION -->
         <div id="game-screen">
             <h2 id="game-title">Game Day</h2>
             <div style="background:#064e3b; padding:15px; border-radius:6px; margin-bottom:15px;">
@@ -206,26 +270,76 @@
     </div>
 </div>
 
+<!-- DRAFT MODAL WITH ANALYST & ROSTER PREVIEW TABS -->
 <div id="draft-modal" class="modal" style="display:none;">
     <div class="modal-content">
-        <h2 id="draft-title">🏈 NFL Offseason Rookie Draft</h2>
-        <p style="color:#cbd5e1; font-size:0.9em;" id="draft-subtitle">Round 1, Pick 1 - Select a top college prospect to build your future.</p>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <h2 id="draft-title" style="margin:0;">🏈 NFL Rookie Draft</h2>
+            <div>
+                <button onclick="switchDraftTab('prospects')" id="tab-btn-prospects" style="padding:6px 12px; font-size:0.85em;">🎓 Prospects</button>
+                <button onclick="switchDraftTab('roster')" id="tab-btn-roster" style="padding:6px 12px; font-size:0.85em; background-color:#334155;">📋 View Roster</button>
+            </div>
+        </div>
+        <p style="color:#cbd5e1; font-size:0.85em; margin-top:0;" id="draft-subtitle">Select 1 rookie prospect per round (3 Rounds Total).</p>
+
+        <!-- Team Analyst Recommendation Box -->
+        <div id="analyst-box" class="analyst-box">
+            <strong>🤖 Team Analyst Recommendation:</strong> <span id="analyst-text">Analyzing roster depth...</span>
+        </div>
+
+        <div id="draft-status-msg" style="display:none; padding:8px; background:#10b981; color:white; border-radius:6px; margin-bottom:10px; text-align:center; font-weight:bold;"></div>
+        
+        <!-- Tab 1: Draft Prospects List -->
         <div id="draft-prospects-list"></div>
+
+        <!-- Tab 2: Current Team Roster Preview -->
+        <div id="draft-roster-preview" style="display:none;"></div>
     </div>
 </div>
 
+<!-- ROSTER OVERFLOW CUT WARNING MODAL -->
 <div id="cut-modal" class="modal" style="display:none;">
     <div class="modal-content">
-        <h2 style="color:#f87171;">⚠️ Roster Limit Exceeded!</h2>
-        <p style="color:#e2e8f0; font-size:0.9em;">Following the draft, your roster exceeds the mandatory <strong>22-player limit</strong>. You must cut or trade players to proceed to Week 1.</p>
+        <h2 style="color:#f87171;">⚠️ Roster Trim Required!</h2>
+        <p style="color:#e2e8f0; font-size:0.9em;">Your roster exceeds the <strong>22-player cap</strong>. Release players to proceed.</p>
+        <div id="cut-status-msg" style="display:none; padding:8px; background:#ef4444; color:white; border-radius:6px; margin-bottom:10px; text-align:center; font-weight:bold;"></div>
         <div id="cut-player-list"></div>
-        <button onclick="checkRosterLimitAndClose()" class="btn-success" style="width:100%; margin-top:15px;">Done Trimming Roster</button>
+        <button onclick="checkRosterLimitAndClose()" class="btn-success" style="width:100%; margin-top:15px;">Confirm Roster Size</button>
     </div>
 </div>
 
 <script>
+    function notify(message, isError = false) {
+        const banner = document.getElementById('notification-banner');
+        banner.innerText = message;
+        banner.style.backgroundColor = isError ? '#ef4444' : '#10b981';
+        banner.style.color = '#ffffff';
+        banner.style.display = 'block';
+        setTimeout(() => { banner.style.display = 'none'; }, 3500);
+    }
+
+    function generateMaddenStats(pos, ovr) {
+        let stats = {};
+        if (pos === "QB") {
+            stats = { SPD: Math.min(94, ovr - 8), THP: Math.min(99, ovr + 2), ACC: Math.min(98, ovr - 1), AWR: Math.min(99, ovr + 1) };
+        } else if (pos === "RB") {
+            stats = { SPD: Math.min(97, ovr + 3), ELU: Math.min(98, ovr + 1), CAR: Math.min(96, ovr - 2), AWR: Math.min(95, ovr - 1) };
+        } else if (pos === "WR" || pos === "TE") {
+            stats = { SPD: Math.min(98, ovr + 2), CTH: Math.min(99, ovr + 3), RTE: Math.min(97, ovr), AWR: Math.min(96, ovr - 1) };
+        } else if (pos === "K" || pos === "P") {
+            stats = { KPW: Math.min(99, ovr + 4), KAC: Math.min(98, ovr + 2), AWR: Math.min(90, ovr - 5) };
+        } else {
+            stats = { SPD: Math.min(92, ovr - 4), TAK: Math.min(98, ovr + 2), BSH: Math.min(96, ovr), AWR: Math.min(97, ovr + 1) };
+        }
+        return stats;
+    }
+
+    function formatStatsString(stats) {
+        return Object.entries(stats).map(([k,v]) => `<span style="color:#38bdf8;">${k}</span>:${v}`).join(' • ');
+    }
+
     const nflDivisions = {
-        "AFC East": ["Buffalo Bills", "Miami Dolphins", "New England Patriots", "New York Jets"],
+        "AFC East": ["Buffalo Bills", "Miami Dolphins", "New York Jets", "New England Patriots"],
         "AFC North": ["Baltimore Ravens", "Cincinnati Bengals", "Cleveland Browns", "Pittsburgh Steelers"],
         "AFC South": ["Houston Texans", "Indianapolis Colts", "Jacksonville Jaguars", "Tennessee Titans"],
         "AFC West": ["Denver Broncos", "Kansas City Chiefs", "Las Vegas Raiders", "Los Angeles Chargers"],
@@ -235,97 +349,109 @@
         "NFC West": ["Arizona Cardinals", "Los Angeles Rams", "San Francisco 49ers", "Seattle Seahawks"]
     };
 
-    const marqueePlayers = {
-        "Kansas City Chiefs": [{name:"Patrick Mahomes", pos:"QB", ovr:98, sal:45.0}, {name:"Travis Kelce", pos:"TE", ovr:94, sal:14.0}, {name:"Chris Jones", pos:"DT", ovr:96, sal:20.0}],
-        "San Francisco 49ers": [{name:"Brock Purdy", pos:"QB", ovr:87, sal:1.1}, {name:"Christian McCaffrey", pos:"RB", ovr:97, sal:12.0}, {name:"Nick Bosa", pos:"DE", ovr:96, sal:22.0}],
-        "Baltimore Ravens": [{name:"Lamar Jackson", pos:"QB", ovr:95, sal:40.0}, {name:"Derrick Henry", pos:"RB", ovr:92, sal:8.0}, {name:"Kyle Hamilton", pos:"S", ovr:91, sal:4.0}],
-        "Philadelphia Eagles": [{name:"Jalen Hurts", pos:"QB", ovr:90, sal:30.0}, {name:"A.J. Brown", pos:"WR", ovr:93, sal:20.0}, {name:"Saquon Barkley", pos:"RB", ovr:92, sal:12.0}],
-        "Buffalo Bills": [{name:"Josh Allen", pos:"QB", ovr:95, sal:43.0}, {name:"Keon Coleman", pos:"WR", ovr:81, sal:3.0}, {name:"Ed Oliver", pos:"DT", ovr:88, sal:15.0}],
-        "Miami Dolphins": [{name:"Tua Tagovailoa", pos:"QB", ovr:86, sal:30.0}, {name:"Tyreek Hill", pos:"WR", ovr:96, sal:24.0}, {name:"Jaylen Waddle", pos:"WR", ovr:88, sal:14.0}],
-        "Cincinnati Bengals": [{name:"Joe Burrow", pos:"QB", ovr:94, sal:45.0}, {name:"Ja'Marr Chase", pos:"WR", ovr:95, sal:16.0}, {name:"Tee Higgins", pos:"WR", ovr:87, sal:12.0}],
-        "Houston Texans": [{name:"C.J. Stroud", pos:"QB", ovr:91, sal:6.0}, {name:"Nico Collins", pos:"WR", ovr:89, sal:12.0}, {name:"Will Anderson Jr.", pos:"DE", ovr:88, sal:7.0}],
-        "Detroit Lions": [{name:"Jared Goff", pos:"QB", ovr:87, sal:32.0}, {name:"Amon-Ra St. Brown", pos:"WR", ovr:93, sal:18.0}, {name:"Jahmyr Gibbs", pos:"RB", ovr:89, sal:5.0}],
-        "Green Bay Packers": [{name:"Jordan Love", pos:"QB", ovr:88, sal:28.0}, {name:"Josh Jacobs", pos:"RB", ovr:88, sal:11.0}, {name:"Jaire Alexander", pos:"CB", ovr:88, sal:15.0}],
-        "Chicago Bears": [{name:"DJ Moore", pos:"WR", ovr:89, sal:16.0}, {name:"Keenan Allen", pos:"WR", ovr:87, sal:15.0}, {name:"Monteaz Sweat", pos:"DE", ovr:86, sal:14.0}],
-        "Minnesota Vikings": [{name:"Justin Jefferson", pos:"WR", ovr:98, sal:28.0}, {name:"Aaron Jones", pos:"RB", ovr:86, sal:7.0}, {name:"T.J. Hockenson", pos:"TE", ovr:88, sal:11.0}],
-        "Dallas Cowboys": [{name:"Dak Prescott", pos:"QB", ovr:90, sal:40.0}, {name:"CeeDee Lamb", pos:"WR", ovr:96, sal:22.0}, {name:"Micah Parsons", pos:"LB", ovr:97, sal:18.0}],
-        "New York Giants": [{name:"Malik Nabers", pos:"WR", ovr:85, sal:4.0}, {name:"Dexter Lawrence", pos:"DT", ovr:92, sal:17.0}, {name:"Brian Burns", pos:"DE", ovr:87, sal:16.0}],
-        "Washington Commanders": [{name:"Jayden Daniels", pos:"QB", ovr:83, sal:5.0}, {name:"Terry McLaurin", pos:"WR", ovr:89, sal:15.0}, {name:"Bobby Wagner", pos:"LB", ovr:85, sal:6.0}],
-        "New York Jets": [{name:"Aaron Rodgers", pos:"QB", ovr:89, sal:35.0}, {name:"Garrett Wilson", pos:"WR", ovr:89, sal:6.0}, {name:"Sauce Gardner", pos:"CB", ovr:94, sal:8.0}],
-        "New England Patriots": [{name:"Drake Maye", pos:"QB", ovr:80, sal:4.5}, {name:"Rhamondre Stevenson", pos:"RB", ovr:83, sal:6.0}, {name:"Christian Gonzalez", pos:"CB", ovr:84, sal:4.0}],
-        "Pittsburgh Steelers": [{name:"T.J. Watt", pos:"LB", ovr:97, sal:24.0}, {name:"George Pickens", pos:"WR", ovr:86, sal:3.0}, {name:"Minkah Fitzpatrick", pos:"S", ovr:91, sal:16.0}],
-        "Cleveland Browns": [{name:"Myles Garrett", pos:"DE", ovr:98, sal:25.0}, {name:"Nick Chubb", pos:"RB", ovr:91, sal:12.0}, {name:"Amari Cooper", pos:"WR", ovr:87, sal:14.0}],
-        "Indianapolis Colts": [{name:"Anthony Richardson", pos:"QB", ovr:82, sal:5.0}, {name:"Jonathan Taylor", pos:"RB", ovr:90, sal:12.0}, {name:"DeForest Buckner", pos:"DT", ovr:90, sal:17.0}],
-        "Jacksonville Jaguars": [{name:"Trevor Lawrence", pos:"QB", ovr:85, sal:30.0}, {name:"Brian Thomas Jr.", pos:"WR", ovr:82, sal:3.5}, {name:"Josh Hines-Allen", pos:"DE", ovr:89, sal:18.0}],
-        "Tennessee Titans": [{name:"Will Levis", pos:"QB", ovr:78, sal:2.5}, {name:"Calvin Ridley", pos:"WR", ovr:84, sal:12.0}, {name:"Jeffery Simmons", pos:"DT", ovr:89, sal:16.0}],
-        "Denver Broncos": [{name:"Patrick Surtain II", pos:"CB", ovr:94, sal:15.0}, {name:"Bo Nix", pos:"QB", ovr:79, sal:3.5}, {name:"Courtland Sutton", pos:"WR", ovr:83, sal:11.0}],
-        "Las Vegas Raiders": [{name:"Davante Adams", pos:"WR", ovr:93, sal:22.0}, {name:"Maxx Crosby", pos:"DE", ovr:96, sal:20.0}, {name:"Brock Bowers", pos:"TE", ovr:86, sal:4.0}],
-        "Los Angeles Chargers": [{name:"Justin Herbert", pos:"QB", ovr:90, sal:38.0}, {name:"JK Dobbins", pos:"RB", ovr:82, sal:3.0}, {name:"Joey Bosa", pos:"DE", ovr:88, sal:18.0}],
-        "Atlanta Falcons": [{name:"Kirk Cousins", pos:"QB", ovr:85, sal:30.0}, {name:"Bijan Robinson", pos:"RB", ovr:89, sal:6.0}, {name:"Drake London", pos:"WR", ovr:86, sal:5.0}],
-        "Carolina Panthers": [{name:"Bryce Young", pos:"QB", ovr:76, sal:6.0}, {name:"Chuba Hubbard", pos:"RB", ovr:81, sal:3.0}, {name:"Derrick Brown", pos:"DT", ovr:90, sal:14.0}],
-        "New Orleans Saints": [{name:"Derek Carr", pos:"QB", ovr:80, sal:25.0}, {name:"Alvin Kamara", pos:"RB", ovr:88, sal:11.0}, {name:"Chris Olave", pos:"WR", ovr:87, sal:4.0}],
-        "Tampa Bay Buccaneers": [{name:"Baker Mayfield", pos:"QB", ovr:84, sal:20.0}, {name:"Mike Evans", pos:"WR", ovr:91, sal:16.0}, {name:"Vita Vea", pos:"DT", ovr:89, sal:14.0}],
-        "Los Angeles Rams": [{name:"Matthew Stafford", pos:"QB", ovr:88, sal:27.0}, {name:"Puka Nacua", pos:"WR", ovr:92, sal:2.0}, {name:"Cooper Kupp", pos:"WR", ovr:89, sal:18.0}],
-        "Seattle Seahawks": [{name:"Geno Smith", pos:"QB", ovr:83, sal:22.0}, {name:"DK Metcalf", pos:"WR", ovr:88, sal:16.0}, {name:"Kenneth Walker III", pos:"RB", ovr:86, sal:3.0}],
-        "Arizona Cardinals": [{name:"Kyler Murray", pos:"QB", ovr:86, sal:32.0}, {name:"Marvin Harrison Jr.", pos:"WR", ovr:86, sal:5.0}, {name:"Budda Baker", pos:"S", ovr:88, sal:13.0}]
+    const pdfDepthCharts = {
+        "Buffalo Bills": [{n:"Josh Allen",p:"QB",o:98,s:43.0},{n:"James Cook",p:"RB",o:88,s:8.0},{n:"Ray Davis",p:"RB",o:77,s:2.0},{n:"DJ Moore",p:"WR",o:89,s:16.0},{n:"Khalil Shakir",p:"WR",o:81,s:4.0},{n:"Dalton Kincaid",p:"TE",o:85,s:4.0},{n:"Tyler Bass",p:"K",o:78,s:2.5}],
+        "Miami Dolphins": [{n:"Malik Willis",p:"QB",o:74,s:3.0},{n:"De'Von Achane",p:"RB",o:88,s:6.0},{n:"Jaylen Wright",p:"RB",o:76,s:2.0},{n:"Jalen Tolbert",p:"WR",o:76,s:2.2},{n:"Greg Dulcich",p:"TE",o:75,s:2.0},{n:"Riley Patterson",p:"K",o:75,s:1.5}],
+        "New York Jets": [{n:"Geno Smith",p:"QB",o:83,s:22.0},{n:"Breece Hall",p:"RB",o:90,s:9.0},{n:"Garrett Wilson",p:"WR",o:89,s:7.0},{n:"Adonai Mitchell",p:"WR",o:77,s:2.5},{n:"Kenyan Sadiq",p:"TE",o:74,s:1.8},{n:"Blake Grupe",p:"K",o:76,s:1.8}],
+        "New England Patriots": [{n:"Drake Maye",p:"QB",o:80,s:4.5},{n:"Rhamondre Stevenson",p:"RB",o:83,s:6.0},{n:"A.J. Brown",p:"WR",o:93,s:20.0},{n:"Romeo Doubs",p:"WR",o:81,s:5.0},{n:"Hunter Henry",p:"TE",o:80,s:5.0},{n:"Andy Borregales",p:"K",o:74,s:1.5}],
+        "Baltimore Ravens": [{n:"Lamar Jackson",p:"QB",o:95,s:40.0},{n:"Derrick Henry",p:"RB",o:92,s:8.0},{n:"Zay Flowers",p:"WR",o:86,s:5.0},{n:"Mark Andrews",p:"TE",o:90,s:12.0},{n:"Tyler Loop",p:"K",o:78,s:2.0}],
+        "Cincinnati Bengals": [{n:"Joe Burrow",p:"QB",o:94,s:45.0},{n:"Chase Brown",p:"RB",o:82,s:3.0},{n:"Ja'Marr Chase",p:"WR",o:95,s:18.0},{n:"Tee Higgins",p:"WR",o:87,s:12.0},{n:"Mike Gesicki",p:"TE",o:79,s:3.5},{n:"Evan McPherson",p:"K",o:81,s:3.0}],
+        "Cleveland Browns": [{n:"Deshaun Watson",p:"QB",o:77,s:23.0},{n:"Quinshon Judkins",p:"RB",o:82,s:3.5},{n:"Jerry Jeudy",p:"WR",o:81,s:7.0},{n:"Harold Fannin Jr.",p:"TE",o:78,s:2.2},{n:"Andre Szmyt",p:"K",o:74,s:1.5}],
+        "Pittsburgh Steelers": [{n:"Aaron Rodgers",p:"QB",o:88,s:25.0},{n:"Jaylen Warren",p:"RB",o:83,s:4.0},{n:"DK Metcalf",p:"WR",o:88,s:16.0},{n:"Pat Freiermuth",p:"TE",o:81,s:6.0},{n:"Chris Boswell",p:"K",o:83,s:3.5}],
+        "Indianapolis Colts": [{n:"Anthony Richardson",p:"QB",o:82,s:5.0},{n:"Jonathan Taylor",p:"RB",o:90,s:12.0},{n:"Alec Pierce",p:"WR",o:79,s:3.0},{n:"Josh Downs",p:"WR",o:81,s:3.5},{n:"Tyler Warren",p:"TE",o:80,s:3.0},{n:"Spencer Shrader",p:"K",o:75,s:1.5}],
+        "Jacksonville Jaguars": [{n:"Trevor Lawrence",p:"QB",o:85,s:30.0},{n:"Jakobi Meyers",p:"WR",o:82,s:8.0},{n:"Brian Thomas Jr.",p:"WR",o:83,s:3.5},{n:"Travis Hunter",p:"WR",o:85,s:5.0},{n:"Cam Little",p:"K",o:77,s:1.8}],
+        "Houston Texans": [{n:"C.J. Stroud",p:"QB",o:91,s:6.0},{n:"David Montgomery",p:"RB",o:85,s:6.0},{n:"Nico Collins",p:"WR",o:89,s:12.0},{n:"Tank Dell",p:"WR",o:84,s:3.0},{n:"Dalton Schultz",p:"TE",o:81,s:7.0},{n:"Ka'imi Fairbairn",p:"K",o:82,s:3.0}],
+        "Tennessee Titans": [{n:"Cam Ward",p:"QB",o:79,s:4.0},{n:"Tony Pollard",p:"RB",o:82,s:7.0},{n:"Wan'Dale Robinson",p:"WR",o:78,s:3.0},{n:"Calvin Ridley",p:"WR",o:84,s:12.0},{n:"Joey Slye",p:"K",o:75,s:1.8}],
+        "Kansas City Chiefs": [{n:"Patrick Mahomes",p:"QB",o:98,s:45.0},{n:"Rashee Rice",p:"WR",o:87,s:4.0},{n:"Xavier Worthy",p:"WR",o:80,s:3.0},{n:"Travis Kelce",p:"TE",o:94,s:14.0},{n:"Harrison Butker",p:"K",o:85,s:4.0}],
+        "San Francisco 49ers": [{n:"Brock Purdy",p:"QB",o:87,s:1.1},{n:"Christian McCaffrey",p:"RB",o:97,s:12.0},{n:"Mike Evans",p:"WR",o:91,s:16.0},{n:"Deebo Samuel Sr.",p:"WR",o:87,s:15.0},{n:"George Kittle",p:"TE",o:95,s:14.0},{n:"Eddy Pineiro",p:"K",o:76,s:1.8}],
+        "Chicago Bears": [{n:"Caleb Williams",p:"QB",o:82,s:5.0},{n:"D'Andre Swift",p:"RB",o:81,s:8.0},{n:"Rome Odunze",p:"WR",o:84,s:3.5},{n:"Cole Kmet",p:"TE",o:81,s:7.0},{n:"Cairo Santos",p:"K",o:78,s:2.2}]
     };
 
-    const positionsList = ["QB", "RB", "WR", "WR", "TE", "OT", "OG", "C", "DE", "DT", "LB", "CB", "CB", "S", "K"];
-    const lastNamesList = ["Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez", "Hernandez", "Lopez", "Gonzalez", "Wilson", "Anderson", "Thomas", "Taylor", "Moore", "Jackson", "Martin"];
+    const fillerPositions = ["OT", "OG", "C", "DE", "DT", "LB", "CB", "CB", "S", "P", "LB", "DE"];
+    const fillerLastNames = ["Smith", "Johnson", "Williams", "Brown", "Jones", "Miller", "Davis", "Wilson", "Anderson", "Taylor", "Jackson", "Harris", "Clark", "Lewis", "Walker"];
+
+    // Random Rookie Name Generator
+    const rookieFirstNames = ["Marcus", "Trey", "Jalen", "Deon", "Bryce", "Malik", "Colton", "Darius", "Kobe", "Jaxson", "Trevon", "Barrett", "Caden", "Zion", "Devin", "Xavier", "Grant", "Brenden", "Keegan", "Landon"];
+    const rookieLastNames = ["Vance", "Thorne", "Sterling", "Mercer", "Hawthorne", "Caldwell", "Booker", "Gentry", "Cross", "Fletcher", "Sutton", "Hayes", "Bowers", "Rios", "Conrad", "Delgado", "Erickson", "Flynn", "Holloway"];
 
     let allTeams = [];
     let userTeam = null;
     let currentWeek = 1;
     let draftRound = 1;
-    let draftPool = [];
+    let draftTiers = { 1: [], 2: [], 3: [] };
     let freeAgents = [];
     let currentGame = null;
+
+    // Generate 100% fictional rookie draft prospects by round quality
+    function generateTieredDraftClass() {
+        const positions = ["QB", "RB", "WR", "WR", "TE", "OT", "OG", "C", "DE", "DT", "LB", "CB", "S"];
+        draftTiers = { 1: [], 2: [], 3: [] };
+
+        // Round 1: High Quality (80 - 88 OVR)
+        for (let i = 0; i < 8; i++) {
+            let fn = rookieFirstNames[Math.floor(Math.random() * rookieFirstNames.length)];
+            let ln = rookieLastNames[Math.floor(Math.random() * rookieLastNames.length)];
+            let pos = positions[Math.floor(Math.random() * positions.length)];
+            let ovr = Math.floor(Math.random() * 9) + 80;
+            let sal = parseFloat((Math.random() * 1.5 + 3.0).toFixed(1));
+            draftTiers[1].push({ name: `${fn} ${ln}`, pos: pos, ovr: ovr, salary: sal, age: 21, stats: generateMaddenStats(pos, ovr) });
+        }
+        // Round 2: Decent Quality (74 - 79 OVR)
+        for (let i = 0; i < 8; i++) {
+            let fn = rookieFirstNames[Math.floor(Math.random() * rookieFirstNames.length)];
+            let ln = rookieLastNames[Math.floor(Math.random() * rookieLastNames.length)];
+            let pos = positions[Math.floor(Math.random() * positions.length)];
+            let ovr = Math.floor(Math.random() * 6) + 74;
+            let sal = parseFloat((Math.random() * 1.0 + 2.0).toFixed(1));
+            draftTiers[2].push({ name: `${fn} ${ln}`, pos: pos, ovr: ovr, salary: sal, age: 21, stats: generateMaddenStats(pos, ovr) });
+        }
+        // Round 3: OK Quality (68 - 73 OVR)
+        for (let i = 0; i < 8; i++) {
+            let fn = rookieFirstNames[Math.floor(Math.random() * rookieFirstNames.length)];
+            let ln = rookieLastNames[Math.floor(Math.random() * rookieLastNames.length)];
+            let pos = positions[Math.floor(Math.random() * positions.length)];
+            let ovr = Math.floor(Math.random() * 6) + 68;
+            let sal = parseFloat((Math.random() * 0.8 + 1.2).toFixed(1));
+            draftTiers[3].push({ name: `${fn} ${ln}`, pos: pos, ovr: ovr, salary: sal, age: 21, stats: generateMaddenStats(pos, ovr) });
+        }
+    }
 
     function initializeLeague() {
         allTeams = [];
         for (const [divName, teamList] of Object.entries(nflDivisions)) {
             teamList.forEach(tName => {
                 let roster = [];
-                if (marqueePlayers[tName]) {
-                    marqueePlayers[tName].forEach(p => {
-                        roster.push({ name: p.name, pos: p.pos, ovr: p.ovr, salary: p.sal, age: Math.floor(Math.random() * 8) + 22 });
+                if (pdfDepthCharts[tName]) {
+                    pdfDepthCharts[tName].forEach(p => {
+                        roster.push({
+                            name: p.n, pos: p.p, ovr: p.o, salary: p.s, age: Math.floor(Math.random() * 7) + 22,
+                            stats: generateMaddenStats(p.p, p.o)
+                        });
                     });
                 }
-                positionsList.forEach(pos => {
-                    const rName = `${lastNamesList[Math.floor(Math.random() * lastNamesList.length)]}`;
-                    const ovr = Math.floor(Math.random() * 18) + 70;
-                    const sal = parseFloat((Math.random() * 6 + 1).toFixed(1));
-                    roster.push({ name: `${pos} ${rName}`, pos: pos, ovr: ovr, salary: sal, age: Math.floor(Math.random() * 9) + 21 });
-                });
+                while (roster.length < 22) {
+                    const pos = fillerPositions[roster.length % fillerPositions.length];
+                    const rName = fillerLastNames[Math.floor(Math.random() * fillerLastNames.length)];
+                    const ovr = Math.floor(Math.random() * 16) + 71;
+                    const sal = parseFloat((Math.random() * 4 + 1).toFixed(1));
+                    roster.push({
+                        name: `${pos} ${rName}`, pos: pos, ovr: ovr, salary: sal, age: Math.floor(Math.random() * 8) + 21,
+                        stats: generateMaddenStats(pos, ovr)
+                    });
+                }
 
-                allTeams.push({
-                    name: tName,
-                    division: divName,
-                    salaryCap: 255.4,
-                    wins: 0,
-                    losses: 0,
-                    roster: roster
-                });
+                allTeams.push({ name: tName, division: divName, salaryCap: 255.4, wins: 0, losses: 0, roster: roster });
             });
         }
 
-        draftPool = [
-            { name: "Caleb Williams", pos: "QB", ovr: 88, salary: 4.0, age: 21 },
-            { name: "Marvin Harrison Jr.", pos: "WR", ovr: 91, salary: 3.5, age: 21 },
-            { name: "Jayden Daniels", pos: "QB", ovr: 85, salary: 3.8, age: 22 },
-            { name: "Malik Nabers", pos: "WR", ovr: 87, salary: 3.2, age: 20 },
-            { name: "Brock Bowers", pos: "TE", ovr: 86, salary: 3.0, age: 21 },
-            { name: "Joe Alt", pos: "OT", ovr: 84, salary: 2.8, age: 21 },
-            { name: "Rome Odunze", pos: "WR", ovr: 84, salary: 2.8, age: 21 },
-            { name: "J.J. McCarthy", pos: "QB", ovr: 82, salary: 2.5, age: 21 }
-        ];
+        generateTieredDraftClass();
 
         freeAgents = [
             { name: "Ryan Tannehill", pos: "QB", ovr: 78, salary: 3.5, age: 35 },
             { name: "Kareem Hunt", pos: "RB", ovr: 81, salary: 2.5, age: 28 },
             { name: "Michael Thomas", pos: "WR", ovr: 82, salary: 3.0, age: 31 },
             { name: "Stephon Gilmore", pos: "CB", ovr: 81, salary: 3.5, age: 33 }
-        ];
+        ].map(p => ({ ...p, stats: generateMaddenStats(p.pos, p.ovr) }));
     }
 
     function renderTeamSelection() {
@@ -370,45 +496,124 @@
         document.getElementById('dash-week').innerText = currentWeek;
     }
 
+    // ---------------- TEAM ANALYST INSIGHT & DRAFT MODAL ----------------
     function startOffseasonDraft() {
         draftRound = 1;
         document.getElementById('draft-modal').style.display = 'flex';
         renderDraftRound();
     }
 
+    function findTeamWeakestPosition() {
+        const posCounts = {};
+        const posSums = {};
+        userTeam.roster.forEach(p => {
+            posCounts[p.pos] = (posCounts[p.pos] || 0) + 1;
+            posSums[p.pos] = (posSums[p.pos] || 0) + p.ovr;
+        });
+
+        let weakestPos = "WR";
+        let lowestAvg = 99;
+        for (const pos in posCounts) {
+            let avg = posSums[pos] / posCounts[pos];
+            if (avg < lowestAvg) {
+                lowestAvg = avg;
+                weakestPos = pos;
+            }
+        }
+        return weakestPos;
+    }
+
     function renderDraftRound() {
         document.getElementById('draft-title').innerText = `🏈 NFL Rookie Draft - Round ${draftRound} of 3`;
-        document.getElementById('draft-subtitle').innerText = `Select 1 rookie for Round ${draftRound}. Your team roster currently has ${userTeam.roster.length} players.`;
+        document.getElementById('draft-subtitle').innerText = `Round ${draftRound} Prospects • Roster: ${userTeam.roster.length} Players`;
         
+        const prospects = draftTiers[draftRound];
+        const weakestPos = findTeamWeakestPosition();
+
+        // Identify recommended pick for Analyst
+        let recommendedIndex = prospects.findIndex(p => p.pos === weakestPos);
+        if (recommendedIndex === -1) {
+            // Pick highest OVR prospect
+            recommendedIndex = 0;
+        }
+
+        const recommendedPlayer = prospects[recommendedIndex];
+        const analystBox = document.getElementById('analyst-text');
+        analystBox.innerHTML = `Our roster needs upgrading at <strong style="color:#38bdf8;">${weakestPos}</strong>. We recommend drafting <strong style="color:#4ade80;">${recommendedPlayer.name} (${recommendedPlayer.pos}, OVR ${recommendedPlayer.ovr})</strong>!`;
+
         const list = document.getElementById('draft-prospects-list');
         list.innerHTML = '';
 
-        draftPool.forEach((prospect, idx) => {
+        prospects.forEach((prospect, idx) => {
+            const isRec = idx === recommendedIndex;
             const item = document.createElement('div');
-            item.className = 'player-item';
+            item.className = `player-item ${isRec ? 'analyst-highlight' : ''}`;
             item.innerHTML = `
                 <div>
                     <strong>${prospect.name}</strong> (${prospect.pos}) 
-                    <span class="player-ovr">OVR ${prospect.ovr}</span>
-                    <br><small style="color:#94a3b8;">Salary: $${prospect.salary}M/yr | Age: ${prospect.age}</small>
+                    <span class="player-ovr">${prospect.ovr} OVR</span>
+                    ${isRec ? '<span class="analyst-badge">⭐ Analyst Top Pick</span>' : ''}
+                    <div class="stat-badge">${formatStatsString(prospect.stats)}</div>
+                    <small style="color:#cbd5e1;">Salary: $${prospect.salary}M/yr | Age: ${prospect.age}</small>
                 </div>
                 <button class="btn-success" onclick="makeDraftPick(${idx})">Draft Player</button>
             `;
             list.appendChild(item);
         });
+
+        renderDraftRosterPreview();
+    }
+
+    function renderDraftRosterPreview() {
+        const preview = document.getElementById('draft-roster-preview');
+        let html = `<h3>${userTeam.name} Current Roster Depth (${userTeam.roster.length} Players)</h3>`;
+        userTeam.roster.slice().sort((a,b) => b.ovr - a.ovr).forEach(p => {
+            html += `
+                <div class="player-item">
+                    <div>
+                        <strong>${p.name}</strong> (${p.pos}) - OVR: ${p.ovr}
+                        <div class="stat-badge">${formatStatsString(p.stats)}</div>
+                    </div>
+                </div>
+            `;
+        });
+        preview.innerHTML = html;
+    }
+
+    function switchDraftTab(tab) {
+        if (tab === 'prospects') {
+            document.getElementById('draft-prospects-list').style.display = 'block';
+            document.getElementById('draft-roster-preview').style.display = 'none';
+            document.getElementById('tab-btn-prospects').style.backgroundColor = '#0284c7';
+            document.getElementById('tab-btn-roster').style.backgroundColor = '#334155';
+        } else {
+            document.getElementById('draft-prospects-list').style.display = 'none';
+            document.getElementById('draft-roster-preview').style.display = 'block';
+            document.getElementById('tab-btn-prospects').style.backgroundColor = '#334155';
+            document.getElementById('tab-btn-roster').style.backgroundColor = '#0284c7';
+        }
     }
 
     function makeDraftPick(index) {
-        const rookie = draftPool.splice(index, 1)[0];
+        const rookie = draftTiers[draftRound].splice(index, 1)[0];
         userTeam.roster.push(rookie);
-        alert(`Drafted ${rookie.name} (${rookie.pos}) in Round ${draftRound}!`);
+        
+        const statusMsg = document.getElementById('draft-status-msg');
+        statusMsg.style.display = 'block';
+        statusMsg.innerText = `Draft Pick Successful! You drafted ${rookie.name} (${rookie.pos}) in Round ${draftRound}!`;
 
         draftRound++;
         if (draftRound <= 3) {
-            renderDraftRound();
+            setTimeout(() => {
+                statusMsg.style.display = 'none';
+                renderDraftRound();
+            }, 1000);
         } else {
-            document.getElementById('draft-modal').style.display = 'none';
-            checkRosterLimitAndClose();
+            setTimeout(() => {
+                statusMsg.style.display = 'none';
+                document.getElementById('draft-modal').style.display = 'none';
+                checkRosterLimitAndClose();
+            }, 1200);
         }
     }
 
@@ -425,7 +630,7 @@
                 item.innerHTML = `
                     <div>
                         <strong>${p.name}</strong> (${p.pos}) - OVR: ${p.ovr}
-                        <br><small style="color:#cbd5e1;">$${p.salary}M/yr</small>
+                        <div class="stat-badge">${formatStatsString(p.stats)}</div>
                     </div>
                     <button class="btn-danger" onclick="cutPlayer(${idx})">Release / Cut</button>
                 `;
@@ -433,6 +638,7 @@
             });
         } else {
             document.getElementById('cut-modal').style.display = 'none';
+            notify("Roster size verified at 22 players. Ready for Week 1!");
             showSection('roster');
         }
     }
@@ -440,24 +646,31 @@
     function cutPlayer(index) {
         const released = userTeam.roster.splice(index, 1)[0];
         freeAgents.push(released);
-        alert(`Released ${released.name} to Free Agency.`);
+        
+        const cutMsg = document.getElementById('cut-status-msg');
+        cutMsg.style.display = 'block';
+        cutMsg.innerText = `Released ${released.name} to Free Agency.`;
+        setTimeout(() => { cutMsg.style.display = 'none'; }, 2000);
+        
         checkRosterLimitAndClose();
     }
 
+    // ---------------- ROSTER & STAT VIEWS ----------------
     function showSection(section) {
         document.getElementById('game-screen').style.display = 'none';
         const view = document.getElementById('content-view');
         view.style.display = 'block';
 
         if (section === 'roster') {
-            let html = `<h2>${userTeam.name} Roster & Depth Chart</h2>`;
-            html += `<p style="font-size:0.85em; color:#94a3b8;">Max Roster Size: 22 players. Cap Remaining: $${getCapSpace(userTeam).toFixed(1)}M</p>`;
+            let html = `<h2>${userTeam.name} Official Depth Chart (22 Players)</h2>`;
+            html += `<p style="font-size:0.85em; color:#94a3b8;">Cap Remaining: $${getCapSpace(userTeam).toFixed(1)}M</p>`;
             userTeam.roster.sort((a,b) => b.ovr - a.ovr).forEach((p, idx) => {
                 html += `
                     <div class="player-item">
                         <div>
                             <strong>${p.name}</strong> (${p.pos}) - <span class="player-ovr">OVR ${p.ovr}</span>
-                            <br><small style="color:#94a3b8;">$${p.salary}M/yr | Age: ${p.age}</small>
+                            <div class="stat-badge">${formatStatsString(p.stats)}</div>
+                            <small style="color:#94a3b8;">$${p.salary}M/yr | Age: ${p.age}</small>
                         </div>
                         <button class="btn-danger" style="font-size:0.8em; padding:4px 8px;" onclick="cutPlayerDirect(${idx})">Cut</button>
                     </div>
@@ -475,7 +688,8 @@
                     <div class="player-item">
                         <div>
                             <strong>${p.name}</strong> (${p.pos}) - <span class="player-ovr">OVR ${p.ovr}</span>
-                            <br><small style="color:#94a3b8;">Salary Demand: $${p.salary}M/yr</small>
+                            <div class="stat-badge">${formatStatsString(p.stats)}</div>
+                            <small style="color:#94a3b8;">Salary Demand: $${p.salary}M/yr</small>
                         </div>
                         <button class="btn-success" onclick="signFreeAgent(${idx})">Sign Player</button>
                     </div>
@@ -488,38 +702,40 @@
     function cutPlayerDirect(idx) {
         const released = userTeam.roster.splice(idx, 1)[0];
         freeAgents.push(released);
+        notify(`Released ${released.name} to Free Agency.`);
         updateDashboard();
         showSection('roster');
     }
 
     function signFreeAgent(idx) {
         if (userTeam.roster.length >= 22) {
-            alert('Your roster is full (22/22 players). Cut a player first!');
+            notify('Your roster is full (22/22). Cut a player first!', true);
             return;
         }
         const target = freeAgents[idx];
         if (getCapSpace(userTeam) < target.salary) {
-            alert('Not enough salary cap space to sign this player!');
+            notify('Not enough salary cap space!', true);
             return;
         }
         userTeam.roster.push(target);
         freeAgents.splice(idx, 1);
-        alert(`Signed ${target.name}!`);
+        notify(`Signed ${target.name}!`);
         updateDashboard();
         showSection('free-agency');
     }
 
+    // ---------------- 32-TEAM TRADE CENTER ----------------
     function renderTradeCenter() {
         const view = document.getElementById('content-view');
         let otherTeams = allTeams.filter(t => t.name !== userTeam.name);
 
         let html = `<h2>🔄 32-Team Trade Center</h2>`;
-        html += `<p style="font-size:0.85em; color:#cbd5e1;">Propose player-for-player trades with any franchise in the NFL.</p>`;
+        html += `<p style="font-size:0.85em; color:#cbd5e1;">Select any NFL franchise to propose player trades.</p>`;
         
         html += `
             <div class="trade-container">
                 <div>
-                    <label>Select Target NFL Team:</label>
+                    <label>Target NFL Franchise:</label>
                     <select id="trade-partner-select" onchange="updateTradePartnerView()">
                         ${otherTeams.map((t, idx) => `<option value="${idx}">${t.name} (${t.division})</option>`).join('')}
                     </select>
@@ -531,7 +747,7 @@
                     <div id="user-players-list"></div>
                 </div>
             </div>
-            <button onclick="executeTradeProposal()" class="btn-success" style="width:100%; margin-top:15px;">Execute Trade</button>
+            <button onclick="executeTradeProposal()" class="btn-success" style="width:100%; margin-top:15px;">Execute Trade Proposal</button>
         `;
         view.innerHTML = html;
         updateTradePartnerView();
@@ -577,7 +793,7 @@
         const offeredPlayer = userTeam.roster[selectedUserPlayerIdx];
 
         if (!targetPlayer || !offeredPlayer) {
-            alert('Please select players from both teams.');
+            notify('Please select players from both teams.', true);
             return;
         }
 
@@ -588,17 +804,18 @@
             userTeam.roster.push(targetPlayer);
             partnerTeam.roster.push(offeredPlayer);
 
-            alert(`TRADE ACCEPTED! You acquired ${targetPlayer.name} (${targetPlayer.pos}) for ${offeredPlayer.name}.`);
+            notify(`TRADE ACCEPTED! Acquired ${targetPlayer.name} (${targetPlayer.pos}) for ${offeredPlayer.name}.`);
             updateDashboard();
             showSection('trade');
         } else {
-            alert(`TRADE REJECTED! The ${partnerTeam.name} front office felt ${offeredPlayer.name} did not match ${targetPlayer.name}'s value.`);
+            notify(`TRADE REJECTED! ${partnerTeam.name} declined ${offeredPlayer.name} for ${targetPlayer.name}.`, true);
         }
     }
 
+    // ---------------- MATCH ENGINE ----------------
     function startMatch() {
         if (userTeam.roster.length > 22) {
-            alert('Your roster exceeds 22 players! Trim your roster before playing.');
+            notify('Roster exceeds 22 players! Release players before playing.', true);
             checkRosterLimitAndClose();
             return;
         }
@@ -614,7 +831,7 @@
             step: 0,
             scenarios: [
                 "1st Qtr (9:15) - 4th & 2 on opponent's 42-yard line.",
-                "2nd Qtr (0:45) - 3rd & Goal on the 5-yard line, down by 3.",
+                "2nd Qtr (0:45) - 3rd & Goal on the 5-yard line, trailing by 3.",
                 "3rd Qtr (11:00) - Facing 3rd & 12 near midfield.",
                 "4th Qtr (1:45) - 4th & 8 trailing by 4 points with 1 timeout left."
             ]
@@ -639,7 +856,7 @@
                 currentGame.opponent.wins++;
             }
 
-            alert(`FINAL SCORE: ${userTeam.name} ${currentGame.userScore} - ${currentGame.oppScore} ${currentGame.opponent.name}`);
+            notify(`FINAL SCORE: ${userTeam.name} ${currentGame.userScore} - ${currentGame.oppScore} ${currentGame.opponent.name}`);
             currentWeek++;
             updateDashboard();
             showSection('roster');
