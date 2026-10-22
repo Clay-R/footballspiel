@@ -6,13 +6,15 @@
     <title>NFL Franchise Manager 2026</title>
     <style>
         :root {
-            --bg-main: #0f172a;
-            --bg-card: #1e293b;
-            --bg-sub: #334155;
-            --primary: #0284c7;
-            --primary-hover: #0369a1;
+            --bg-main: #0b132b;
+            --bg-card: #1c2541;
+            --bg-sub: #3a506b;
+            --primary: #00b4d8;
+            --primary-hover: #0077b6;
             --accent: #10b981;
             --danger: #ef4444;
+            --warning: #f59e0b;
+            --gold: #fbbf24;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
         }
@@ -25,16 +27,18 @@
             padding: 15px;
         }
         .container {
-            max-width: 1200px;
+            max-width: 1240px;
             margin: 0 auto;
             background-color: var(--bg-card);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            padding: 22px;
+            border-radius: 14px;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.6);
+            border: 1px solid #1e293b;
         }
         h1, h2, h3, h4 { margin-top: 0; color: #38bdf8; }
         .subtitle { color: var(--text-muted); font-size: 0.95em; margin-bottom: 15px; }
         
+        /* Banner Notification System */
         #notification-banner {
             display: none;
             padding: 12px 18px;
@@ -46,22 +50,25 @@
             animation: fadeIn 0.3s ease-in-out;
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-5px); }
+            from { opacity: 0; transform: translateY(-6px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Top Persistent Dashboard */
         .dashboard {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 12px;
             margin-bottom: 20px;
-            background: var(--bg-sub);
-            padding: 15px;
-            border-radius: 8px;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            padding: 16px;
+            border-radius: 10px;
+            border: 1px solid #334155;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
         }
         .stat-box { text-align: center; }
-        .stat-box span { font-size: 0.8em; color: var(--text-muted); text-transform: uppercase; display: block; }
-        .stat-box strong { font-size: 1.25em; color: #38bdf8; }
+        .stat-box span { font-size: 0.78em; color: var(--text-muted); text-transform: uppercase; display: block; font-weight: 600; }
+        .stat-box strong { font-size: 1.3em; color: #38bdf8; }
         
         .nav-buttons {
             display: flex;
@@ -74,7 +81,7 @@
             background-color: var(--primary);
             color: white;
             border: none;
-            padding: 10px 15px;
+            padding: 10px 16px;
             border-radius: 6px;
             cursor: pointer;
             font-weight: 600;
@@ -85,13 +92,13 @@
         button.btn-success:hover { background-color: #059669; }
         button.btn-danger { background-color: var(--danger); }
         button.btn-danger:hover { background-color: #dc2626; }
-        button.btn-warning { background-color: #f59e0b; }
+        button.btn-warning { background-color: var(--warning); color: #000; }
         button.btn-warning:hover { background-color: #d97706; }
         
         .card {
             background: #0f172a;
             padding: 18px;
-            border-radius: 8px;
+            border-radius: 10px;
             margin-bottom: 15px;
             border: 1px solid #334155;
         }
@@ -125,24 +132,26 @@
             margin-bottom: 4px;
             background: #1e293b;
         }
-        .player-item:last-child { border-bottom: none; }
         .player-ovr {
-            background: #0284c7;
-            color: white;
-            padding: 2px 6px;
+            padding: 2px 7px;
             border-radius: 4px;
             font-weight: bold;
             font-size: 0.85em;
             margin-right: 6px;
         }
+        .ovr-gold { background: #d97706; color: #fff; }
+        .ovr-green { background: #059669; color: #fff; }
+        .ovr-blue { background: #0284c7; color: #fff; }
+
         .stat-badge {
             font-size: 0.78em;
             color: #94a3b8;
             margin-top: 3px;
         }
 
+        /* Analyst Green Highlight */
         .analyst-highlight {
-            background: rgba(16, 185, 129, 0.18) !important;
+            background: rgba(16, 185, 129, 0.22) !important;
             border: 2px solid #10b981 !important;
         }
         .analyst-badge {
@@ -168,13 +177,14 @@
             background: var(--bg-card);
             padding: 22px;
             border-radius: 10px;
-            max-width: 800px;
-            width: 92%;
+            max-width: 820px;
+            width: 94%;
             max-height: 88vh;
             overflow-y: auto;
             border: 1px solid #38bdf8;
         }
 
+        /* Trade Center Grid */
         .trade-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -217,22 +227,61 @@
             margin-bottom: 10px;
         }
 
+        /* Game Drive Screen & Field Graphics */
         #game-screen {
             background: #022c22;
             border: 2px solid #10b981;
             padding: 20px;
-            border-radius: 8px;
+            border-radius: 10px;
             display: none;
         }
+        .field-container {
+            background: #064e3b;
+            border: 2px solid #34d399;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .field-bar-outer {
+            width: 100%;
+            height: 22px;
+            background: #022c22;
+            border-radius: 11px;
+            border: 1px solid #059669;
+            overflow: hidden;
+            margin: 10px 0;
+            position: relative;
+        }
+        .field-bar-inner {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #38bdf8);
+            width: 20%;
+            transition: width 0.4s ease;
+        }
+        .game-scoreboard {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #000;
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: 1px solid #10b981;
+            margin-bottom: 15px;
+        }
+        .score-team { text-align: center; }
+        .score-team h3 { margin: 0; color: #f8fafc; font-size: 1.1em; }
+        .score-num { font-size: 2em; font-weight: bold; color: #34d399; }
+
         .log-box {
             background: #000;
             color: #4ade80;
             font-family: 'Courier New', monospace;
-            padding: 10px;
+            padding: 12px;
             border-radius: 6px;
-            height: 140px;
+            height: 160px;
             overflow-y: auto;
             margin-top: 15px;
+            border: 1px solid #059669;
         }
 
         .analyst-box {
@@ -245,7 +294,6 @@
             font-size: 0.9em;
         }
 
-        /* Lineup Grid */
         .lineup-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -263,8 +311,9 @@
 
 <div class="container">
     <h1>🏈 NFL Franchise Manager 2026</h1>
-    <p class="subtitle">Real NFL Depth Charts • Madden 27 Ratings • Custom Lineups • Trades • Draft</p>
+    <p class="subtitle">Real NFL Depth Charts • Madden 27 Ratings • Dynamic Drive Gameplay • In-Draft Trading</p>
 
+    <!-- IN-PAGE BANNER FOR MESSAGES -->
     <div id="notification-banner"></div>
 
     <!-- SELECT 32 TEAMS -->
@@ -274,14 +323,15 @@
         <div class="team-grid" id="team-choices"></div>
     </div>
 
-    <!-- MAIN GAME DASHBOARD -->
+    <!-- MAIN GAME DASHBOARD (PERSISTENT RATINGS DISPLAY) -->
     <div id="main-interface" style="display:none;">
         <div class="dashboard">
-            <div class="stat-box"><span>Team</span><strong id="dash-team">-</strong></div>
+            <div class="stat-box"><span>Franchise</span><strong id="dash-team">-</strong></div>
             <div class="stat-box"><span>Record</span><strong id="dash-record">0-0</strong></div>
+            <div class="stat-box"><span>Roster Rating</span><strong id="dash-roster-ovr">0 OVR</strong></div>
             <div class="stat-box"><span>Starter Rating</span><strong id="dash-lineup-ovr">0 OVR</strong></div>
             <div class="stat-box"><span>Cap Space</span><strong id="dash-cap">$0M</strong></div>
-            <div class="stat-box"><span>Roster Size</span><strong id="dash-roster-count">0/22</strong></div>
+            <div class="stat-box"><span>Roster Count</span><strong id="dash-roster-count">0/22</strong></div>
             <div class="stat-box"><span>Week</span><strong id="dash-week">1</strong></div>
         </div>
 
@@ -290,48 +340,79 @@
             <button onclick="showSection('roster')">📋 Roster & Depth Chart</button>
             <button onclick="showSection('trade')">🔄 32-Team Trade Center</button>
             <button onclick="showSection('free-agency')">💼 Free Agency Market</button>
-            <button onclick="startMatch()" class="btn-success">🎮 Play Week Game</button>
+            <button onclick="startMatch()" class="btn-success">🎮 Play Interactive Game</button>
         </div>
 
         <div id="content-view" class="card"></div>
 
-        <!-- GAME SIMULATION INTERFACE -->
+        <!-- DYNAMIC PLAY-BY-PLAY GAMEPLAY ENGINE -->
         <div id="game-screen">
-            <h2 id="game-title">Game Day</h2>
-            <div style="background:#064e3b; padding:15px; border-radius:6px; margin-bottom:15px;">
-                <h3 id="scenario-title" style="color:#6ee7b7;">Situation</h3>
-                <p id="scenario-desc">Loading play call...</p>
-                <div id="match-ovr-banner" style="font-size:0.85em; color:#a7f3d0; margin-top:5px;"></div>
+            <div class="game-scoreboard">
+                <div class="score-team">
+                    <h3 id="game-user-team-name">USER</h3>
+                    <div class="score-num" id="game-user-score">0</div>
+                </div>
+                <div style="text-align:center;">
+                    <div style="color:#38bdf8; font-size:0.85em; text-transform:uppercase;" id="game-qtr-clock">Q1 • 15:00</div>
+                    <div style="color:#94a3b8; font-size:0.8em;" id="game-down-dist">1st & 10</div>
+                </div>
+                <div class="score-team">
+                    <h3 id="game-opp-team-name">OPPONENT</h3>
+                    <div class="score-num" id="game-opp-score">0</div>
+                </div>
             </div>
-            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                <button onclick="makePlayCall(1)">1. Aggressive Pass / Heavy Blitz</button>
-                <button onclick="makePlayCall(2)">2. Safe Run / Zone Coverage</button>
-                <button onclick="makePlayCall(3)">3. Play Action Pass</button>
+
+            <div class="field-container">
+                <div style="display:flex; justify-style:space-between; font-size:0.85em; color:#6ee7b7; font-weight:bold;">
+                    <span>OWN GOAL LINE</span>
+                    <span id="field-ball-loc">Ball on OWN 20</span>
+                    <span>OPP GOAL LINE</span>
+                </div>
+                <div class="field-bar-outer">
+                    <div id="field-progress-bar" class="field-bar-inner"></div>
+                </div>
             </div>
-            <div class="log-box" id="game-log">Initializing matchup...<br></div>
+
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;" id="play-call-actions">
+                <button onclick="executeInteractivePlay('SHORT_PASS')" style="background:#0284c7;">🎯 Short West Coast Pass</button>
+                <button onclick="executeInteractivePlay('DEEP_PASS')" style="background:#0369a1;">🚀 Deep Shotgun Pass</button>
+                <button onclick="executeInteractivePlay('POWER_RUN')" style="background:#059669;">🚜 Power Inside Run</button>
+                <button onclick="executeInteractivePlay('PLAY_ACTION')" style="background:#d97706;">⚡ Play Action Pass</button>
+                <button onclick="executeInteractivePlay('SPECIAL_TEAMS')" class="btn-warning">🏈 Kick Field Goal / Punt</button>
+            </div>
+
+            <div class="log-box" id="game-log">Kickoff! Game initialized...<br></div>
         </div>
     </div>
 </div>
 
-<!-- DRAFT MODAL -->
+<!-- DRAFT MODAL WITH IN-DRAFT TRADING TAB -->
 <div id="draft-modal" class="modal" style="display:none;">
     <div class="modal-content">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
             <h2 id="draft-title" style="margin:0;">🏈 NFL Rookie Draft</h2>
             <div>
                 <button onclick="switchDraftTab('prospects')" id="tab-btn-prospects" style="padding:6px 12px; font-size:0.85em;">🎓 Prospects</button>
+                <button onclick="switchDraftTab('trade')" id="tab-btn-draft-trade" style="padding:6px 12px; font-size:0.85em; background-color:#d97706; color:#000;">🔄 Trade Pick (1.5x Value)</button>
                 <button onclick="switchDraftTab('roster')" id="tab-btn-roster" style="padding:6px 12px; font-size:0.85em; background-color:#334155;">📋 View Roster</button>
             </div>
         </div>
         <p style="color:#cbd5e1; font-size:0.85em; margin-top:0;" id="draft-subtitle">Select 1 rookie prospect per round (3 Rounds Total).</p>
 
+        <!-- Team Analyst Box -->
         <div id="analyst-box" class="analyst-box">
             <strong>🤖 Team Analyst Recommendation:</strong> <span id="analyst-text">Analyzing roster depth...</span>
         </div>
 
         <div id="draft-status-msg" style="display:none; padding:8px; background:#10b981; color:white; border-radius:6px; margin-bottom:10px; text-align:center; font-weight:bold;"></div>
         
+        <!-- Tab 1: Draft Prospects -->
         <div id="draft-prospects-list"></div>
+
+        <!-- Tab 2: In-Draft Pick Trading -->
+        <div id="draft-trade-view" style="display:none;"></div>
+
+        <!-- Tab 3: Roster Preview -->
         <div id="draft-roster-preview" style="display:none;"></div>
     </div>
 </div>
@@ -367,6 +448,12 @@
 
     function getPosFull(posCode) {
         return POS_NAMES[posCode] || posCode;
+    }
+
+    function getOvrClass(ovr) {
+        if (ovr >= 90) return 'ovr-gold';
+        if (ovr >= 80) return 'ovr-green';
+        return 'ovr-blue';
     }
 
     function notify(message, isError = false) {
@@ -457,17 +544,23 @@
     let draftRound = 1;
     let draftTiers = { 1: [], 2: [], 3: [] };
     let freeAgents = [];
-    let currentGame = null;
 
-    // Default Starters Slot Config
-    let startingLineup = {
-        QB: null,
-        RB: null,
-        WR1: null,
-        WR2: null,
-        TE: null,
-        DEF: null,
-        K: null
+    // Lineup Slot
+    let startingLineup = { QB: null, RB: null, WR1: null, WR2: null, TE: null, DEF: null, K: null };
+
+    // Interactive Game Drive State
+    let gameEngine = {
+        active: false,
+        opponent: null,
+        userScore: 0,
+        oppScore: 0,
+        quarter: 1,
+        clockSecs: 300,
+        ballLoc: 20, // Yards from user endzone
+        down: 1,
+        dist: 10,
+        userRating: 75,
+        oppRating: 75
     };
 
     function generateTieredDraftClass() {
@@ -589,14 +682,17 @@
         return team.salaryCap - spent;
     }
 
+    function calculateRosterOvr(team = userTeam) {
+        if (!team || !team.roster.length) return 75;
+        const sum = team.roster.reduce((a, b) => a + b.ovr, 0);
+        return Math.round(sum / team.roster.length);
+    }
+
     function autoSetBestLineup() {
         if (!userTeam) return;
         const findBest = (posList) => {
-            return userTeam.roster
-                .filter(p => posList.includes(p.pos))
-                .sort((a,b) => b.ovr - a.ovr)[0] || userTeam.roster[0];
+            return userTeam.roster.filter(p => posList.includes(p.pos)).sort((a,b) => b.ovr - a.ovr)[0] || userTeam.roster[0];
         };
-
         const wrs = userTeam.roster.filter(p => p.pos === "WR").sort((a,b) => b.ovr - a.ovr);
 
         startingLineup.QB = findBest(["QB"]);
@@ -612,7 +708,6 @@
         if (!team) return 75;
         let l = customLineup;
         if (team !== userTeam) {
-            // Auto lineup for opponent
             const best = (posList) => team.roster.filter(p => posList.includes(p.pos)).sort((a,b) => b.ovr - a.ovr)[0] || team.roster[0];
             const wrs = team.roster.filter(p => p.pos === "WR").sort((a,b) => b.ovr - a.ovr);
             l = {
@@ -634,6 +729,7 @@
     function updateDashboard() {
         document.getElementById('dash-team').innerText = userTeam.name;
         document.getElementById('dash-record').innerText = `${userTeam.wins}-${userTeam.losses}`;
+        document.getElementById('dash-roster-ovr').innerText = `${calculateRosterOvr()} OVR`;
         document.getElementById('dash-lineup-ovr').innerText = `${calculateLineupRating()} OVR`;
         document.getElementById('dash-cap').innerText = `$${getCapSpace(userTeam).toFixed(1)}M`;
         document.getElementById('dash-roster-count').innerText = `${userTeam.roster.length}/22`;
@@ -644,7 +740,7 @@
     function renderLineupScreen() {
         const view = document.getElementById('content-view');
         let html = `<h2>🏈 Set Starting Lineup & Game Plan</h2>`;
-        html += `<p style="font-size:0.88em; color:#cbd5e1;">Your starting lineup directly determines your <strong>Team Game Rating (${calculateLineupRating()} OVR)</strong> and play call execution probability against opponents.</p>`;
+        html += `<p style="font-size:0.88em; color:#cbd5e1;">Your starting lineup directly determines your <strong>Starting Rating (${calculateLineupRating()} OVR)</strong> and play execution in games.</p>`;
 
         const slots = [
             { id: "QB", label: "Starting Quarterback", posList: ["QB"] },
@@ -660,7 +756,6 @@
         slots.forEach(slot => {
             const currentSelected = startingLineup[slot.id];
             const eligiblePlayers = userTeam.roster.filter(p => slot.posList.includes(p.pos)).sort((a,b) => b.ovr - a.ovr);
-            // Include fallback if empty
             const playerOptions = eligiblePlayers.length > 0 ? eligiblePlayers : userTeam.roster;
 
             html += `
@@ -690,7 +785,7 @@
         notify(`Updated starting ${slotId}! New Starter Rating: ${calculateLineupRating()} OVR.`);
     }
 
-    // ---------------- DRAFT & ANALYST ----------------
+    // ---------------- DRAFT & IN-DRAFT TRADING ----------------
     function startOffseasonDraft() {
         draftRound = 1;
         document.getElementById('draft-modal').style.display = 'flex';
@@ -749,7 +844,7 @@
             item.innerHTML = `
                 <div>
                     <strong>${prospect.name}</strong> (${getPosFull(prospect.pos)}) 
-                    <span class="player-ovr">${prospect.ovr} OVR</span>
+                    <span class="player-ovr ${getOvrClass(prospect.ovr)}">${prospect.ovr} OVR</span>
                     ${isRec ? '<span class="analyst-badge">⭐ Analyst Top Pick</span>' : ''}
                     <div class="stat-badge">${formatStatsString(prospect.stats)}</div>
                     <small style="color:#cbd5e1;">Salary: $${prospect.salary}M/yr | Age: ${prospect.age}</small>
@@ -760,6 +855,92 @@
         });
 
         renderDraftRosterPreview();
+        renderInDraftTradeView();
+    }
+
+    function renderInDraftTradeView() {
+        const tradeView = document.getElementById('draft-trade-view');
+        const otherTeams = allTeams.filter(t => t.name !== userTeam.name);
+
+        const pickValues = { 1: 180, 2: 105, 3: 60 }; // 1.5x Multiplier during draft
+        const currentPickVal = pickValues[draftRound];
+
+        let html = `<h3>🔄 Trade Round ${draftRound} Pick (Draft Day Value: ${currentPickVal} PTS)</h3>`;
+        html += `<p style="font-size:0.85em; color:#f59e0b;">Draft picks are worth <strong>50% more value</strong> during live draft rounds! Offer your pick for active player(s).</p>`;
+        
+        html += `
+            <label>Select Target Franchise to Trade Pick With:</label>
+            <select id="in-draft-partner-select" onchange="updateInDraftPartnerPlayers()">
+                ${otherTeams.map((t, idx) => `<option value="${idx}">${t.name} (${t.division})</option>`).join('')}
+            </select>
+            <h4>Their Players Available:</h4>
+            <div id="in-draft-partner-players" style="max-height:260px; overflow-y:auto; margin-bottom:15px;"></div>
+            <button onclick="executeInDraftTrade()" class="btn-warning" style="width:100%; padding:10px; font-weight:bold;">Trade Round ${draftRound} Pick For Selected Player</button>
+        `;
+
+        tradeView.innerHTML = html;
+        updateInDraftPartnerPlayers();
+    }
+
+    function updateInDraftPartnerPlayers() {
+        const otherTeams = allTeams.filter(t => t.name !== userTeam.name);
+        const sel = document.getElementById('in-draft-partner-select');
+        if (!sel) return;
+
+        const partnerTeam = otherTeams[sel.value];
+        const container = document.getElementById('in-draft-partner-players');
+
+        container.innerHTML = partnerTeam.roster.map((p, idx) => `
+            <div class="player-item">
+                <label>
+                    <input type="radio" name="draft-trade-target" value="${idx}" ${idx === 0 ? 'checked' : ''}>
+                    <strong>${p.name}</strong> (${getPosFull(p.pos)}) - <span class="player-ovr ${getOvrClass(p.ovr)}">${p.ovr} OVR</span>
+                </label>
+            </div>
+        `).join('');
+    }
+
+    function executeInDraftTrade() {
+        const otherTeams = allTeams.filter(t => t.name !== userTeam.name);
+        const sel = document.getElementById('in-draft-partner-select');
+        const partnerTeam = otherTeams[sel.value];
+
+        const checkedRadio = document.querySelector('input[name="draft-trade-target"]:checked');
+        if (!checkedRadio) return;
+
+        const targetPlayerIdx = parseInt(checkedRadio.value);
+        const targetPlayer = partnerTeam.roster[targetPlayerIdx];
+
+        const pickValues = { 1: 180, 2: 105, 3: 60 };
+        const pickVal = pickValues[draftRound];
+        const playerVal = Math.max(10, Math.pow(targetPlayer.ovr - 50, 2) * 1.5);
+
+        if (getCapSpace(userTeam) < targetPlayer.salary) {
+            notify('Trade Declined: Salary cap space insufficient!', true);
+            return;
+        }
+
+        if (pickVal >= playerVal * 0.85) { // Bonus acceptance rate
+            partnerTeam.roster.splice(targetPlayerIdx, 1);
+            userTeam.roster.push(targetPlayer);
+
+            notify(`IN-DRAFT TRADE ACCEPTED! You traded Round ${draftRound} Pick for ${targetPlayer.name} (${getPosFull(targetPlayer.pos)})!`);
+            
+            autoSetBestLineup();
+            updateDashboard();
+
+            // Advance to next draft round
+            draftRound++;
+            switchDraftTab('prospects');
+            if (draftRound <= 3) {
+                renderDraftRound();
+            } else {
+                document.getElementById('draft-modal').style.display = 'none';
+                checkRosterLimitAndClose();
+            }
+        } else {
+            notify(`TRADE DECLINED! ${partnerTeam.name} values ${targetPlayer.name} higher than a Round ${draftRound} pick.`, true);
+        }
     }
 
     function renderDraftRosterPreview() {
@@ -779,17 +960,13 @@
     }
 
     function switchDraftTab(tab) {
-        if (tab === 'prospects') {
-            document.getElementById('draft-prospects-list').style.display = 'block';
-            document.getElementById('draft-roster-preview').style.display = 'none';
-            document.getElementById('tab-btn-prospects').style.backgroundColor = '#0284c7';
-            document.getElementById('tab-btn-roster').style.backgroundColor = '#334155';
-        } else {
-            document.getElementById('draft-prospects-list').style.display = 'none';
-            document.getElementById('draft-roster-preview').style.display = 'block';
-            document.getElementById('tab-btn-prospects').style.backgroundColor = '#334155';
-            document.getElementById('tab-btn-roster').style.backgroundColor = '#0284c7';
-        }
+        document.getElementById('draft-prospects-list').style.display = tab === 'prospects' ? 'block' : 'none';
+        document.getElementById('draft-trade-view').style.display = tab === 'trade' ? 'block' : 'none';
+        document.getElementById('draft-roster-preview').style.display = tab === 'roster' ? 'block' : 'none';
+
+        document.getElementById('tab-btn-prospects').style.backgroundColor = tab === 'prospects' ? '#0284c7' : '#334155';
+        document.getElementById('tab-btn-draft-trade').style.backgroundColor = tab === 'trade' ? '#d97706' : '#334155';
+        document.getElementById('tab-btn-roster').style.backgroundColor = tab === 'roster' ? '#0284c7' : '#334155';
     }
 
     function makeDraftPick(index) {
@@ -870,7 +1047,7 @@
                 html += `
                     <div class="player-item">
                         <div>
-                            <strong>${p.name}</strong> (${getPosFull(p.pos)}) - <span class="player-ovr">OVR ${p.ovr}</span>
+                            <strong>${p.name}</strong> (${getPosFull(p.pos)}) - <span class="player-ovr ${getOvrClass(p.ovr)}">${p.ovr} OVR</span>
                             <div class="stat-badge">${formatStatsString(p.stats)}</div>
                             <small style="color:#94a3b8;">$${p.salary}M/yr | Age: ${p.age}</small>
                         </div>
@@ -889,7 +1066,7 @@
                 html += `
                     <div class="player-item">
                         <div>
-                            <strong>${p.name}</strong> (${getPosFull(p.pos)}) - <span class="player-ovr">OVR ${p.ovr}</span>
+                            <strong>${p.name}</strong> (${getPosFull(p.pos)}) - <span class="player-ovr ${getOvrClass(p.ovr)}">${p.ovr} OVR</span>
                             <div class="stat-badge">${formatStatsString(p.stats)}</div>
                             <small style="color:#94a3b8;">Salary Demand: $${p.salary}M/yr</small>
                         </div>
@@ -1064,7 +1241,7 @@
         }
     }
 
-    // ---------------- MATCH SIMULATION ENGINE WITH LINEUP IMPACT ----------------
+    // ---------------- DYNAMIC INTERACTIVE GAMEPLAY ENGINE ----------------
     function startMatch() {
         if (userTeam.roster.length > 22) {
             notify('Roster exceeds 22 players! Release players before playing.', true);
@@ -1079,99 +1256,185 @@
         const userRating = calculateLineupRating(userTeam, startingLineup);
         const oppRating = calculateLineupRating(opponent);
 
-        currentGame = {
+        gameEngine = {
+            active: true,
             opponent: opponent,
             userScore: 0,
             oppScore: 0,
+            quarter: 1,
+            clockSecs: 300,
+            ballLoc: 20, // Yards from user endzone
+            down: 1,
+            dist: 10,
             userRating: userRating,
-            oppRating: oppRating,
-            step: 0,
-            scenarios: [
-                "1st Qtr (9:15) - 4th & 2 on opponent's 42-yard line.",
-                "2nd Qtr (0:45) - 3rd & Goal on the 5-yard line, trailing by 3.",
-                "3rd Qtr (11:00) - Facing 3rd & 12 near midfield.",
-                "4th Qtr (1:45) - 4th & 8 trailing by 4 points with 1 timeout left."
-            ]
+            oppRating: oppRating
         };
 
-        document.getElementById('game-title').innerText = `Week ${currentWeek}: ${userTeam.name} vs ${opponent.name}`;
-        document.getElementById('match-ovr-banner').innerHTML = `Matchup Starters Rating: <strong>${userTeam.name} (${userRating} OVR)</strong> vs <strong>${opponent.name} (${oppRating} OVR)</strong>`;
-        document.getElementById('game-log').innerHTML = 'Kickoff! Game initialized...<br>';
-        loadScenario();
+        document.getElementById('game-user-team-name').innerText = userTeam.name;
+        document.getElementById('game-opp-team-name').innerText = opponent.name;
+        document.getElementById('game-log').innerHTML = `Kickoff! Game started against ${opponent.name}. Starting Rating: ${userRating} OVR vs ${oppRating} OVR.<br>`;
+        updateGameDisplay();
     }
 
-    function loadScenario() {
-        if (currentGame.step < currentGame.scenarios.length) {
-            document.getElementById('scenario-title').innerText = `Situation ${currentGame.step + 1} of 4`;
-            document.getElementById('scenario-desc').innerText = currentGame.scenarios[currentGame.step];
-        } else {
-            // Overall Win/Loss outcome factored by lineup rating differential
-            const ovrDiff = currentGame.userRating - currentGame.oppRating;
-            const winProbability = 0.50 + (ovrDiff * 0.03); // Each OVR point adds/subtracts 3% win probability
-
-            const userWon = (currentGame.userScore > currentGame.oppScore) || 
-                             (currentGame.userScore === currentGame.oppScore && Math.random() < winProbability);
-
-            if (userWon) {
-                if (currentGame.userScore <= currentGame.oppScore) currentGame.userScore += 3;
-                userTeam.wins++;
-                currentGame.opponent.losses++;
-            } else {
-                if (currentGame.oppScore <= currentGame.userScore) currentGame.oppScore += 3;
-                userTeam.losses++;
-                currentGame.opponent.wins++;
-            }
-
-            notify(`FINAL SCORE: ${userTeam.name} ${currentGame.userScore} - ${currentGame.oppScore} ${currentGame.opponent.name}`);
-            currentWeek++;
-            updateDashboard();
-            showSection('lineup');
-        }
-    }
-
-    function makePlayCall(choice) {
-        const log = document.getElementById('game-log');
+    function updateGameDisplay() {
+        document.getElementById('game-user-score').innerText = gameEngine.userScore;
+        document.getElementById('game-opp-score').innerText = gameEngine.oppScore;
         
-        // Starter attributes impact play outcomes
-        const qbOvr = startingLineup.QB ? startingLineup.QB.ovr : 70;
-        const rbOvr = startingLineup.RB ? startingLineup.RB.ovr : 70;
-        const wrOvr = startingLineup.WR1 ? startingLineup.WR1.ovr : 70;
-        const defOvr = startingLineup.DEF ? startingLineup.DEF.ovr : 70;
+        const mins = Math.floor(gameEngine.clockSecs / 60);
+        const secs = (gameEngine.clockSecs % 60).toString().padStart(2, '0');
+        document.getElementById('game-qtr-clock').innerText = `Q${gameEngine.quarter} • ${mins}:${secs}`;
 
-        const ratingAdvantage = (currentGame.userRating - currentGame.oppRating) * 0.015;
+        const fieldDesc = gameEngine.ballLoc < 50 ? `OWN ${gameEngine.ballLoc}` : `OPP ${100 - gameEngine.ballLoc}`;
+        document.getElementById('field-ball-loc').innerText = `Ball on ${fieldDesc}`;
+        document.getElementById('field-progress-bar').style.width = `${gameEngine.ballLoc}%`;
+
+        document.getElementById('game-down-dist').innerText = `${getDownString(gameEngine.down)} & ${gameEngine.dist}`;
+    }
+
+    function getDownString(d) {
+        if (d === 1) return "1st";
+        if (d === 2) return "2nd";
+        if (d === 3) return "3rd";
+        return "4th";
+    }
+
+    function executeInteractivePlay(playType) {
+        if (!gameEngine.active) return;
+
+        const log = document.getElementById('game-log');
+        const qb = startingLineup.QB || { name: "Quarterback", ovr: 75 };
+        const rb = startingLineup.RB || { name: "Running Back", ovr: 75 };
+        const wr1 = startingLineup.WR1 || { name: "Receiver", ovr: 75 };
+        const kicker = startingLineup.K || { name: "Kicker", ovr: 75 };
+
+        let yardsGained = 0;
+        let playMsg = "";
         const roll = Math.random();
+        const ratDiff = (gameEngine.userRating - gameEngine.oppRating) * 0.1;
 
-        if (choice === 1) { // Aggressive Pass / Heavy Blitz
-            const successChance = 0.45 + ((qbOvr + wrOvr) / 200 - 0.75) + ratingAdvantage;
-            if (roll < successChance) {
-                currentGame.userScore += 7;
-                log.innerHTML += `-> EXCELLENT PASS EXECUTION by ${startingLineup.QB.name}! Touchdown (+7 PTS)<br>`;
+        if (playType === 'SHORT_PASS') {
+            if (roll < 0.72 + (qb.ovr - 75)*0.005) {
+                yardsGained = Math.floor(Math.random() * 8) + 4;
+                playMsg = `-> ${qb.name} completes quick pass to ${wr1.name} for +${yardsGained} yards.`;
             } else {
-                currentGame.oppScore += 3;
-                log.innerHTML += `-> SACK / TURNOVER! Opponent capitalizes (+3 PTS)<br>`;
+                yardsGained = 0;
+                playMsg = `-> Incomplete pass thrown by ${qb.name}.`;
             }
-        } else if (choice === 2) { // Safe Run / Zone Coverage
-            const successChance = 0.60 + (rbOvr / 100 - 0.75) + ratingAdvantage;
-            if (roll < successChance) {
-                currentGame.userScore += 3;
-                log.innerHTML += `-> SOLID RUN DRIVE by ${startingLineup.RB.name}! Field Goal good (+3 PTS)<br>`;
+        } 
+        else if (playType === 'DEEP_PASS') {
+            if (roll < 0.40 + (qb.ovr - 75)*0.008 + ratDiff*0.02) {
+                yardsGained = Math.floor(Math.random() * 25) + 18;
+                playMsg = `-> DEEP BOMB EXECUTED! ${qb.name} launches downfield to ${wr1.name} for +${yardsGained} yards!`;
+            } else if (roll > 0.90) {
+                yardsGained = -7;
+                playMsg = `-> SACKED! Opponent defense breaks through for -7 yards.`;
             } else {
-                log.innerHTML += `-> DEFENSE STUFFED RUN. Forced to punt.<br>`;
+                yardsGained = 0;
+                playMsg = `-> Deep pass falls incomplete in coverage.`;
             }
-        } else { // Play Action Pass
-            const successChance = 0.50 + (qbOvr / 100 - 0.75) + ratingAdvantage;
-            if (roll < successChance) {
-                currentGame.userScore += 7;
-                log.innerHTML += `-> GREAT PLAY ACTION READ by ${startingLineup.QB.name}! Touchdown (+7 PTS)<br>`;
+        }
+        else if (playType === 'POWER_RUN') {
+            yardsGained = Math.floor(Math.random() * 8) + (roll > 0.4 ? 2 : -1);
+            playMsg = `-> ${rb.name} powers through the line for +${yardsGained} yards.`;
+        }
+        else if (playType === 'PLAY_ACTION') {
+            if (roll < 0.55 + (qb.ovr - 75)*0.006) {
+                yardsGained = Math.floor(Math.random() * 16) + 10;
+                playMsg = `-> FAKE HANDOFF! ${qb.name} finds open receiver for +${yardsGained} yards!`;
             } else {
-                currentGame.oppScore += 7;
-                log.innerHTML += `-> INCOMPLETE PASS / TURNOVER ON DOWNS! Opponent returns for TD (+7 PTS)<br>`;
+                yardsGained = -4;
+                playMsg = `-> Play action blown up by defense! -4 yards.`;
+            }
+        }
+        else if (playType === 'SPECIAL_TEAMS') {
+            if (gameEngine.ballLoc >= 60) { // Field goal range
+                const fgDist = 100 - gameEngine.ballLoc + 17;
+                if (roll < 0.82 + (kicker.ovr - 75)*0.005) {
+                    gameEngine.userScore += 3;
+                    playMsg = `-> FIELD GOAL GOOD! ${kicker.name} drills ${fgDist}-yard FG (+3 PTS)!`;
+                } else {
+                    playMsg = `-> MISSED FG! ${kicker.name}'s kick sails wide.`;
+                }
+            } else {
+                playMsg = `-> Punt executed. Opponent takes over on possession.`;
+            }
+            // Reset drive after special teams
+            gameEngine.oppScore += (Math.random() < 0.45 ? 3 : (Math.random() < 0.3 ? 7 : 0));
+            gameEngine.ballLoc = 25;
+            gameEngine.down = 1;
+            gameEngine.dist = 10;
+        }
+
+        if (playType !== 'SPECIAL_TEAMS') {
+            gameEngine.ballLoc += yardsGained;
+            if (gameEngine.ballLoc < 1) gameEngine.ballLoc = 1;
+
+            // Check Touchdown
+            if (gameEngine.ballLoc >= 100) {
+                gameEngine.userScore += 7;
+                playMsg += ` TOUCHDOWN ${userTeam.name} (+7 PTS)!`;
+                gameEngine.ballLoc = 25;
+                gameEngine.down = 1;
+                gameEngine.dist = 10;
+
+                // Opponent counter drive simulation
+                if (Math.random() < 0.45 + (gameEngine.oppRating - gameEngine.userRating)*0.01) {
+                    gameEngine.oppScore += 7;
+                    playMsg += ` [Opponent answered with TD +7]`;
+                }
+            } else {
+                // Down advancement
+                gameEngine.dist -= yardsGained;
+                if (gameEngine.dist <= 0) {
+                    gameEngine.down = 1;
+                    gameEngine.dist = 10;
+                    playMsg += ` FIRST DOWN!`;
+                } else {
+                    gameEngine.down++;
+                    if (gameEngine.down > 4) {
+                        playMsg += ` TURNOVER ON DOWNS!`;
+                        gameEngine.oppScore += (Math.random() < 0.5 ? 3 : 0);
+                        gameEngine.ballLoc = 25;
+                        gameEngine.down = 1;
+                        gameEngine.dist = 10;
+                    }
+                }
             }
         }
 
+        // Clock Progression
+        gameEngine.clockSecs -= 35;
+        if (gameEngine.clockSecs <= 0) {
+            gameEngine.quarter++;
+            gameEngine.clockSecs = 300;
+        }
+
+        log.innerHTML += playMsg + '<br>';
         log.scrollTop = log.scrollHeight;
-        currentGame.step++;
-        setTimeout(loadScenario, 900);
+
+        updateGameDisplay();
+
+        // Check Game End
+        if (gameEngine.quarter > 4) {
+            finishGame();
+        }
+    }
+
+    function finishGame() {
+        gameEngine.active = false;
+        const won = gameEngine.userScore >= gameEngine.oppScore;
+        if (won) {
+            userTeam.wins++;
+            gameEngine.opponent.losses++;
+        } else {
+            userTeam.losses++;
+            gameEngine.opponent.wins++;
+        }
+
+        notify(`FINAL SCORE: ${userTeam.name} ${gameEngine.userScore} - ${gameEngine.oppScore} ${gameEngine.opponent.name}`);
+        currentWeek++;
+        updateDashboard();
+        showSection('lineup');
     }
 
     initializeLeague();
