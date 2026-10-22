@@ -25,14 +25,14 @@
             padding: 15px;
         }
         .container {
-            max-width: 1150px;
+            max-width: 1180px;
             margin: 0 auto;
             background-color: var(--bg-card);
             padding: 20px;
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        h1, h2, h3 { margin-top: 0; color: #38bdf8; }
+        h1, h2, h3, h4 { margin-top: 0; color: #38bdf8; }
         .subtitle { color: var(--text-muted); font-size: 0.95em; margin-bottom: 15px; }
         
         /* Notification Banner (No Browser Popups) */
@@ -122,6 +122,7 @@
             font-size: 0.9em;
             border-radius: 6px;
             margin-bottom: 4px;
+            background: #1e293b;
         }
         .player-item:last-child { border-bottom: none; }
         .player-ovr {
@@ -167,18 +168,46 @@
             background: var(--bg-card);
             padding: 22px;
             border-radius: 10px;
-            max-width: 750px;
+            max-width: 800px;
             width: 92%;
             max-height: 88vh;
             overflow-y: auto;
             border: 1px solid #38bdf8;
         }
 
+        /* Multi-Asset Trade Layout */
         .trade-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
         }
+        .trade-column {
+            background: #0f172a;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            max-height: 480px;
+            overflow-y: auto;
+        }
+        .trade-section-title {
+            background: #334155;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.82em;
+            font-weight: bold;
+            color: #38bdf8;
+            margin: 8px 0 6px 0;
+            text-transform: uppercase;
+        }
+        .trade-checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 6px 8px;
+            border-bottom: 1px solid #1e293b;
+            font-size: 0.85em;
+        }
+        .trade-checkbox-item input { margin-right: 8px; cursor: pointer; }
+
         select {
             width: 100%;
             padding: 8px;
@@ -222,9 +251,9 @@
 
 <div class="container">
     <h1>🏈 NFL Franchise Manager 2026</h1>
-    <p class="subtitle">Madden 27 Ratings • Depth Chart Rosters • 32 Teams • Draft • Trades • Salary Cap</p>
+    <p class="subtitle">Madden 27 Ratings • Depth Chart Rosters • 32 Teams • Draft • Multi-Asset Trades • Salary Cap</p>
 
-    <!-- IN-PAGE BANNER FOR SUCCESS/ERROR MESSAGES -->
+    <!-- IN-PAGE BANNER FOR MESSAGES -->
     <div id="notification-banner"></div>
 
     <!-- SELECT 32 TEAMS -->
@@ -245,7 +274,7 @@
         </div>
 
         <div class="nav-buttons">
-            <button onclick="showSection('roster')">📋 Roster & Category Stats</button>
+            <button onclick="showSection('roster')">📋 Roster & Depth Chart</button>
             <button onclick="showSection('trade')">🔄 32-Team Trade Center</button>
             <button onclick="showSection('free-agency')">💼 Free Agency Market</button>
             <button onclick="startMatch()" class="btn-success">🏈 Play Week Game</button>
@@ -270,7 +299,7 @@
     </div>
 </div>
 
-<!-- DRAFT MODAL WITH ANALYST & ROSTER PREVIEW TABS -->
+<!-- DRAFT MODAL WITH ANALYST & ROSTER PREVIEW -->
 <div id="draft-modal" class="modal" style="display:none;">
     <div class="modal-content">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
@@ -282,22 +311,22 @@
         </div>
         <p style="color:#cbd5e1; font-size:0.85em; margin-top:0;" id="draft-subtitle">Select 1 rookie prospect per round (3 Rounds Total).</p>
 
-        <!-- Team Analyst Recommendation Box -->
+        <!-- Team Analyst Box -->
         <div id="analyst-box" class="analyst-box">
             <strong>🤖 Team Analyst Recommendation:</strong> <span id="analyst-text">Analyzing roster depth...</span>
         </div>
 
         <div id="draft-status-msg" style="display:none; padding:8px; background:#10b981; color:white; border-radius:6px; margin-bottom:10px; text-align:center; font-weight:bold;"></div>
         
-        <!-- Tab 1: Draft Prospects List -->
+        <!-- Tab 1: Draft Prospects -->
         <div id="draft-prospects-list"></div>
 
-        <!-- Tab 2: Current Team Roster Preview -->
+        <!-- Tab 2: Roster Preview -->
         <div id="draft-roster-preview" style="display:none;"></div>
     </div>
 </div>
 
-<!-- ROSTER OVERFLOW CUT WARNING MODAL -->
+<!-- ROSTER CUT WARNING MODAL -->
 <div id="cut-modal" class="modal" style="display:none;">
     <div class="modal-content">
         <h2 style="color:#f87171;">⚠️ Roster Trim Required!</h2>
@@ -309,6 +338,28 @@
 </div>
 
 <script>
+    // FULL UNABBREVIATED POSITION MAPPER
+    const POS_NAMES = {
+        "QB": "Quarterback",
+        "RB": "Running Back",
+        "WR": "Wide Receiver",
+        "TE": "Tight End",
+        "OT": "Offensive Tackle",
+        "OG": "Offensive Guard",
+        "C": "Center",
+        "DE": "Defensive End",
+        "DT": "Defensive Tackle",
+        "LB": "Linebacker",
+        "CB": "Cornerback",
+        "S": "Safety",
+        "K": "Kicker",
+        "P": "Punter"
+    };
+
+    function getPosFull(posCode) {
+        return POS_NAMES[posCode] || posCode;
+    }
+
     function notify(message, isError = false) {
         const banner = document.getElementById('notification-banner');
         banner.innerText = message;
@@ -370,7 +421,6 @@
     const fillerPositions = ["OT", "OG", "C", "DE", "DT", "LB", "CB", "CB", "S", "P", "LB", "DE"];
     const fillerLastNames = ["Smith", "Johnson", "Williams", "Brown", "Jones", "Miller", "Davis", "Wilson", "Anderson", "Taylor", "Jackson", "Harris", "Clark", "Lewis", "Walker"];
 
-    // Random Rookie Name Generator
     const rookieFirstNames = ["Marcus", "Trey", "Jalen", "Deon", "Bryce", "Malik", "Colton", "Darius", "Kobe", "Jaxson", "Trevon", "Barrett", "Caden", "Zion", "Devin", "Xavier", "Grant", "Brenden", "Keegan", "Landon"];
     const rookieLastNames = ["Vance", "Thorne", "Sterling", "Mercer", "Hawthorne", "Caldwell", "Booker", "Gentry", "Cross", "Fletcher", "Sutton", "Hayes", "Bowers", "Rios", "Conrad", "Delgado", "Erickson", "Flynn", "Holloway"];
 
@@ -382,12 +432,11 @@
     let freeAgents = [];
     let currentGame = null;
 
-    // Generate 100% fictional rookie draft prospects by round quality
     function generateTieredDraftClass() {
         const positions = ["QB", "RB", "WR", "WR", "TE", "OT", "OG", "C", "DE", "DT", "LB", "CB", "S"];
         draftTiers = { 1: [], 2: [], 3: [] };
 
-        // Round 1: High Quality (80 - 88 OVR)
+        // Round 1 (80-88 OVR)
         for (let i = 0; i < 8; i++) {
             let fn = rookieFirstNames[Math.floor(Math.random() * rookieFirstNames.length)];
             let ln = rookieLastNames[Math.floor(Math.random() * rookieLastNames.length)];
@@ -396,7 +445,7 @@
             let sal = parseFloat((Math.random() * 1.5 + 3.0).toFixed(1));
             draftTiers[1].push({ name: `${fn} ${ln}`, pos: pos, ovr: ovr, salary: sal, age: 21, stats: generateMaddenStats(pos, ovr) });
         }
-        // Round 2: Decent Quality (74 - 79 OVR)
+        // Round 2 (74-79 OVR)
         for (let i = 0; i < 8; i++) {
             let fn = rookieFirstNames[Math.floor(Math.random() * rookieFirstNames.length)];
             let ln = rookieLastNames[Math.floor(Math.random() * rookieLastNames.length)];
@@ -405,7 +454,7 @@
             let sal = parseFloat((Math.random() * 1.0 + 2.0).toFixed(1));
             draftTiers[2].push({ name: `${fn} ${ln}`, pos: pos, ovr: ovr, salary: sal, age: 21, stats: generateMaddenStats(pos, ovr) });
         }
-        // Round 3: OK Quality (68 - 73 OVR)
+        // Round 3 (68-73 OVR)
         for (let i = 0; i < 8; i++) {
             let fn = rookieFirstNames[Math.floor(Math.random() * rookieFirstNames.length)];
             let ln = rookieLastNames[Math.floor(Math.random() * rookieLastNames.length)];
@@ -414,6 +463,14 @@
             let sal = parseFloat((Math.random() * 0.8 + 1.2).toFixed(1));
             draftTiers[3].push({ name: `${fn} ${ln}`, pos: pos, ovr: ovr, salary: sal, age: 21, stats: generateMaddenStats(pos, ovr) });
         }
+    }
+
+    function createDefaultPicks(teamName) {
+        return [
+            { id: `pick_1_${teamName}`, round: 1, name: "2027 Round 1 Draft Pick", value: 120 },
+            { id: `pick_2_${teamName}`, round: 2, name: "2027 Round 2 Draft Pick", value: 70 },
+            { id: `pick_3_${teamName}`, round: 3, name: "2027 Round 3 Draft Pick", value: 40 }
+        ];
     }
 
     function initializeLeague() {
@@ -440,7 +497,15 @@
                     });
                 }
 
-                allTeams.push({ name: tName, division: divName, salaryCap: 255.4, wins: 0, losses: 0, roster: roster });
+                allTeams.push({
+                    name: tName,
+                    division: divName,
+                    salaryCap: 255.4,
+                    wins: 0,
+                    losses: 0,
+                    roster: roster,
+                    draftPicks: createDefaultPicks(tName)
+                });
             });
         }
 
@@ -496,31 +561,47 @@
         document.getElementById('dash-week').innerText = currentWeek;
     }
 
-    // ---------------- TEAM ANALYST INSIGHT & DRAFT MODAL ----------------
+    // ---------------- STRICT ANALYST SYNCHRONIZATION & DRAFT ----------------
     function startOffseasonDraft() {
         draftRound = 1;
         document.getElementById('draft-modal').style.display = 'flex';
         renderDraftRound();
     }
 
-    function findTeamWeakestPosition() {
-        const posCounts = {};
-        const posSums = {};
-        userTeam.roster.forEach(p => {
-            posCounts[p.pos] = (posCounts[p.pos] || 0) + 1;
-            posSums[p.pos] = (posSums[p.pos] || 0) + p.ovr;
-        });
+    // Finds the weakest position ON YOUR TEAM that IS AVAILABLE in the current draft round
+    function findTeamAnalystRecommendation(prospects) {
+        const availablePositions = [...new Set(prospects.map(p => p.pos))];
+        
+        let weakestPos = availablePositions[0];
+        let lowestRating = 999;
 
-        let weakestPos = "WR";
-        let lowestAvg = 99;
-        for (const pos in posCounts) {
-            let avg = posSums[pos] / posCounts[pos];
-            if (avg < lowestAvg) {
-                lowestAvg = avg;
+        availablePositions.forEach(pos => {
+            const teamPlayers = userTeam.roster.filter(p => p.pos === pos);
+            let avgRating = 50; // high priority if 0 players
+            if (teamPlayers.length > 0) {
+                avgRating = teamPlayers.reduce((sum, p) => sum + p.ovr, 0) / teamPlayers.length;
+            }
+            if (avgRating < lowestRating) {
+                lowestRating = avgRating;
                 weakestPos = pos;
             }
-        }
-        return weakestPos;
+        });
+
+        // Find highest OVR prospect at this exact position
+        let bestIdx = 0;
+        let maxOvr = -1;
+        prospects.forEach((p, idx) => {
+            if (p.pos === weakestPos && p.ovr > maxOvr) {
+                maxOvr = p.ovr;
+                bestIdx = idx;
+            }
+        });
+
+        return {
+            recommendedIndex: bestIdx,
+            targetPos: weakestPos,
+            player: prospects[bestIdx]
+        };
     }
 
     function renderDraftRound() {
@@ -528,29 +609,24 @@
         document.getElementById('draft-subtitle').innerText = `Round ${draftRound} Prospects • Roster: ${userTeam.roster.length} Players`;
         
         const prospects = draftTiers[draftRound];
-        const weakestPos = findTeamWeakestPosition();
+        const recommendation = findTeamAnalystRecommendation(prospects);
 
-        // Identify recommended pick for Analyst
-        let recommendedIndex = prospects.findIndex(p => p.pos === weakestPos);
-        if (recommendedIndex === -1) {
-            // Pick highest OVR prospect
-            recommendedIndex = 0;
-        }
+        const recPlayer = recommendation.player;
+        const targetPosFull = getPosFull(recommendation.targetPos);
 
-        const recommendedPlayer = prospects[recommendedIndex];
         const analystBox = document.getElementById('analyst-text');
-        analystBox.innerHTML = `Our roster needs upgrading at <strong style="color:#38bdf8;">${weakestPos}</strong>. We recommend drafting <strong style="color:#4ade80;">${recommendedPlayer.name} (${recommendedPlayer.pos}, OVR ${recommendedPlayer.ovr})</strong>!`;
+        analystBox.innerHTML = `Our roster needs depth at <strong style="color:#38bdf8;">${targetPosFull}</strong>. We recommend drafting <strong style="color:#4ade80;">${recPlayer.name} (${getPosFull(recPlayer.pos)}, OVR ${recPlayer.ovr})</strong>!`;
 
         const list = document.getElementById('draft-prospects-list');
         list.innerHTML = '';
 
         prospects.forEach((prospect, idx) => {
-            const isRec = idx === recommendedIndex;
+            const isRec = idx === recommendation.recommendedIndex;
             const item = document.createElement('div');
             item.className = `player-item ${isRec ? 'analyst-highlight' : ''}`;
             item.innerHTML = `
                 <div>
-                    <strong>${prospect.name}</strong> (${prospect.pos}) 
+                    <strong>${prospect.name}</strong> (${getPosFull(prospect.pos)}) 
                     <span class="player-ovr">${prospect.ovr} OVR</span>
                     ${isRec ? '<span class="analyst-badge">⭐ Analyst Top Pick</span>' : ''}
                     <div class="stat-badge">${formatStatsString(prospect.stats)}</div>
@@ -566,12 +642,12 @@
 
     function renderDraftRosterPreview() {
         const preview = document.getElementById('draft-roster-preview');
-        let html = `<h3>${userTeam.name} Current Roster Depth (${userTeam.roster.length} Players)</h3>`;
+        let html = `<h3>${userTeam.name} Current Roster (${userTeam.roster.length} Players)</h3>`;
         userTeam.roster.slice().sort((a,b) => b.ovr - a.ovr).forEach(p => {
             html += `
                 <div class="player-item">
                     <div>
-                        <strong>${p.name}</strong> (${p.pos}) - OVR: ${p.ovr}
+                        <strong>${p.name}</strong> (${getPosFull(p.pos)}) - OVR: ${p.ovr}
                         <div class="stat-badge">${formatStatsString(p.stats)}</div>
                     </div>
                 </div>
@@ -600,7 +676,7 @@
         
         const statusMsg = document.getElementById('draft-status-msg');
         statusMsg.style.display = 'block';
-        statusMsg.innerText = `Draft Pick Successful! You drafted ${rookie.name} (${rookie.pos}) in Round ${draftRound}!`;
+        statusMsg.innerText = `Pick Successful! You drafted ${rookie.name} (${getPosFull(rookie.pos)}) in Round ${draftRound}!`;
 
         draftRound++;
         if (draftRound <= 3) {
@@ -629,7 +705,7 @@
                 item.className = 'player-item';
                 item.innerHTML = `
                     <div>
-                        <strong>${p.name}</strong> (${p.pos}) - OVR: ${p.ovr}
+                        <strong>${p.name}</strong> (${getPosFull(p.pos)}) - OVR: ${p.ovr}
                         <div class="stat-badge">${formatStatsString(p.stats)}</div>
                     </div>
                     <button class="btn-danger" onclick="cutPlayer(${idx})">Release / Cut</button>
@@ -668,7 +744,7 @@
                 html += `
                     <div class="player-item">
                         <div>
-                            <strong>${p.name}</strong> (${p.pos}) - <span class="player-ovr">OVR ${p.ovr}</span>
+                            <strong>${p.name}</strong> (${getPosFull(p.pos)}) - <span class="player-ovr">OVR ${p.ovr}</span>
                             <div class="stat-badge">${formatStatsString(p.stats)}</div>
                             <small style="color:#94a3b8;">$${p.salary}M/yr | Age: ${p.age}</small>
                         </div>
@@ -687,7 +763,7 @@
                 html += `
                     <div class="player-item">
                         <div>
-                            <strong>${p.name}</strong> (${p.pos}) - <span class="player-ovr">OVR ${p.ovr}</span>
+                            <strong>${p.name}</strong> (${getPosFull(p.pos)}) - <span class="player-ovr">OVR ${p.ovr}</span>
                             <div class="stat-badge">${formatStatsString(p.stats)}</div>
                             <small style="color:#94a3b8;">Salary Demand: $${p.salary}M/yr</small>
                         </div>
@@ -724,37 +800,41 @@
         showSection('free-agency');
     }
 
-    // ---------------- 32-TEAM TRADE CENTER ----------------
+    // ---------------- MULTI-ASSET & DRAFT PICK TRADE CENTER ----------------
     function renderTradeCenter() {
         const view = document.getElementById('content-view');
         let otherTeams = allTeams.filter(t => t.name !== userTeam.name);
 
-        let html = `<h2>🔄 32-Team Trade Center</h2>`;
-        html += `<p style="font-size:0.85em; color:#cbd5e1;">Select any NFL franchise to propose player trades.</p>`;
+        let html = `<h2>🔄 Multi-Asset & Draft Pick Trade Center</h2>`;
+        html += `<p style="font-size:0.85em; color:#cbd5e1;">Select multiple players and draft picks from both franchises to construct a deal.</p>`;
         
         html += `
+            <label><strong>Select Partner Franchise:</strong></label>
+            <select id="trade-partner-select" onchange="updateTradePartnerView()">
+                ${otherTeams.map((t, idx) => `<option value="${idx}">${t.name} (${t.division})</option>`).join('')}
+            </select>
+
             <div class="trade-container">
-                <div>
-                    <label>Target NFL Franchise:</label>
-                    <select id="trade-partner-select" onchange="updateTradePartnerView()">
-                        ${otherTeams.map((t, idx) => `<option value="${idx}">${t.name} (${t.division})</option>`).join('')}
-                    </select>
-                    <h3>Their Players</h3>
+                <div class="trade-column">
+                    <h3 id="partner-trade-title" style="margin:0 0 10px 0;">Their Offer</h3>
+                    <div class="trade-section-title">Players</div>
                     <div id="partner-players-list"></div>
+                    <div class="trade-section-title">Draft Picks</div>
+                    <div id="partner-picks-list"></div>
                 </div>
-                <div>
-                    <h3>Your Offered Player</h3>
+                <div class="trade-column">
+                    <h3 style="margin:0 0 10px 0;">Your Offer (${userTeam.name})</h3>
+                    <div class="trade-section-title">Players</div>
                     <div id="user-players-list"></div>
+                    <div class="trade-section-title">Draft Picks</div>
+                    <div id="user-picks-list"></div>
                 </div>
             </div>
-            <button onclick="executeTradeProposal()" class="btn-success" style="width:100%; margin-top:15px;">Execute Trade Proposal</button>
+            <button onclick="executeMultiTradeProposal()" class="btn-success" style="width:100%; margin-top:15px; padding:12px; font-size:1em;">Propose Trade Package</button>
         `;
         view.innerHTML = html;
         updateTradePartnerView();
     }
-
-    let selectedTargetPlayerIdx = 0;
-    let selectedUserPlayerIdx = 0;
 
     function updateTradePartnerView() {
         const otherTeams = allTeams.filter(t => t.name !== userTeam.name);
@@ -762,53 +842,109 @@
         if (!partnerSelect) return;
         
         const partnerTeam = otherTeams[partnerSelect.value];
-        const partnerList = document.getElementById('partner-players-list');
-        const userList = document.getElementById('user-players-list');
+        document.getElementById('partner-trade-title').innerText = `${partnerTeam.name} Assets`;
 
-        partnerList.innerHTML = partnerTeam.roster.map((p, idx) => `
-            <div class="player-item">
-                <label>
-                    <input type="radio" name="target-player" value="${idx}" ${idx === 0 ? 'checked' : ''} onclick="selectedTargetPlayerIdx=${idx}">
-                    <strong>${p.name}</strong> (${p.pos}) - OVR: ${p.ovr}
-                </label>
+        const partnerPlayersEl = document.getElementById('partner-players-list');
+        const partnerPicksEl = document.getElementById('partner-picks-list');
+        const userPlayersEl = document.getElementById('user-players-list');
+        const userPicksEl = document.getElementById('user-picks-list');
+
+        // Partner Players
+        partnerPlayersEl.innerHTML = partnerTeam.roster.map((p, idx) => `
+            <div class="trade-checkbox-item">
+                <input type="checkbox" class="cb-partner-player" data-idx="${idx}">
+                <span><strong>${p.name}</strong> (${getPosFull(p.pos)}) - ${p.ovr} OVR</span>
             </div>
         `).join('');
 
-        userList.innerHTML = userTeam.roster.map((p, idx) => `
-            <div class="player-item">
-                <label>
-                    <input type="radio" name="user-player" value="${idx}" ${idx === 0 ? 'checked' : ''} onclick="selectedUserPlayerIdx=${idx}">
-                    <strong>${p.name}</strong> (${p.pos}) - OVR: ${p.ovr}
-                </label>
+        // Partner Picks
+        partnerPicksEl.innerHTML = partnerTeam.draftPicks.map((pick, idx) => `
+            <div class="trade-checkbox-item">
+                <input type="checkbox" class="cb-partner-pick" data-idx="${idx}">
+                <span>🎟️ ${pick.name}</span>
+            </div>
+        `).join('');
+
+        // User Players
+        userPlayersEl.innerHTML = userTeam.roster.map((p, idx) => `
+            <div class="trade-checkbox-item">
+                <input type="checkbox" class="cb-user-player" data-idx="${idx}">
+                <span><strong>${p.name}</strong> (${getPosFull(p.pos)}) - ${p.ovr} OVR</span>
+            </div>
+        `).join('');
+
+        // User Picks
+        userPicksEl.innerHTML = userTeam.draftPicks.map((pick, idx) => `
+            <div class="trade-checkbox-item">
+                <input type="checkbox" class="cb-user-pick" data-idx="${idx}">
+                <span>🎟️ ${pick.name}</span>
             </div>
         `).join('');
     }
 
-    function executeTradeProposal() {
+    function executeMultiTradeProposal() {
         const otherTeams = allTeams.filter(t => t.name !== userTeam.name);
         const partnerSelect = document.getElementById('trade-partner-select');
         const partnerTeam = otherTeams[partnerSelect.value];
 
-        const targetPlayer = partnerTeam.roster[selectedTargetPlayerIdx];
-        const offeredPlayer = userTeam.roster[selectedUserPlayerIdx];
+        // Gather Selected Partner Items
+        const selPartnerPlayerIdxs = Array.from(document.querySelectorAll('.cb-partner-player:checked')).map(cb => parseInt(cb.dataset.idx));
+        const selPartnerPickIdxs = Array.from(document.querySelectorAll('.cb-partner-pick:checked')).map(cb => parseInt(cb.dataset.idx));
 
-        if (!targetPlayer || !offeredPlayer) {
-            notify('Please select players from both teams.', true);
+        // Gather Selected User Items
+        const selUserPlayerIdxs = Array.from(document.querySelectorAll('.cb-user-player:checked')).map(cb => parseInt(cb.dataset.idx));
+        const selUserPickIdxs = Array.from(document.querySelectorAll('.cb-user-pick:checked')).map(cb => parseInt(cb.dataset.idx));
+
+        if ((selPartnerPlayerIdxs.length + selPartnerPickIdxs.length === 0) || (selUserPlayerIdxs.length + selUserPickIdxs.length === 0)) {
+            notify('Select at least one player or draft pick on BOTH sides to trade.', true);
             return;
         }
 
-        if (offeredPlayer.ovr >= targetPlayer.ovr - 4) {
-            userTeam.roster.splice(selectedUserPlayerIdx, 1);
-            partnerTeam.roster.splice(selectedTargetPlayerIdx, 1);
+        // Selected Objects
+        const selPartnerPlayers = selPartnerPlayerIdxs.map(i => partnerTeam.roster[i]);
+        const selPartnerPicks = selPartnerPickIdxs.map(i => partnerTeam.draftPicks[i]);
 
-            userTeam.roster.push(targetPlayer);
-            partnerTeam.roster.push(offeredPlayer);
+        const selUserPlayers = selUserPlayerIdxs.map(i => userTeam.roster[i]);
+        const selUserPicks = selUserPickIdxs.map(i => userTeam.draftPicks[i]);
 
-            notify(`TRADE ACCEPTED! Acquired ${targetPlayer.name} (${targetPlayer.pos}) for ${offeredPlayer.name}.`);
+        // Valuation Formula
+        const calcPlayerValue = (p) => Math.max(10, Math.pow(p.ovr - 50, 2) * 1.5);
+        const calcPickValue = (pick) => pick.value;
+
+        const partnerReqVal = selPartnerPlayers.reduce((s,p) => s + calcPlayerValue(p), 0) + selPartnerPicks.reduce((s,pk) => s + calcPickValue(pk), 0);
+        const userOfferVal = selUserPlayers.reduce((s,p) => s + calcPlayerValue(p), 0) + selUserPicks.reduce((s,pk) => s + calcPickValue(pk), 0);
+
+        // Check Salary Cap Impact
+        const userSalaryOut = selUserPlayers.reduce((s,p) => s + p.salary, 0);
+        const userSalaryIn = selPartnerPlayers.reduce((s,p) => s + p.salary, 0);
+        const projectedCapRemaining = getCapSpace(userTeam) + userSalaryOut - userSalaryIn;
+
+        if (projectedCapRemaining < 0) {
+            notify('Trade Rejected: Acquiring these players would exceed your salary cap!', true);
+            return;
+        }
+
+        // Evaluation: Partner accepts if offered value >= 92% of requested value
+        if (userOfferVal >= partnerReqVal * 0.92) {
+            // Swap Players
+            userTeam.roster = userTeam.roster.filter(p => !selUserPlayers.includes(p));
+            partnerTeam.roster = partnerTeam.roster.filter(p => !selPartnerPlayers.includes(p));
+
+            userTeam.roster.push(...selPartnerPlayers);
+            partnerTeam.roster.push(...selUserPlayers);
+
+            // Swap Picks
+            userTeam.draftPicks = userTeam.draftPicks.filter(pk => !selUserPicks.includes(pk));
+            partnerTeam.draftPicks = partnerTeam.draftPicks.filter(pk => !selPartnerPicks.includes(pk));
+
+            userTeam.draftPicks.push(...selPartnerPicks);
+            partnerTeam.draftPicks.push(...selUserPicks);
+
+            notify(`TRADE ACCEPTED! Successfully completed trade package with ${partnerTeam.name}!`);
             updateDashboard();
             showSection('trade');
         } else {
-            notify(`TRADE REJECTED! ${partnerTeam.name} declined ${offeredPlayer.name} for ${targetPlayer.name}.`, true);
+            notify(`TRADE REJECTED! ${partnerTeam.name} front office felt your offer was insufficient.`, true);
         }
     }
 
