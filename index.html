@@ -34,8 +34,6 @@
         }
         h1, h2, h3 { margin-top: 0; color: #38bdf8; }
         .subtitle { color: var(--text-muted); font-size: 0.95em; margin-bottom: 20px; }
-        
-        /* Dashboard Stats */
         .dashboard {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -48,8 +46,6 @@
         .stat-box { text-align: center; }
         .stat-box span { font-size: 0.8em; color: var(--text-muted); text-transform: uppercase; display: block; }
         .stat-box strong { font-size: 1.25em; color: #38bdf8; }
-        
-        /* Navigation */
         .nav-buttons {
             display: flex;
             flex-wrap: wrap;
@@ -72,7 +68,6 @@
         button.btn-success:hover { background-color: #059669; }
         button.btn-danger { background-color: var(--danger); }
         button.btn-danger:hover { background-color: #dc2626; }
-        
         .card {
             background: #0f172a;
             padding: 18px;
@@ -80,8 +75,6 @@
             margin-bottom: 15px;
             border: 1px solid #334155;
         }
-        
-        /* Grid Layouts */
         .team-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -99,8 +92,6 @@
             color: #f1f5f9;
             margin-top: 10px;
         }
-        
-        /* Player List */
         .player-item {
             display: flex;
             justify-content: space-between;
@@ -117,8 +108,6 @@
             font-weight: bold;
             font-size: 0.85em;
         }
-
-        /* Modal Overlay */
         .modal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -138,8 +127,6 @@
             overflow-y: auto;
             border: 1px solid #38bdf8;
         }
-
-        /* Trade Interface */
         .trade-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -154,8 +141,6 @@
             border: 1px solid #475569;
             margin-bottom: 10px;
         }
-
-        /* Game Simulation Console */
         #game-screen {
             background: #022c22;
             border: 2px solid #10b981;
@@ -181,14 +166,12 @@
     <h1>🏈 NFL Franchise Manager 2026</h1>
     <p class="subtitle">Real Rosters • 32 Teams • Draft • Trades • Salary Cap</p>
 
-    <!-- STEP 1: SELECT ANY OF THE 32 NFL TEAMS -->
     <div id="team-select-screen" class="card">
         <h2>Choose Your NFL Franchise</h2>
         <p style="color:#cbd5e1; font-size:0.9em;">Select from all 32 teams to take full control of their official roster.</p>
         <div class="team-grid" id="team-choices"></div>
     </div>
 
-    <!-- MAIN DASHBOARD -->
     <div id="main-interface" style="display:none;">
         <div class="dashboard">
             <div class="stat-box"><span>Team</span><strong id="dash-team">-</strong></div>
@@ -205,10 +188,8 @@
             <button onclick="startMatch()" class="btn-success">🏈 Play Week Game</button>
         </div>
 
-        <!-- MAIN CONTENT CONTAINER -->
         <div id="content-view" class="card"></div>
 
-        <!-- GAME SIMULATION INTERFACE -->
         <div id="game-screen">
             <h2 id="game-title">Game Day</h2>
             <div style="background:#064e3b; padding:15px; border-radius:6px; margin-bottom:15px;">
@@ -225,7 +206,6 @@
     </div>
 </div>
 
-<!-- DRAFT MODAL (START OF SEASON) -->
 <div id="draft-modal" class="modal" style="display:none;">
     <div class="modal-content">
         <h2 id="draft-title">🏈 NFL Offseason Rookie Draft</h2>
@@ -234,7 +214,6 @@
     </div>
 </div>
 
-<!-- ROSTER OVERFLOW CUT WARNING MODAL -->
 <div id="cut-modal" class="modal" style="display:none;">
     <div class="modal-content">
         <h2 style="color:#f87171;">⚠️ Roster Limit Exceeded!</h2>
@@ -245,7 +224,6 @@
 </div>
 
 <script>
-    // ---------------- FULL 32 NFL TEAMS & DIVISION STRUCTURE ----------------
     const nflDivisions = {
         "AFC East": ["Buffalo Bills", "Miami Dolphins", "New England Patriots", "New York Jets"],
         "AFC North": ["Baltimore Ravens", "Cincinnati Bengals", "Cleveland Browns", "Pittsburgh Steelers"],
@@ -257,7 +235,6 @@
         "NFC West": ["Arizona Cardinals", "Los Angeles Rams", "San Francisco 49ers", "Seattle Seahawks"]
     };
 
-    // Marquee real players per team to seed authentic rosters
     const marqueePlayers = {
         "Kansas City Chiefs": [{name:"Patrick Mahomes", pos:"QB", ovr:98, sal:45.0}, {name:"Travis Kelce", pos:"TE", ovr:94, sal:14.0}, {name:"Chris Jones", pos:"DT", ovr:96, sal:20.0}],
         "San Francisco 49ers": [{name:"Brock Purdy", pos:"QB", ovr:87, sal:1.1}, {name:"Christian McCaffrey", pos:"RB", ovr:97, sal:12.0}, {name:"Nick Bosa", pos:"DE", ovr:96, sal:22.0}],
@@ -293,9 +270,8 @@
         "Arizona Cardinals": [{name:"Kyler Murray", pos:"QB", ovr:86, sal:32.0}, {name:"Marvin Harrison Jr.", pos:"WR", ovr:86, sal:5.0}, {name:"Budda Baker", pos:"S", ovr:88, sal:13.0}]
     };
 
-    // Generic positions used to populate realistic full rosters
     const positionsList = ["QB", "RB", "WR", "WR", "TE", "OT", "OG", "C", "DE", "DT", "LB", "CB", "CB", "S", "K"];
-    const lastNamesList = ["Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez", "Hernandez", "Lopez", "Gonzalez", "Wilson", "Anderson", "Thomas", "Taylor", "Moore", "Jackson", "Martin", "Lee", "Perez", "Thompson", "White", "Harris", "Sanchez", "Clark", "Ramirez", "Lewis", "Robinson"];
+    const lastNamesList = ["Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez", "Hernandez", "Lopez", "Gonzalez", "Wilson", "Anderson", "Thomas", "Taylor", "Moore", "Jackson", "Martin"];
 
     let allTeams = [];
     let userTeam = null;
@@ -305,22 +281,19 @@
     let freeAgents = [];
     let currentGame = null;
 
-    // Build the 32 full team rosters
     function initializeLeague() {
         allTeams = [];
         for (const [divName, teamList] of Object.entries(nflDivisions)) {
             teamList.forEach(tName => {
                 let roster = [];
-                // Add signature real marquee players
                 if (marqueePlayers[tName]) {
                     marqueePlayers[tName].forEach(p => {
                         roster.push({ name: p.name, pos: p.pos, ovr: p.ovr, salary: p.sal, age: Math.floor(Math.random() * 8) + 22 });
                     });
                 }
-                // Fill remaining depth chart to 18-19 starting players per team
-                positionsList.forEach((pos, idx) => {
+                positionsList.forEach(pos => {
                     const rName = `${lastNamesList[Math.floor(Math.random() * lastNamesList.length)]}`;
-                    const ovr = Math.floor(Math.random() * 18) + 70; // 70-88 depth ratings
+                    const ovr = Math.floor(Math.random() * 18) + 70;
                     const sal = parseFloat((Math.random() * 6 + 1).toFixed(1));
                     roster.push({ name: `${pos} ${rName}`, pos: pos, ovr: ovr, salary: sal, age: Math.floor(Math.random() * 9) + 21 });
                 });
@@ -336,7 +309,6 @@
             });
         }
 
-        // Generate Pure Incoming Rookie Prospects (No active NFL players)
         draftPool = [
             { name: "Caleb Williams", pos: "QB", ovr: 88, salary: 4.0, age: 21 },
             { name: "Marvin Harrison Jr.", pos: "WR", ovr: 91, salary: 3.5, age: 21 },
@@ -345,25 +317,17 @@
             { name: "Brock Bowers", pos: "TE", ovr: 86, salary: 3.0, age: 21 },
             { name: "Joe Alt", pos: "OT", ovr: 84, salary: 2.8, age: 21 },
             { name: "Rome Odunze", pos: "WR", ovr: 84, salary: 2.8, age: 21 },
-            { name: "J.J. McCarthy", pos: "QB", ovr: 82, salary: 2.5, age: 21 },
-            { name: "Dallas Turner", pos: "DE", ovr: 83, salary: 2.6, age: 21 },
-            { name: "Terrion Arnold", pos: "CB", ovr: 82, salary: 2.4, age: 21 },
-            { name: "Quinyon Mitchell", pos: "CB", ovr: 83, salary: 2.5, age: 22 },
-            { name: "Olu Fashanu", pos: "OT", ovr: 81, salary: 2.2, age: 21 }
+            { name: "J.J. McCarthy", pos: "QB", ovr: 82, salary: 2.5, age: 21 }
         ];
 
-        // Free Agent Market
         freeAgents = [
             { name: "Ryan Tannehill", pos: "QB", ovr: 78, salary: 3.5, age: 35 },
             { name: "Kareem Hunt", pos: "RB", ovr: 81, salary: 2.5, age: 28 },
             { name: "Michael Thomas", pos: "WR", ovr: 82, salary: 3.0, age: 31 },
-            { name: "Hunter Renfrow", pos: "WR", ovr: 79, salary: 2.0, age: 28 },
-            { name: "Stephon Gilmore", pos: "CB", ovr: 81, salary: 3.5, age: 33 },
-            { name: "Xavien Howard", pos: "CB", ovr: 80, salary: 3.0, age: 30 }
+            { name: "Stephon Gilmore", pos: "CB", ovr: 81, salary: 3.5, age: 33 }
         ];
     }
 
-    // Render team select screen broken down by division
     function renderTeamSelection() {
         const grid = document.getElementById('team-choices');
         grid.innerHTML = '';
@@ -390,8 +354,6 @@
         document.getElementById('team-select-screen').style.display = 'none';
         document.getElementById('main-interface').style.display = 'block';
         updateDashboard();
-
-        // Trigger Offseason Draft immediately at the start of career
         startOffseasonDraft();
     }
 
@@ -408,7 +370,6 @@
         document.getElementById('dash-week').innerText = currentWeek;
     }
 
-    // ---------------- START OF SEASON 3-ROUND DRAFT ----------------
     function startOffseasonDraft() {
         draftRound = 1;
         document.getElementById('draft-modal').style.display = 'flex';
@@ -446,13 +407,11 @@
         if (draftRound <= 3) {
             renderDraftRound();
         } else {
-            // Draft completed -> close draft modal and check roster limit cut rules
             document.getElementById('draft-modal').style.display = 'none';
             checkRosterLimitAndClose();
         }
     }
 
-    // Mandatory Post-Draft Roster Cut Procedure
     function checkRosterLimitAndClose() {
         updateDashboard();
         if (userTeam.roster.length > 22) {
@@ -485,7 +444,6 @@
         checkRosterLimitAndClose();
     }
 
-    // ---------------- SECTION VIEWS (ROSTER, TRADES, FA) ----------------
     function showSection(section) {
         document.getElementById('game-screen').style.display = 'none';
         const view = document.getElementById('content-view');
@@ -551,7 +509,6 @@
         showSection('free-agency');
     }
 
-    // ---------------- 32-TEAM TRADE CENTER ----------------
     function renderTradeCenter() {
         const view = document.getElementById('content-view');
         let otherTeams = allTeams.filter(t => t.name !== userTeam.name);
@@ -624,7 +581,6 @@
             return;
         }
 
-        // Trade evaluation: Partner accepts if offered player overall is within 4 OVR points
         if (offeredPlayer.ovr >= targetPlayer.ovr - 4) {
             userTeam.roster.splice(selectedUserPlayerIdx, 1);
             partnerTeam.roster.splice(selectedTargetPlayerIdx, 1);
@@ -640,7 +596,6 @@
         }
     }
 
-    // ---------------- WEEKLY MATCH SIMULATION ENGINE ----------------
     function startMatch() {
         if (userTeam.roster.length > 22) {
             alert('Your roster exceeds 22 players! Trim your roster before playing.');
@@ -675,7 +630,6 @@
             document.getElementById('scenario-title').innerText = `Situation ${currentGame.step + 1} of 4`;
             document.getElementById('scenario-desc').innerText = currentGame.scenarios[currentGame.step];
         } else {
-            // Conclude Game
             const wins = currentGame.userScore >= currentGame.oppScore;
             if (wins) {
                 userTeam.wins++;
@@ -722,7 +676,6 @@
         setTimeout(loadScenario, 900);
     }
 
-    // Start App
     initializeLeague();
     renderTeamSelection();
 </script>
