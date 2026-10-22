@@ -28,13 +28,13 @@
             min-height: 100vh;
         }
         .container {
-            max-width: 1240px;
+            max-width: 1280px;
             margin: 0 auto;
-            background-color: rgba(15, 23, 42, 0.92);
+            background-color: rgba(15, 23, 42, 0.94);
             backdrop-filter: blur(12px);
             padding: 24px;
             border-radius: 16px;
-            box-shadow: 0 0 30px rgba(0, 240, 255, 0.15), 0 15px 35px rgba(0,0,0,0.7);
+            box-shadow: 0 0 35px rgba(0, 240, 255, 0.15), 0 15px 35px rgba(0,0,0,0.7);
             border: 1px solid rgba(56, 189, 248, 0.25);
         }
         h1, h2, h3, h4 { margin-top: 0; color: #38bdf8; text-shadow: 0 0 10px rgba(56, 189, 248, 0.3); }
@@ -95,7 +95,6 @@
         button.btn-success { background: linear-gradient(135deg, #10b981, #059669); border-color: #34d399; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); }
         button.btn-danger { background: linear-gradient(135deg, #ef4444, #dc2626); border-color: #f87171; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3); }
         button.btn-warning { background: linear-gradient(135deg, #f59e0b, #d97706); border-color: #fbbf24; color: #000; font-weight: 700; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3); }
-        button.btn-purple { background: linear-gradient(135deg, #8b5cf6, #6d28d9); border-color: #c084fc; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3); }
 
         .card {
             background: rgba(15, 23, 42, 0.95);
@@ -105,7 +104,223 @@
             border: 1px solid rgba(51, 65, 85, 0.8);
             box-shadow: 0 8px 25px rgba(0,0,0,0.4);
         }
-        
+
+        /* MADDEN / TOPPS TRADING CARD STYLING */
+        .card-grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+            gap: 16px;
+            padding: 10px 0;
+        }
+
+        .madden-card {
+            position: relative;
+            background: linear-gradient(145deg, #0f172a, #1e293b);
+            border-radius: 14px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 2px solid #38bdf8;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            user-select: none;
+        }
+        .madden-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 12px 28px rgba(0, 240, 255, 0.35);
+        }
+
+        /* Madden Quality Tier Frames */
+        .card-tier-hof {
+            background: linear-gradient(140deg, #231500 0%, #78350f 40%, #d97706 80%, #f59e0b 100%) !important;
+            border: 2px solid #fbbf24 !important;
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.5), 0 8px 20px rgba(0,0,0,0.7) !important;
+        }
+        .card-tier-elite {
+            background: linear-gradient(140deg, #022c22 0%, #064e3b 40%, #047857 80%, #10b981 100%) !important;
+            border: 2px solid #34d399 !important;
+            box-shadow: 0 0 18px rgba(16, 185, 129, 0.4), 0 8px 20px rgba(0,0,0,0.7) !important;
+        }
+        .card-tier-starter {
+            background: linear-gradient(140deg, #0f172a 0%, #1e293b 40%, #0369a1 80%, #0284c7 100%) !important;
+            border: 2px solid #38bdf8 !important;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.3), 0 8px 20px rgba(0,0,0,0.7) !important;
+        }
+        .card-tier-prospect {
+            background: linear-gradient(140deg, #0f172a 0%, #1e293b 70%, #334155 100%) !important;
+            border: 2px solid #94a3b8 !important;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.6) !important;
+        }
+
+        .card-selected-glow {
+            border: 3px solid #00f0ff !important;
+            box-shadow: 0 0 25px #00f0ff, inset 0 0 15px #00f0ff !important;
+            transform: scale(1.03);
+        }
+
+        .card-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .card-pos-badge {
+            font-size: 0.7em;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            background: rgba(0,0,0,0.6);
+            padding: 3px 8px;
+            border-radius: 6px;
+            color: #e2e8f0;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        .card-ovr-badge {
+            font-size: 1.25em;
+            font-weight: 900;
+            padding: 2px 8px;
+            border-radius: 6px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.9);
+            background: rgba(0,0,0,0.7);
+            border: 1px solid rgba(255,255,255,0.25);
+        }
+        .card-header-hof { color: #fef08a; border-color: #f59e0b; }
+        .card-header-elite { color: #a7f3d0; border-color: #10b981; }
+        .card-header-starter { color: #bae6fd; border-color: #38bdf8; }
+        .card-header-prospect { color: #e2e8f0; border-color: #94a3b8; }
+
+        .card-avatar-box {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            padding: 10px 6px;
+            margin-bottom: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .card-tier-tag {
+            font-size: 0.68em;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            color: #fbbf24;
+            text-shadow: 0 0 6px rgba(251, 191, 36, 0.6);
+        }
+        .card-player-initials {
+            font-size: 1.8em;
+            font-weight: 900;
+            letter-spacing: 1px;
+            color: #f8fafc;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
+            margin: 2px 0;
+        }
+        .card-player-name {
+            font-size: 0.95em;
+            font-weight: 800;
+            color: #ffffff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .card-details-sub {
+            font-size: 0.73em;
+            color: #cbd5e1;
+            margin-top: 2px;
+        }
+
+        .card-stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px;
+            background: rgba(0,0,0,0.5);
+            padding: 6px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .card-stat-item {
+            text-align: center;
+            font-size: 0.72em;
+            padding: 2px;
+        }
+        .card-stat-label {
+            color: #94a3b8;
+            font-weight: 700;
+            margin-right: 2px;
+        }
+        .card-stat-val {
+            color: #38bdf8;
+            font-weight: 900;
+        }
+
+        .card-action-box {
+            margin-top: 4px;
+        }
+        .card-action-box button {
+            width: 100%;
+            padding: 6px 10px;
+            font-size: 0.82em;
+            border-radius: 6px;
+        }
+
+        /* Analyst Green Highlight */
+        .analyst-highlight {
+            border: 3px solid #10b981 !important;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.6) !important;
+        }
+        .analyst-badge {
+            background: #10b981;
+            color: #022c22;
+            font-weight: bold;
+            font-size: 0.72em;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+
+        /* LINEUP DROP ZONES */
+        .lineup-slots-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .lineup-drop-slot {
+            background: rgba(15, 23, 42, 0.9);
+            border: 2px dashed #0284c7;
+            border-radius: 12px;
+            padding: 12px;
+            transition: all 0.2s ease;
+        }
+        .lineup-drop-slot.drag-over {
+            background: rgba(2, 132, 199, 0.2);
+            border-color: #00f0ff;
+            box-shadow: 0 0 15px #00f0ff;
+        }
+
+        /* TRADE CENTER SHOWCASE */
+        .trade-showcase-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .trade-column-box {
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #334155;
+            max-height: 580px;
+            overflow-y: auto;
+        }
+        .trade-balance-meter {
+            background: #1e293b;
+            border: 1px solid #38bdf8;
+            padding: 12px 18px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
         .team-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -124,52 +339,6 @@
             margin-top: 10px;
             border-left: 4px solid #38bdf8;
         }
-        
-        .player-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 14px;
-            border-bottom: 1px solid #334155;
-            font-size: 0.9em;
-            border-radius: 8px;
-            margin-bottom: 6px;
-            background: #1e293b;
-            transition: all 0.2s ease;
-        }
-        .player-item:hover { background: #334155; }
-        .player-ovr {
-            padding: 2px 7px;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 0.85em;
-            margin-right: 6px;
-        }
-        .ovr-gold { background: linear-gradient(135deg, #f59e0b, #b45309); color: #fff; }
-        .ovr-green { background: linear-gradient(135deg, #10b981, #047857); color: #fff; }
-        .ovr-blue { background: linear-gradient(135deg, #0284c7, #1d4ed8); color: #fff; }
-
-        .stat-badge {
-            font-size: 0.78em;
-            color: #94a3b8;
-            margin-top: 3px;
-        }
-
-        /* Analyst Neon Green Highlight */
-        .analyst-highlight {
-            background: rgba(16, 185, 129, 0.22) !important;
-            border: 2px solid #10b981 !important;
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
-        }
-        .analyst-badge {
-            background: #10b981;
-            color: #022c22;
-            font-weight: bold;
-            font-size: 0.75em;
-            padding: 2px 8px;
-            border-radius: 12px;
-            margin-left: 6px;
-        }
 
         .modal {
             position: fixed;
@@ -185,46 +354,13 @@
             background: var(--bg-card);
             padding: 24px;
             border-radius: 14px;
-            max-width: 820px;
+            max-width: 860px;
             width: 94%;
             max-height: 88vh;
             overflow-y: auto;
             border: 1px solid #38bdf8;
             box-shadow: 0 0 35px rgba(0, 240, 255, 0.2);
         }
-
-        /* Trade Center Grid */
-        .trade-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-        .trade-column {
-            background: #0f172a;
-            padding: 12px;
-            border-radius: 10px;
-            border: 1px solid #334155;
-            max-height: 480px;
-            overflow-y: auto;
-        }
-        .trade-section-title {
-            background: #334155;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.82em;
-            font-weight: bold;
-            color: #38bdf8;
-            margin: 8px 0 6px 0;
-            text-transform: uppercase;
-        }
-        .trade-checkbox-item {
-            display: flex;
-            align-items: center;
-            padding: 6px 8px;
-            border-bottom: 1px solid #1e293b;
-            font-size: 0.85em;
-        }
-        .trade-checkbox-item input { margin-right: 8px; cursor: pointer; }
 
         select {
             width: 100%;
@@ -325,25 +461,13 @@
             color: #ecfdf5;
             font-size: 0.9em;
         }
-
-        .lineup-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 15px;
-        }
-        .lineup-slot {
-            background: #0f172a;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #334155;
-        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h1>🏈 NFL Franchise Manager 2026</h1>
-    <p class="subtitle">Real NFL Depth Charts • Madden 27 Ratings • Playable Offense & Defense Engine • Draft & Trades</p>
+    <p class="subtitle">Madden / Topps Trading Cards • Drag & Drop Lineups • Accurate Rosters • Offense & Defense</p>
 
     <!-- IN-PAGE BANNER FOR MESSAGES -->
     <div id="notification-banner"></div>
@@ -368,8 +492,8 @@
         </div>
 
         <div class="nav-buttons">
-            <button onclick="showSection('lineup')" class="btn-warning">🏈 Set Starting Lineup</button>
-            <button onclick="showSection('roster')">📋 Roster & Depth Chart</button>
+            <button onclick="showSection('lineup')" class="btn-warning">🏈 Set Starting Lineup (Drag & Drop)</button>
+            <button onclick="showSection('roster')">📋 Roster Trading Cards</button>
             <button onclick="showSection('trade')">🔄 32-Team Trade Center</button>
             <button onclick="showSection('free-agency')">💼 Free Agency Market</button>
             <button onclick="startMatch()" class="btn-success">🎮 Play Interactive Game</button>
@@ -448,7 +572,7 @@
         <h2 style="color:#f87171;">⚠️ Roster Trim Required!</h2>
         <p style="color:#e2e8f0; font-size:0.9em;">Your roster exceeds the <strong>22-player cap</strong>. Release players to proceed.</p>
         <div id="cut-status-msg" style="display:none; padding:8px; background:#ef4444; color:white; border-radius:6px; margin-bottom:10px; text-align:center; font-weight:bold;"></div>
-        <div id="cut-player-list"></div>
+        <div id="cut-player-list" class="card-grid-container"></div>
         <button onclick="checkRosterLimitAndClose()" class="btn-success" style="width:100%; margin-top:15px;">Confirm Roster Size</button>
     </div>
 </div>
@@ -473,12 +597,6 @@
 
     function getPosFull(posCode) {
         return POS_NAMES[posCode] || posCode;
-    }
-
-    function getOvrClass(ovr) {
-        if (ovr >= 90) return 'ovr-gold';
-        if (ovr >= 80) return 'ovr-green';
-        return 'ovr-blue';
     }
 
     function notify(message, isError = false) {
@@ -506,8 +624,58 @@
         return stats;
     }
 
-    function formatStatsString(stats) {
-        return Object.entries(stats).map(([k,v]) => `<span style="color:#38bdf8;">${k}</span>:${v}`).join(' • ');
+    /* MADDEN / TOPPS CARD RENDERER ENGINE */
+    function renderMaddenCard(p, opts = {}) {
+        let tierClass = 'card-tier-prospect';
+        let headerClass = 'card-header-prospect';
+        let tierName = '🎓 PROSPECT';
+
+        if (p.ovr >= 90) {
+            tierClass = 'card-tier-hof';
+            headerClass = 'card-header-hof';
+            tierName = '👑 HOF ELITE';
+        } else if (p.ovr >= 80) {
+            tierClass = 'card-tier-elite';
+            headerClass = 'card-header-elite';
+            tierName = '⚡ ELITE';
+        } else if (p.ovr >= 70) {
+            tierClass = 'card-tier-starter';
+            headerClass = 'card-header-starter';
+            tierName = '⭐ STARTER';
+        }
+
+        const initials = p.name ? p.name.split(' ').map(n => n[0]).join('') : 'NFL';
+        const statsEntries = Object.entries(p.stats || {}).slice(0, 4);
+        const statsHtml = statsEntries.map(([k, v]) => `
+            <div class="card-stat-item">
+                <span class="card-stat-label">${k}:</span>
+                <span class="card-stat-val">${v}</span>
+            </div>
+        `).join('');
+
+        const dragAttr = opts.draggable ? `draggable="true" ondragstart="handleCardDragStart(event, ${opts.rosterIdx})"` : '';
+        const selectedClass = opts.isSelected ? 'card-selected-glow' : '';
+        const analystClass = opts.isAnalyst ? 'analyst-highlight' : '';
+
+        return `
+            <div class="madden-card ${tierClass} ${selectedClass} ${analystClass}" ${dragAttr}>
+                ${opts.topCheckHtml || ''}
+                <div class="card-top-bar">
+                    <span class="card-pos-badge">${getPosFull(p.pos)}</span>
+                    <span class="card-ovr-badge ${headerClass}">${p.ovr} <small style="font-size:0.5em;">OVR</small></span>
+                </div>
+                <div class="card-avatar-box">
+                    <div class="card-tier-tag">${tierName}</div>
+                    <div class="card-player-initials">${initials}</div>
+                    <div class="card-player-name">${p.name}</div>
+                    <div class="card-details-sub">$${p.salary}M/yr • Age ${p.age}</div>
+                </div>
+                <div class="card-stats-grid">
+                    ${statsHtml}
+                </div>
+                ${opts.actionBtnHtml ? `<div class="card-action-box">${opts.actionBtnHtml}</div>` : ''}
+            </div>
+        `;
     }
 
     const nflDivisions = {
@@ -521,40 +689,40 @@
         "NFC West": ["Arizona Cardinals", "Los Angeles Rams", "San Francisco 49ers", "Seattle Seahawks"]
     };
 
-    // ACCURATE 32 NFL TEAM DEPTH CHARTS FROM PDF
+    // ACCURATE 32 NFL TEAM DEPTH CHARTS INCLUDING ELITE DEFENSIVE STARS
     const pdfDepthCharts = {
-        "Buffalo Bills": [{n:"Josh Allen",p:"QB",o:98,s:43.0},{n:"James Cook",p:"RB",o:88,s:8.0},{n:"Ray Davis",p:"RB",o:77,s:2.0},{n:"Ty Johnson",p:"RB",o:75,s:1.5},{n:"DJ Moore",p:"WR",o:89,s:16.0},{n:"Khalil Shakir",p:"WR",o:81,s:4.0},{n:"Keon Coleman",p:"WR",o:81,s:3.0},{n:"Dalton Kincaid",p:"TE",o:85,s:4.0},{n:"Dawson Knox",p:"TE",o:79,s:6.0},{n:"Tyler Bass",p:"K",o:78,s:2.5}],
-        "Miami Dolphins": [{n:"Malik Willis",p:"QB",o:74,s:3.0},{n:"Tommy DeVito",p:"QB",o:72,s:1.2},{n:"De'Von Achane",p:"RB",o:88,s:6.0},{n:"Jaylen Wright",p:"RB",o:76,s:2.0},{n:"Ollie Gordon II",p:"RB",o:75,s:1.8},{n:"Caleb Douglas",p:"WR",o:74,s:1.5},{n:"Malik Washington",p:"WR",o:75,s:2.0},{n:"Jalen Tolbert",p:"WR",o:76,s:2.2},{n:"Chris Bell",p:"WR",o:72,s:1.2},{n:"Greg Dulcich",p:"TE",o:75,s:2.0},{n:"Riley Patterson",p:"K",o:75,s:1.5}],
-        "New York Jets": [{n:"Geno Smith",p:"QB",o:83,s:22.0},{n:"Breece Hall",p:"RB",o:90,s:9.0},{n:"Braelon Allen",p:"RB",o:78,s:2.5},{n:"Isaiah Davis",p:"RB",o:73,s:1.5},{n:"Garrett Wilson",p:"WR",o:89,s:7.0},{n:"Adonai Mitchell",p:"WR",o:77,s:2.5},{n:"Omarion Cooper Jr.",p:"WR",o:73,s:1.5},{n:"Kenyan Sadiq",p:"TE",o:74,s:1.8},{n:"Mason Taylor",p:"TE",o:72,s:1.5},{n:"Blake Grupe",p:"K",o:76,s:1.8}],
-        "New England Patriots": [{n:"Drake Maye",p:"QB",o:80,s:4.5},{n:"Rhamondre Stevenson",p:"RB",o:83,s:6.0},{n:"TreVeyon Henderson",p:"RB",o:81,s:3.0},{n:"A.J. Brown",p:"WR",o:93,s:20.0},{n:"Romeo Doubs",p:"WR",o:81,s:5.0},{n:"DeMario Douglas",p:"WR",o:78,s:2.5},{n:"Mack Hollins",p:"WR",o:74,s:2.0},{n:"Hunter Henry",p:"TE",o:80,s:5.0},{n:"Andy Borregales",p:"K",o:74,s:1.5}],
-        "Dallas Cowboys": [{n:"Dak Prescott",p:"QB",o:90,s:40.0},{n:"Sam Howell",p:"QB",o:75,s:3.0},{n:"Javonte Williams",p:"RB",o:81,s:6.0},{n:"Malik Davis",p:"RB",o:74,s:1.5},{n:"CeeDee Lamb",p:"WR",o:96,s:22.0},{n:"George Pickens",p:"WR",o:84,s:10.0},{n:"Ryan Flournoy",p:"WR",o:74,s:1.8},{n:"Jake Ferguson",p:"TE",o:82,s:5.0},{n:"Brandon Aubrey",p:"K",o:88,s:4.0}],
-        "Philadelphia Eagles": [{n:"Jalen Hurts",p:"QB",o:90,s:30.0},{n:"Tanner McKee",p:"QB",o:72,s:1.2},{n:"Saquon Barkley",p:"RB",o:92,s:12.0},{n:"Tank Bigsby",p:"RB",o:78,s:2.5},{n:"DeVonta Smith",p:"WR",o:89,s:15.0},{n:"Makai Lemon",p:"WR",o:74,s:1.8},{n:"Dontayvion Wicks",p:"WR",o:77,s:2.2},{n:"Dallas Goedert",p:"TE",o:85,s:9.0},{n:"Jake Elliott",p:"K",o:84,s:3.5}],
-        "New York Giants": [{n:"Jaxson Dart",p:"QB",o:77,s:3.0},{n:"Jameis Winston",p:"QB",o:75,s:2.5},{n:"Cam Skattebo",p:"RB",o:79,s:2.0},{n:"Najee Harris",p:"RB",o:82,s:6.0},{n:"Tyrone Tracy Jr.",p:"RB",o:76,s:2.0},{n:"Malik Nabers",p:"WR",o:87,s:4.0},{n:"Malachi Fields",p:"WR",o:73,s:1.5},{n:"Darnell Mooney",p:"WR",o:80,s:6.0},{n:"Isaiah Likely",p:"TE",o:81,s:4.0},{n:"Dominic Zvada",p:"K",o:75,s:1.5}],
-        "Washington Commanders": [{n:"Jayden Daniels",p:"QB",o:83,s:5.0},{n:"Marcus Mariota",p:"QB",o:74,s:2.0},{n:"Rachaad White",p:"RB",o:81,s:4.0},{n:"Jacory Croskey-Merritt",p:"RB",o:72,s:1.2},{n:"Terry McLaurin",p:"WR",o:89,s:15.0},{n:"Stefon Diggs",p:"WR",o:87,s:12.0},{n:"Antwane Williams",p:"WR",o:73,s:1.5},{n:"Chig Okonkwo",p:"TE",o:78,s:3.0},{n:"Drew Stevens",p:"K",o:75,s:1.5}],
-        "Baltimore Ravens": [{n:"Lamar Jackson",p:"QB",o:95,s:40.0},{n:"Derrick Henry",p:"RB",o:92,s:8.0},{n:"Justice Hill",p:"RB",o:78,s:3.0},{n:"Rasheen Ali",p:"RB",o:73,s:1.5},{n:"Zay Flowers",p:"WR",o:86,s:5.0},{n:"Rashod Bateman",p:"WR",o:79,s:4.0},{n:"Ja'Kobi Lane",p:"WR",o:74,s:1.8},{n:"Mark Andrews",p:"TE",o:90,s:12.0},{n:"Tyler Loop",p:"K",o:78,s:2.0}],
-        "Cincinnati Bengals": [{n:"Joe Burrow",p:"QB",o:94,s:45.0},{n:"Joe Flacco",p:"QB",o:74,s:2.0},{n:"Chase Brown",p:"RB",o:82,s:3.0},{n:"Samaje Perine",p:"RB",o:76,s:2.0},{n:"Ja'Marr Chase",p:"WR",o:95,s:18.0},{n:"Tee Higgins",p:"WR",o:87,s:12.0},{n:"Andrei Iosivas",p:"WR",o:76,s:2.0},{n:"Mike Gesicki",p:"TE",o:79,s:3.5},{n:"Evan McPherson",p:"K",o:81,s:3.0}],
-        "Cleveland Browns": [{n:"Deshaun Watson",p:"QB",o:77,s:23.0},{n:"Shedeur Sanders",p:"QB",o:76,s:3.0},{n:"Quinshon Judkins",p:"RB",o:82,s:3.5},{n:"Dylan Sampson",p:"RB",o:75,s:2.0},{n:"KC Concepcion",p:"WR",o:78,s:2.5},{n:"Jerry Jeudy",p:"WR",o:81,s:7.0},{n:"Harold Fannin Jr.",p:"TE",o:78,s:2.2},{n:"Andre Szmyt",p:"K",o:74,s:1.5}],
-        "Pittsburgh Steelers": [{n:"Aaron Rodgers",p:"QB",o:88,s:25.0},{n:"Jaylen Warren",p:"RB",o:83,s:4.0},{n:"Rico Dowdle",p:"RB",o:78,s:2.5},{n:"Michael Pittman Jr.",p:"WR",o:86,s:14.0},{n:"DK Metcalf",p:"WR",o:88,s:16.0},{n:"Pat Freiermuth",p:"TE",o:81,s:6.0},{n:"Chris Boswell",p:"K",o:83,s:3.5}],
-        "Chicago Bears": [{n:"Caleb Williams",p:"QB",o:82,s:5.0},{n:"Tyson Bagent",p:"QB",o:70,s:1.0},{n:"D'Andre Swift",p:"RB",o:81,s:8.0},{n:"Kyle Monangai",p:"RB",o:74,s:1.8},{n:"Rome Odunze",p:"WR",o:84,s:3.5},{n:"Luther Burden III",p:"WR",o:81,s:3.0},{n:"Colston Loveland",p:"TE",o:80,s:2.5},{n:"Cole Kmet",p:"TE",o:81,s:7.0},{n:"Cairo Santos",p:"K",o:78,s:2.2}],
-        "Detroit Lions": [{n:"Jared Goff",p:"QB",o:87,s:32.0},{n:"Jahmyr Gibbs",p:"RB",o:89,s:5.0},{n:"Isiah Pacheco",p:"RB",o:84,s:3.5},{n:"Jacob Saylors",p:"RB",o:73,s:1.5},{n:"Amon-Ra St. Brown",p:"WR",o:93,s:18.0},{n:"Jameson Williams",p:"WR",o:82,s:4.0},{n:"Isaac TeSlaa",p:"WR",o:74,s:1.8},{n:"Sam LaPorta",p:"TE",o:87,s:6.0},{n:"Jake Bates",p:"K",o:77,s:1.8}],
-        "Green Bay Packers": [{n:"Jordan Love",p:"QB",o:88,s:28.0},{n:"Josh Jacobs",p:"RB",o:88,s:11.0},{n:"MarShawn Lloyd",p:"RB",o:76,s:2.0},{n:"Christian Watson",p:"WR",o:81,s:4.0},{n:"Matthew Golden",p:"WR",o:75,s:1.8},{n:"Jayden Reed",p:"WR",o:82,s:3.0},{n:"Tucker Kraft",p:"TE",o:80,s:2.5},{n:"Trey Smack",p:"K",o:75,s:1.5}],
-        "Minnesota Vikings": [{n:"Kyler Murray",p:"QB",o:86,s:32.0},{n:"J.J. McCarthy",p:"QB",o:78,s:3.0},{n:"Aaron Jones Sr.",p:"RB",o:86,s:7.0},{n:"Jordan Mason",p:"RB",o:79,s:2.5},{n:"Justin Jefferson",p:"WR",o:98,s:28.0},{n:"Jordan Addison",p:"WR",o:83,s:4.0},{n:"Ja'Corey Brooks",p:"WR",o:74,s:1.8},{n:"T.J. Hockenson",p:"TE",o:88,s:11.0},{n:"Will Reichard",p:"K",o:76,s:1.8}],
-        "Indianapolis Colts": [{n:"Daniel Jones",p:"QB",o:76,s:12.0},{n:"Anthony Richardson",p:"QB",o:82,s:5.0},{n:"Jonathan Taylor",p:"RB",o:90,s:12.0},{n:"Seth McGowan",p:"RB",o:72,s:1.2},{n:"Alec Pierce",p:"WR",o:79,s:3.0},{n:"Josh Downs",p:"WR",o:81,s:3.5},{n:"Keenan Allen",p:"WR",o:85,s:10.0},{n:"Tyler Warren",p:"TE",o:80,s:3.0},{n:"Spencer Shrader",p:"K",o:75,s:1.5}],
-        "Jacksonville Jaguars": [{n:"Trevor Lawrence",p:"QB",o:85,s:30.0},{n:"Bhayshul Tuten",p:"RB",o:77,s:2.2},{n:"Jakobi Meyers",p:"WR",o:82,s:8.0},{n:"Brian Thomas Jr.",p:"WR",o:83,s:3.5},{n:"Travis Hunter",p:"WR",o:85,s:5.0},{n:"Brenton Strange",p:"TE",o:75,s:2.0},{n:"Cam Little",p:"K",o:77,s:1.8}],
-        "Houston Texans": [{n:"C.J. Stroud",p:"QB",o:91,s:6.0},{n:"David Montgomery",p:"RB",o:85,s:6.0},{n:"Woody Marks",p:"RB",o:75,s:2.0},{n:"Nico Collins",p:"WR",o:89,s:12.0},{n:"Tank Dell",p:"WR",o:84,s:3.0},{n:"Jaylin Noel",p:"WR",o:76,s:2.0},{n:"Dalton Schultz",p:"TE",o:81,s:7.0},{n:"Ka'imi Fairbairn",p:"K",o:82,s:3.0}],
-        "Tennessee Titans": [{n:"Cam Ward",p:"QB",o:79,s:4.0},{n:"Tony Pollard",p:"RB",o:82,s:7.0},{n:"Tyjae Spears",p:"RB",o:78,s:2.5},{n:"Wan'Dale Robinson",p:"WR",o:78,s:3.0},{n:"Calvin Ridley",p:"WR",o:84,s:12.0},{n:"Gunnar Helm",p:"TE",o:74,s:1.5},{n:"Joey Slye",p:"K",o:75,s:1.8}],
-        "Tampa Bay Buccaneers": [{n:"Baker Mayfield",p:"QB",o:84,s:20.0},{n:"Bucky Irving",p:"RB",o:81,s:3.0},{n:"Kenny Gainwell",p:"RB",o:78,s:2.5},{n:"Emeka Egbuka",p:"WR",o:82,s:3.5},{n:"Chris Godwin Jr.",p:"WR",o:86,s:12.0},{n:"Jalen McMillan",p:"WR",o:76,s:2.0},{n:"Cade Otton",p:"TE",o:78,s:3.0},{n:"Chase McLaughlin",p:"K",o:77,s:1.8}],
-        "Atlanta Falcons": [{n:"Tua Tagovailoa",p:"QB",o:86,s:30.0},{n:"Michael Penix Jr.",p:"QB",o:77,s:3.0},{n:"Bijan Robinson",p:"RB",o:89,s:6.0},{n:"Brian Robinson Jr.",p:"RB",o:81,s:3.5},{n:"Drake London",p:"WR",o:86,s:5.0},{n:"Zachariah Branch",p:"WR",o:75,s:1.8},{n:"Kyle Pitts Sr.",p:"TE",o:83,s:6.0},{n:"Nick Folk",p:"K",o:79,s:2.0}],
-        "Carolina Panthers": [{n:"Bryce Young",p:"QB",o:76,s:6.0},{n:"Jonathon Brooks",p:"RB",o:81,s:3.0},{n:"Chuba Hubbard",p:"RB",o:80,s:3.0},{n:"Tetairoa McMillan",p:"WR",o:81,s:3.0},{n:"Jalen Coker",p:"WR",o:75,s:1.8},{n:"Xavier Legette",p:"WR",o:77,s:2.2},{n:"Ja'Tavion Sanders",p:"TE",o:75,s:2.0},{n:"Ryan Fitzgerald",p:"K",o:74,s:1.5}],
-        "New Orleans Saints": [{n:"Tyler Shough",p:"QB",o:75,s:2.5},{n:"Travis Etienne Jr.",p:"RB",o:85,s:8.0},{n:"Alvin Kamara",p:"RB",o:88,s:11.0},{n:"Chris Olave",p:"WR",o:87,s:4.0},{n:"Jordyn Tyson",p:"WR",o:75,s:1.8},{n:"Juwan Johnson",p:"TE",o:79,s:3.5},{n:"Daniel Carlson",p:"K",o:82,s:3.5}],
-        "Denver Broncos": [{n:"Bo Nix",p:"QB",o:79,s:3.5},{n:"Jarrett Stidham",p:"QB",o:72,s:1.2},{n:"J.K. Dobbins",p:"RB",o:82,s:3.0},{n:"RJ Harvey",p:"RB",o:74,s:1.8},{n:"Jaylen Waddle",p:"WR",o:88,s:14.0},{n:"Courtland Sutton",p:"WR",o:83,s:11.0},{n:"Evan Engram",p:"TE",o:84,s:6.0},{n:"Wil Lutz",p:"K",o:77,s:2.0}],
-        "Los Angeles Chargers": [{n:"Justin Herbert",p:"QB",o:90,s:38.0},{n:"Omarion Hampton",p:"RB",o:80,s:3.0},{n:"Keaton Mitchell",p:"RB",o:76,s:2.0},{n:"Ladd McConkey",p:"WR",o:82,s:3.0},{n:"Quentin Johnston",p:"WR",o:78,s:2.5},{n:"David Njoku",p:"TE",o:85,s:8.0},{n:"Cameron Dicker",p:"K",o:80,s:2.5}],
-        "Kansas City Chiefs": [{n:"Patrick Mahomes",p:"QB",o:98,s:45.0},{n:"Kenneth Walker III",p:"RB",o:86,s:3.0},{n:"Brashard Smith",p:"RB",o:74,s:1.8},{n:"Rashee Rice",p:"WR",o:87,s:4.0},{n:"Xavier Worthy",p:"WR",o:80,s:3.0},{n:"Travis Kelce",p:"TE",o:94,s:14.0},{n:"Harrison Butker",p:"K",o:85,s:4.0}],
-        "Las Vegas Raiders": [{n:"Fernando Mendoza",p:"QB",o:75,s:2.5},{n:"Kirk Cousins",p:"QB",o:83,s:15.0},{n:"Ashton Jeanty",p:"RB",o:84,s:3.5},{n:"Mike Washington Jr.",p:"RB",o:73,s:1.5},{n:"Tre Tucker",p:"WR",o:78,s:2.5},{n:"Brock Bowers",p:"TE",o:86,s:4.0},{n:"Matt Gay",p:"K",o:78,s:2.0}],
-        "San Francisco 49ers": [{n:"Brock Purdy",p:"QB",o:87,s:1.1},{n:"Mac Jones",p:"QB",o:74,s:2.0},{n:"Christian McCaffrey",p:"RB",o:97,s:12.0},{n:"Kaelon Black",p:"RB",o:73,s:1.5},{n:"Mike Evans",p:"WR",o:91,s:16.0},{n:"Deebo Samuel Sr.",p:"WR",o:87,s:15.0},{n:"George Kittle",p:"TE",o:95,s:14.0},{n:"Eddy Pineiro",p:"K",o:76,s:1.8}],
-        "Arizona Cardinals": [{n:"Jacoby Brissett",p:"QB",o:77,s:3.0},{n:"Carson Beck",p:"QB",o:74,s:2.0},{n:"Jeremyah Love",p:"RB",o:79,s:2.5},{n:"Tyler Allgeier",p:"RB",o:80,s:3.0},{n:"Marvin Harrison Jr.",p:"WR",o:86,s:5.0},{n:"Michael Wilson",p:"WR",o:79,s:2.5},{n:"Trey McBride",p:"TE",o:89,s:8.0},{n:"Chad Ryland",p:"K",o:75,s:1.5}],
-        "Los Angeles Rams": [{n:"Matthew Stafford",p:"QB",o:88,s:27.0},{n:"Ty Simpson",p:"QB",o:73,s:1.5},{n:"Kyren Williams",p:"RB",o:88,s:8.0},{n:"Blake Corum",p:"RB",o:77,s:2.5},{n:"Puka Nacua",p:"WR",o:92,s:2.0},{n:"Davante Adams",p:"WR",o:93,s:22.0},{n:"Terrance Ferguson",p:"TE",o:76,s:2.0},{n:"Harrison Mevis",p:"K",o:75,s:1.5}],
-        "Seattle Seahawks": [{n:"Sam Darnold",p:"QB",o:80,s:5.0},{n:"Jadarian Price",p:"RB",o:78,s:2.2},{n:"Zach Charbonnet",p:"RB",o:79,s:3.0},{n:"Jaxon Smith-Njigba",p:"WR",o:85,s:4.0},{n:"Rashid Shaheed",p:"WR",o:82,s:3.0},{n:"Cooper Kupp",p:"WR",o:89,s:18.0},{n:"AJ Barner",p:"TE",o:75,s:1.8},{n:"Jason Myers",p:"K",o:80,s:2.5}]
+        "Buffalo Bills": [{n:"Josh Allen",p:"QB",o:98,s:43.0},{n:"James Cook",p:"RB",o:88,s:8.0},{n:"Ray Davis",p:"RB",o:77,s:2.0},{n:"Ty Johnson",p:"RB",o:75,s:1.5},{n:"DJ Moore",p:"WR",o:89,s:16.0},{n:"Khalil Shakir",p:"WR",o:81,s:4.0},{n:"Keon Coleman",p:"WR",o:81,s:3.0},{n:"Dalton Kincaid",p:"TE",o:85,s:4.0},{n:"Dawson Knox",p:"TE",o:79,s:6.0},{n:"Ed Oliver",p:"DT",o:88,s:12.0},{n:"Matt Milano",p:"LB",o:87,s:10.0},{n:"Taron Johnson",p:"CB",o:86,s:8.0},{n:"Tyler Bass",p:"K",o:78,s:2.5}],
+        "Miami Dolphins": [{n:"Tua Tagovailoa",p:"QB",o:86,s:30.0},{n:"De'Von Achane",p:"RB",o:88,s:6.0},{n:"Tyreek Hill",p:"WR",o:98,s:28.0},{n:"Jaylen Waddle",p:"WR",o:88,s:14.0},{n:"Malik Washington",p:"WR",o:75,s:2.0},{n:"Jalen Ramsey",p:"CB",o:92,s:20.0},{n:"Bradley Chubb",p:"DE",o:86,s:12.0},{n:"Jevon Holland",p:"S",o:86,s:7.0},{n:"Riley Patterson",p:"K",o:75,s:1.5}],
+        "New York Jets": [{n:"Geno Smith",p:"QB",o:83,s:22.0},{n:"Breece Hall",p:"RB",o:90,s:9.0},{n:"Braelon Allen",p:"RB",o:78,s:2.5},{n:"Garrett Wilson",p:"WR",o:89,s:7.0},{n:"Adonai Mitchell",p:"WR",o:77,s:2.5},{n:"Sauce Gardner",p:"CB",o:95,s:10.0},{n:"Quinnen Williams",p:"DT",o:94,s:21.0},{n:"CJ Mosley",p:"LB",o:88,s:12.0},{n:"Mason Taylor",p:"TE",o:72,s:1.5},{n:"Blake Grupe",p:"K",o:76,s:1.8}],
+        "New England Patriots": [{n:"Drake Maye",p:"QB",o:80,s:4.5},{n:"Rhamondre Stevenson",p:"RB",o:83,s:6.0},{n:"TreVeyon Henderson",p:"RB",o:81,s:3.0},{n:"A.J. Brown",p:"WR",o:93,s:20.0},{n:"Romeo Doubs",p:"WR",o:81,s:5.0},{n:"DeMario Douglas",p:"WR",o:78,s:2.5},{n:"Christian Barmore",p:"DT",o:86,s:8.0},{n:"Hunter Henry",p:"TE",o:80,s:5.0},{n:"Andy Borregales",p:"K",o:74,s:1.5}],
+        "Dallas Cowboys": [{n:"Dak Prescott",p:"QB",o:90,s:40.0},{n:"Javonte Williams",p:"RB",o:81,s:6.0},{n:"CeeDee Lamb",p:"WR",o:96,s:22.0},{n:"George Pickens",p:"WR",o:84,s:10.0},{n:"Micah Parsons",p:"LB",o:98,s:25.0},{n:"Trevon Diggs",p:"CB",o:87,s:12.0},{n:"DeMarcus Lawrence",p:"DE",o:86,s:11.0},{n:"Jake Ferguson",p:"TE",o:82,s:5.0},{n:"Brandon Aubrey",p:"K",o:88,s:4.0}],
+        "Philadelphia Eagles": [{n:"Jalen Hurts",p:"QB",o:90,s:30.0},{n:"Saquon Barkley",p:"RB",o:92,s:12.0},{n:"Tank Bigsby",p:"RB",o:78,s:2.5},{n:"DeVonta Smith",p:"WR",o:89,s:15.0},{n:"Dontayvion Wicks",p:"WR",o:77,s:2.2},{n:"Jalen Carter",p:"DT",o:89,s:6.0},{n:"Darius Slay",p:"CB",o:86,s:10.0},{n:"CJ Gardner-Johnson",p:"S",o:85,s:7.0},{n:"Dallas Goedert",p:"TE",o:85,s:9.0},{n:"Jake Elliott",p:"K",o:84,s:3.5}],
+        "New York Giants": [{n:"Jaxson Dart",p:"QB",o:77,s:3.0},{n:"Jameis Winston",p:"QB",o:75,s:2.5},{n:"Cam Skattebo",p:"RB",o:79,s:2.0},{n:"Najee Harris",p:"RB",o:82,s:6.0},{n:"Malik Nabers",p:"WR",o:87,s:4.0},{n:"Darnell Mooney",p:"WR",o:80,s:6.0},{n:"Dexter Lawrence",p:"DT",o:96,s:22.0},{n:"Brian Burns",p:"DE",o:88,s:15.0},{n:"Kayvon Thibodeaux",p:"LB",o:84,s:6.0},{n:"Isaiah Likely",p:"TE",o:81,s:4.0},{n:"Dominic Zvada",p:"K",o:75,s:1.5}],
+        "Washington Commanders": [{n:"Jayden Daniels",p:"QB",o:83,s:5.0},{n:"Rachaad White",p:"RB",o:81,s:4.0},{n:"Terry McLaurin",p:"WR",o:89,s:15.0},{n:"Stefon Diggs",p:"WR",o:87,s:12.0},{n:"Frankie Luvu",p:"LB",o:85,s:7.0},{n:"Jonathan Allen",p:"DT",o:86,s:10.0},{n:"Chig Okonkwo",p:"TE",o:78,s:3.0},{n:"Drew Stevens",p:"K",o:75,s:1.5}],
+        "Baltimore Ravens": [{n:"Lamar Jackson",p:"QB",o:95,s:40.0},{n:"Derrick Henry",p:"RB",o:92,s:8.0},{n:"Justice Hill",p:"RB",o:78,s:3.0},{n:"Zay Flowers",p:"WR",o:86,s:5.0},{n:"Rashod Bateman",p:"WR",o:79,s:4.0},{n:"Roquan Smith",p:"LB",o:95,s:18.0},{n:"Kyle Hamilton",p:"S",o:93,s:8.0},{n:"Nnamdi Madubuike",p:"DT",o:90,s:14.0},{n:"Mark Andrews",p:"TE",o:90,s:12.0},{n:"Tyler Loop",p:"K",o:78,s:2.0}],
+        "Cincinnati Bengals": [{n:"Joe Burrow",p:"QB",o:94,s:45.0},{n:"Chase Brown",p:"RB",o:82,s:3.0},{n:"Ja'Marr Chase",p:"WR",o:95,s:18.0},{n:"Tee Higgins",p:"WR",o:87,s:12.0},{n:"Trey Hendrickson",p:"DE",o:92,s:16.0},{n:"Logan Wilson",p:"LB",o:84,s:7.0},{n:"Mike Gesicki",p:"TE",o:79,s:3.5},{n:"Evan McPherson",p:"K",o:81,s:3.0}],
+        "Cleveland Browns": [{n:"Deshaun Watson",p:"QB",o:77,s:23.0},{n:"Shedeur Sanders",p:"QB",o:76,s:3.0},{n:"Quinshon Judkins",p:"RB",o:82,s:3.5},{n:"KC Concepcion",p:"WR",o:78,s:2.5},{n:"Jerry Jeudy",p:"WR",o:81,s:7.0},{n:"Myles Garrett",p:"DE",o:98,s:25.0},{n:"Denzel Ward",p:"CB",o:90,s:15.0},{n:"Jeremiah Owusu-Koramoah",p:"LB",o:87,s:9.0},{n:"Harold Fannin Jr.",p:"TE",o:78,s:2.2},{n:"Andre Szmyt",p:"K",o:74,s:1.5}],
+        "Pittsburgh Steelers": [{n:"Aaron Rodgers",p:"QB",o:88,s:25.0},{n:"Jaylen Warren",p:"RB",o:83,s:4.0},{n:"Michael Pittman Jr.",p:"WR",o:86,s:14.0},{n:"DK Metcalf",p:"WR",o:88,s:16.0},{n:"TJ Watt",p:"LB",o:97,s:24.0},{n:"Cameron Heyward",p:"DT",o:90,s:14.0},{n:"Minkah Fitzpatrick",p:"S",o:91,s:15.0},{n:"Pat Freiermuth",p:"TE",o:81,s:6.0},{n:"Chris Boswell",p:"K",o:83,s:3.5}],
+        "Chicago Bears": [{n:"Caleb Williams",p:"QB",o:82,s:5.0},{n:"D'Andre Swift",p:"RB",o:81,s:8.0},{n:"Rome Odunze",p:"WR",o:84,s:3.5},{n:"Luther Burden III",p:"WR",o:81,s:3.0},{n:"Jaylon Johnson",p:"CB",o:92,s:18.0},{n:"Montez Sweat",p:"DE",o:87,s:12.0},{n:"Tremaine Edmunds",p:"LB",o:84,s:10.0},{n:"Colston Loveland",p:"TE",o:80,s:2.5},{n:"Cole Kmet",p:"TE",o:81,s:7.0},{n:"Cairo Santos",p:"K",o:78,s:2.2}],
+        "Detroit Lions": [{n:"Jared Goff",p:"QB",o:87,s:32.0},{n:"Jahmyr Gibbs",p:"RB",o:89,s:5.0},{n:"Isiah Pacheco",p:"RB",o:84,s:3.5},{n:"Amon-Ra St. Brown",p:"WR",o:93,s:18.0},{n:"Jameson Williams",p:"WR",o:82,s:4.0},{n:"Aidan Hutchinson",p:"DE",o:93,s:12.0},{n:"Brian Branch",p:"S",o:88,s:4.0},{n:"Jack Campbell",p:"LB",o:83,s:3.0},{n:"Sam LaPorta",p:"TE",o:87,s:6.0},{n:"Jake Bates",p:"K",o:77,s:1.8}],
+        "Green Bay Packers": [{n:"Jordan Love",p:"QB",o:88,s:28.0},{n:"Josh Jacobs",p:"RB",o:88,s:11.0},{n:"Christian Watson",p:"WR",o:81,s:4.0},{n:"Jayden Reed",p:"WR",o:82,s:3.0},{n:"Rashan Gary",p:"LB",o:87,s:14.0},{n:"Jaire Alexander",p:"CB",o:89,s:16.0},{n:"Xavier McKinney",p:"S",o:88,s:11.0},{n:"Tucker Kraft",p:"TE",o:80,s:2.5},{n:"Trey Smack",p:"K",o:75,s:1.5}],
+        "Minnesota Vikings": [{n:"Kyler Murray",p:"QB",o:86,s:32.0},{n:"J.J. McCarthy",p:"QB",o:78,s:3.0},{n:"Aaron Jones Sr.",p:"RB",o:86,s:7.0},{n:"Justin Jefferson",p:"WR",o:98,s:28.0},{n:"Jordan Addison",p:"WR",o:83,s:4.0},{n:"Andrew Van Ginkel",p:"LB",o:86,s:8.0},{n:"Jonathan Greenard",p:"DE",o:85,s:9.0},{n:"Harrison Smith",p:"S",o:85,s:8.0},{n:"T.J. Hockenson",p:"TE",o:88,s:11.0},{n:"Will Reichard",p:"K",o:76,s:1.8}],
+        "Indianapolis Colts": [{n:"Daniel Jones",p:"QB",o:76,s:12.0},{n:"Anthony Richardson",p:"QB",o:82,s:5.0},{n:"Jonathan Taylor",p:"RB",o:90,s:12.0},{n:"Alec Pierce",p:"WR",o:79,s:3.0},{n:"Josh Downs",p:"WR",o:81,s:3.5},{n:"Keenan Allen",p:"WR",o:85,s:10.0},{n:"DeForest Buckner",p:"DT",o:89,s:16.0},{n:"Zaire Franklin",p:"LB",o:84,s:6.0},{n:"Tyler Warren",p:"TE",o:80,s:3.0},{n:"Spencer Shrader",p:"K",o:75,s:1.5}],
+        "Jacksonville Jaguars": [{n:"Trevor Lawrence",p:"QB",o:85,s:30.0},{n:"Bhayshul Tuten",p:"RB",o:77,s:2.2},{n:"Jakobi Meyers",p:"WR",o:82,s:8.0},{n:"Brian Thomas Jr.",p:"WR",o:83,s:3.5},{n:"Travis Hunter",p:"WR",o:85,s:5.0},{n:"Josh Hines-Allen",p:"DE",o:89,s:15.0},{n:"Foyesade Oluokun",p:"LB",o:86,s:9.0},{n:"Brenton Strange",p:"TE",o:75,s:2.0},{n:"Cam Little",p:"K",o:77,s:1.8}],
+        "Houston Texans": [{n:"C.J. Stroud",p:"QB",o:91,s:6.0},{n:"David Montgomery",p:"RB",o:85,s:6.0},{n:"Nico Collins",p:"WR",o:89,s:12.0},{n:"Tank Dell",p:"WR",o:84,s:3.0},{n:"Danielle Hunter",p:"DE",o:90,s:17.0},{n:"Will Anderson Jr.",p:"DE",o:89,s:7.0},{n:"Derek Stingley Jr.",p:"CB",o:90,s:8.0},{n:"Dalton Schultz",p:"TE",o:81,s:7.0},{n:"Ka'imi Fairbairn",p:"K",o:82,s:3.0}],
+        "Tennessee Titans": [{n:"Cam Ward",p:"QB",o:79,s:4.0},{n:"Tony Pollard",p:"RB",o:82,s:7.0},{n:"Tyjae Spears",p:"RB",o:78,s:2.5},{n:"Wan'Dale Robinson",p:"WR",o:78,s:3.0},{n:"Calvin Ridley",p:"WR",o:84,s:12.0},{n:"Jeffery Simmons",p:"DT",o:89,s:16.0},{n:"L'Jarius Sneed",p:"CB",o:87,s:14.0},{n:"Gunnar Helm",p:"TE",o:74,s:1.5},{n:"Joey Slye",p:"K",o:75,s:1.8}],
+        "Tampa Bay Buccaneers": [{n:"Baker Mayfield",p:"QB",o:84,s:20.0},{n:"Bucky Irving",p:"RB",o:81,s:3.0},{n:"Emeka Egbuka",p:"WR",o:82,s:3.5},{n:"Chris Godwin Jr.",p:"WR",o:86,s:12.0},{n:"Antoine Winfield Jr.",p:"S",o:92,s:18.0},{n:"Vita Vea",p:"DT",o:88,s:12.0},{n:"Lavonte David",p:"LB",o:86,s:9.0},{n:"Cade Otton",p:"TE",o:78,s:3.0},{n:"Chase McLaughlin",p:"K",o:77,s:1.8}],
+        "Atlanta Falcons": [{n:"Tua Tagovailoa",p:"QB",o:86,s:30.0},{n:"Michael Penix Jr.",p:"QB",o:77,s:3.0},{n:"Bijan Robinson",p:"RB",o:89,s:6.0},{n:"Brian Robinson Jr.",p:"RB",o:81,s:3.5},{n:"Drake London",p:"WR",o:86,s:5.0},{n:"Jessie Bates III",p:"S",o:91,s:16.0},{n:"Matthew Judon",p:"DE",o:85,s:10.0},{n:"Kyle Pitts Sr.",p:"TE",o:83,s:6.0},{n:"Nick Folk",p:"K",o:79,s:2.0}],
+        "Carolina Panthers": [{n:"Bryce Young",p:"QB",o:76,s:6.0},{n:"Jonathon Brooks",p:"RB",o:81,s:3.0},{n:"Chuba Hubbard",p:"RB",o:80,s:3.0},{n:"Tetairoa McMillan",p:"WR",o:81,s:3.0},{n:"Xavier Legette",p:"WR",o:77,s:2.2},{n:"Derrick Brown",p:"DT",o:90,s:17.0},{n:"Jaycee Horn",p:"CB",o:86,s:10.0},{n:"Ja'Tavion Sanders",p:"TE",o:75,s:2.0},{n:"Ryan Fitzgerald",p:"K",o:74,s:1.5}],
+        "New Orleans Saints": [{n:"Tyler Shough",p:"QB",o:75,s:2.5},{n:"Travis Etienne Jr.",p:"RB",o:85,s:8.0},{n:"Alvin Kamara",p:"RB",o:88,s:11.0},{n:"Chris Olave",p:"WR",o:87,s:4.0},{n:"Demario Davis",p:"LB",o:89,s:10.0},{n:"Marshon Lattimore",p:"CB",o:87,s:13.0},{n:"Juwan Johnson",p:"TE",o:79,s:3.5},{n:"Daniel Carlson",p:"K",o:82,s:3.5}],
+        "Denver Broncos": [{n:"Bo Nix",p:"QB",o:79,s:3.5},{n:"Jarrett Stidham",p:"QB",o:72,s:1.2},{n:"J.K. Dobbins",p:"RB",o:82,s:3.0},{n:"RJ Harvey",p:"RB",o:74,s:1.8},{n:"Jaylen Waddle",p:"WR",o:88,s:14.0},{n:"Courtland Sutton",p:"WR",o:83,s:11.0},{n:"Patrick Surtain II",p:"CB",o:97,s:24.0},{n:"Zach Allen",p:"DE",o:85,s:8.0},{n:"Alex Singleton",p:"LB",o:83,s:5.0},{n:"Evan Engram",p:"TE",o:84,s:6.0},{n:"Wil Lutz",p:"K",o:77,s:2.0}],
+        "Los Angeles Chargers": [{n:"Justin Herbert",p:"QB",o:90,s:38.0},{n:"Omarion Hampton",p:"RB",o:80,s:3.0},{n:"Ladd McConkey",p:"WR",o:82,s:3.0},{n:"Quentin Johnston",p:"WR",o:78,s:2.5},{n:"Derwin James Jr.",p:"S",o:91,s:18.0},{n:"Joey Bosa",p:"DE",o:87,s:14.0},{n:"Khalil Mack",p:"LB",o:90,s:16.0},{n:"David Njoku",p:"TE",o:85,s:8.0},{n:"Cameron Dicker",p:"K",o:80,s:2.5}],
+        "Kansas City Chiefs": [{n:"Patrick Mahomes",p:"QB",o:98,s:45.0},{n:"Kenneth Walker III",p:"RB",o:86,s:3.0},{n:"Rashee Rice",p:"WR",o:87,s:4.0},{n:"Xavier Worthy",p:"WR",o:80,s:3.0},{n:"Chris Jones",p:"DT",o:96,s:28.0},{n:"Trent McDuffie",p:"CB",o:90,s:8.0},{n:"Nick Bolton",p:"LB",o:86,s:9.0},{n:"Travis Kelce",p:"TE",o:94,s:14.0},{n:"Harrison Butker",p:"K",o:85,s:4.0}],
+        "Las Vegas Raiders": [{n:"Fernando Mendoza",p:"QB",o:75,s:2.5},{n:"Kirk Cousins",p:"QB",o:83,s:15.0},{n:"Ashton Jeanty",p:"RB",o:84,s:3.5},{n:"Tre Tucker",p:"WR",o:78,s:2.5},{n:"Maxx Crosby",p:"DE",o:95,s:23.0},{n:"Christian Wilkins",p:"DT",o:88,s:18.0},{n:"Nate Hobbs",p:"CB",o:82,s:5.0},{n:"Brock Bowers",p:"TE",o:86,s:4.0},{n:"Matt Gay",p:"K",o:78,s:2.0}],
+        "San Francisco 49ers": [{n:"Brock Purdy",p:"QB",o:87,s:1.1},{n:"Christian McCaffrey",p:"RB",o:97,s:12.0},{n:"Mike Evans",p:"WR",o:91,s:16.0},{n:"Deebo Samuel Sr.",p:"WR",o:87,s:15.0},{n:"Nick Bosa",p:"DE",o:96,s:27.0},{n:"Fred Warner",p:"LB",o:97,s:19.0},{n:"Charvarius Ward",p:"CB",o:88,s:13.0},{n:"George Kittle",p:"TE",o:95,s:14.0},{n:"Eddy Pineiro",p:"K",o:76,s:1.8}],
+        "Arizona Cardinals": [{n:"Jacoby Brissett",p:"QB",o:77,s:3.0},{n:"Carson Beck",p:"QB",o:74,s:2.0},{n:"Jeremyah Love",p:"RB",o:79,s:2.5},{n:"Tyler Allgeier",p:"RB",o:80,s:3.0},{n:"Marvin Harrison Jr.",p:"WR",o:86,s:5.0},{n:"Michael Wilson",p:"WR",o:79,s:2.5},{n:"Budda Baker",p:"S",o:88,s:12.0},{n:"Kyzir White",p:"LB",o:82,s:5.0},{n:"Trey McBride",p:"TE",o:89,s:8.0},{n:"Chad Ryland",p:"K",o:75,s:1.5}],
+        "Los Angeles Rams": [{n:"Matthew Stafford",p:"QB",o:88,s:27.0},{n:"Kyren Williams",p:"RB",o:88,s:8.0},{n:"Puka Nacua",p:"WR",o:92,s:2.0},{n:"Davante Adams",p:"WR",o:93,s:22.0},{n:"Kobie Turner",p:"DT",o:85,s:4.0},{n:"Byron Young",p:"DE",o:83,s:3.0},{n:"Quentin Lake",p:"S",o:82,s:3.0},{n:"Terrance Ferguson",p:"TE",o:76,s:2.0},{n:"Harrison Mevis",p:"K",o:75,s:1.5}],
+        "Seattle Seahawks": [{n:"Sam Darnold",p:"QB",o:80,s:5.0},{n:"Jadarian Price",p:"RB",o:78,s:2.2},{n:"Zach Charbonnet",p:"RB",o:79,s:3.0},{n:"Jaxon Smith-Njigba",p:"WR",o:85,s:4.0},{n:"Rashid Shaheed",p:"WR",o:82,s:3.0},{n:"Cooper Kupp",p:"WR",o:89,s:18.0},{n:"Devon Witherspoon",p:"CB",o:89,s:7.0},{n:"Leonard Williams",p:"DT",o:86,s:12.0},{n:"AJ Barner",p:"TE",o:75,s:1.8},{n:"Jason Myers",p:"K",o:80,s:2.5}]
     };
 
     const fillerPositions = ["OT", "OG", "C", "DE", "DT", "LB", "CB", "CB", "S", "P", "LB", "DE"];
@@ -569,15 +737,16 @@
     let draftRound = 1;
     let draftTiers = { 1: [], 2: [], 3: [] };
     let freeAgents = [];
+    let faFilterPos = 'ALL';
 
-    // Lineup Slot
+    // Lineup Slot State
     let startingLineup = { QB: null, RB: null, WR1: null, WR2: null, TE: null, DEF: null, K: null };
 
     // Interactive Game Engine State (Playable Offense & Defense)
     let gameEngine = {
         active: false,
         opponent: null,
-        mode: 'OFFENSE', // 'OFFENSE' or 'DEFENSE'
+        mode: 'OFFENSE',
         userScore: 0,
         oppScore: 0,
         quarter: 1,
@@ -669,7 +838,9 @@
             { name: "Ryan Tannehill", pos: "QB", ovr: 78, salary: 3.5, age: 35 },
             { name: "Kareem Hunt", pos: "RB", ovr: 81, salary: 2.5, age: 28 },
             { name: "Michael Thomas", pos: "WR", ovr: 82, salary: 3.0, age: 31 },
-            { name: "Stephon Gilmore", pos: "CB", ovr: 81, salary: 3.5, age: 33 }
+            { name: "Stephon Gilmore", pos: "CB", ovr: 81, salary: 3.5, age: 33 },
+            { name: "Micah Hyde", pos: "S", ovr: 80, salary: 2.8, age: 33 },
+            { name: "Carl Lawson", pos: "DE", ovr: 79, salary: 2.2, age: 29 }
         ].map(p => ({ ...p, stats: generateMaddenStats(p.pos, p.ovr) }));
     }
 
@@ -762,11 +933,11 @@
         document.getElementById('dash-week').innerText = currentWeek;
     }
 
-    // ---------------- STARTING LINEUP SELECTION SCREEN ----------------
+    /* ---------------- DRAG & DROP STARTING LINEUP ENGINE ---------------- */
     function renderLineupScreen() {
         const view = document.getElementById('content-view');
-        let html = `<h2>🏈 Set Starting Lineup & Game Plan</h2>`;
-        html += `<p style="font-size:0.88em; color:#cbd5e1;">Your starting lineup directly determines your <strong>Starting Rating (${calculateLineupRating()} OVR)</strong> and play execution in games.</p>`;
+        let html = `<h2>🏈 Starting Lineup & Drag-and-Drop Pitch</h2>`;
+        html += `<p style="font-size:0.88em; color:#cbd5e1;">Drag any Madden Player Trading Card from below and <strong>Drop into a Starting Position Slot</strong>, or use the quick selection dropdown.</p>`;
 
         const slots = [
             { id: "QB", label: "Starting Quarterback", posList: ["QB"] },
@@ -778,30 +949,71 @@
             { id: "K", label: "Starting Kicker", posList: ["K","P"] }
         ];
 
-        html += `<div class="lineup-grid">`;
+        html += `<div class="lineup-slots-container">`;
         slots.forEach(slot => {
             const currentSelected = startingLineup[slot.id];
             const eligiblePlayers = userTeam.roster.filter(p => slot.posList.includes(p.pos)).sort((a,b) => b.ovr - a.ovr);
             const playerOptions = eligiblePlayers.length > 0 ? eligiblePlayers : userTeam.roster;
 
             html += `
-                <div class="lineup-slot">
-                    <label><strong>${slot.label}</strong></label>
-                    <select onchange="updateLineupSlot('${slot.id}', this.value)">
-                        ${playerOptions.map((p, idx) => `
+                <div class="lineup-drop-slot" ondragover="handleLineupDragOver(event)" ondragleave="handleLineupDragLeave(event)" ondrop="handleLineupDrop(event, '${slot.id}')">
+                    <label style="color:#38bdf8; font-weight:800; font-size:0.9em; display:block; margin-bottom:6px;">
+                        🎯 ${slot.label}
+                    </label>
+                    <select onchange="updateLineupSlot('${slot.id}', this.value)" style="margin-bottom:8px;">
+                        ${playerOptions.map((p) => `
                             <option value="${userTeam.roster.indexOf(p)}" ${currentSelected === p ? 'selected' : ''}>
                                 ${p.name} (${getPosFull(p.pos)}) - ${p.ovr} OVR
                             </option>
                         `).join('')}
                     </select>
-                    ${currentSelected ? `<div class="stat-badge">${formatStatsString(currentSelected.stats)}</div>` : ''}
+                    ${currentSelected ? renderMaddenCard(currentSelected) : '<p style="font-size:0.8em; color:#94a3b8; text-align:center;">Drop Card Here</p>'}
                 </div>
             `;
         });
         html += `</div>`;
-        html += `<button onclick="autoSetBestLineup(); renderLineupScreen(); updateDashboard(); notify('Auto-assigned highest rated starters!');" class="btn-success" style="width:100%; margin-top:15px; padding:10px;">⚡ Auto-Set Best Starters</button>`;
+
+        html += `<h3 style="margin-top:20px;">📋 Roster Player Cards (Drag to Position Slot)</h3>`;
+        html += `<div class="card-grid-container">`;
+        userTeam.roster.slice().sort((a,b) => b.ovr - a.ovr).forEach((p, rIdx) => {
+            const realIdx = userTeam.roster.indexOf(p);
+            html += renderMaddenCard(p, {
+                draggable: true,
+                rosterIdx: realIdx,
+                actionBtnHtml: `<button onclick="notify('Drag this card onto a slot above!')" style="background:#334155; font-size:0.75em;">🖐️ Drag Card</button>`
+            });
+        });
+        html += `</div>`;
+
+        html += `<button onclick="autoSetBestLineup(); renderLineupScreen(); updateDashboard(); notify('Auto-assigned highest rated starters!');" class="btn-success" style="width:100%; margin-top:20px; padding:12px; font-weight:bold;">⚡ Auto-Set Best Starters</button>`;
 
         view.innerHTML = html;
+    }
+
+    function handleCardDragStart(event, rosterIdx) {
+        event.dataTransfer.setData("text/plain", rosterIdx);
+    }
+
+    function handleLineupDragOver(event) {
+        event.preventDefault();
+        event.currentTarget.classList.add('drag-over');
+    }
+
+    function handleLineupDragLeave(event) {
+        event.currentTarget.classList.remove('drag-over');
+    }
+
+    function handleLineupDrop(event, slotId) {
+        event.preventDefault();
+        event.currentTarget.classList.remove('drag-over');
+        const rosterIdx = parseInt(event.dataTransfer.getData("text/plain"));
+        if (!isNaN(rosterIdx) && userTeam.roster[rosterIdx]) {
+            const player = userTeam.roster[rosterIdx];
+            startingLineup[slotId] = player;
+            updateDashboard();
+            renderLineupScreen();
+            notify(`Assigned ${player.name} as starting ${getPosFull(slotId)}! New Starter OVR: ${calculateLineupRating()}`);
+        }
     }
 
     function updateLineupSlot(slotId, rosterIndex) {
@@ -861,23 +1073,16 @@
         analystBox.innerHTML = `Our roster needs depth at <strong style="color:#38bdf8;">${targetPosFull}</strong>. We recommend drafting <strong style="color:#4ade80;">${recPlayer.name} (${getPosFull(recPlayer.pos)}, OVR ${recPlayer.ovr})</strong>!`;
 
         const list = document.getElementById('draft-prospects-list');
+        list.className = 'card-grid-container';
         list.innerHTML = '';
 
         prospects.forEach((prospect, idx) => {
             const isRec = idx === recommendation.recommendedIndex;
-            const item = document.createElement('div');
-            item.className = `player-item ${isRec ? 'analyst-highlight' : ''}`;
-            item.innerHTML = `
-                <div>
-                    <strong>${prospect.name}</strong> (${getPosFull(prospect.pos)}) 
-                    <span class="player-ovr ${getOvrClass(prospect.ovr)}">${prospect.ovr} OVR</span>
-                    ${isRec ? '<span class="analyst-badge">⭐ Analyst Top Pick</span>' : ''}
-                    <div class="stat-badge">${formatStatsString(prospect.stats)}</div>
-                    <small style="color:#cbd5e1;">Salary: $${prospect.salary}M/yr | Age: ${prospect.age}</small>
-                </div>
-                <button class="btn-success" onclick="makeDraftPick(${idx})">Draft Player</button>
-            `;
-            list.appendChild(item);
+            const cardHtml = renderMaddenCard(prospect, {
+                isAnalyst: isRec,
+                actionBtnHtml: `<button class="btn-success" onclick="makeDraftPick(${idx})">Draft Player</button>`
+            });
+            list.innerHTML += cardHtml;
         });
 
         renderDraftRosterPreview();
@@ -899,8 +1104,8 @@
             <select id="in-draft-partner-select" onchange="updateInDraftPartnerPlayers()">
                 ${otherTeams.map((t, idx) => `<option value="${idx}">${t.name} (${t.division})</option>`).join('')}
             </select>
-            <h4>Their Players Available:</h4>
-            <div id="in-draft-partner-players" style="max-height:260px; overflow-y:auto; margin-bottom:15px;"></div>
+            <h4>Their Available Player Cards:</h4>
+            <div id="in-draft-partner-players" class="card-grid-container" style="max-height:360px; overflow-y:auto; margin-bottom:15px;"></div>
             <button onclick="executeInDraftTrade()" class="btn-warning" style="width:100%; padding:10px; font-weight:bold;">Trade Round ${draftRound} Pick For Selected Player</button>
         `;
 
@@ -916,14 +1121,11 @@
         const partnerTeam = otherTeams[sel.value];
         const container = document.getElementById('in-draft-partner-players');
 
-        container.innerHTML = partnerTeam.roster.map((p, idx) => `
-            <div class="player-item">
-                <label>
-                    <input type="radio" name="draft-trade-target" value="${idx}" ${idx === 0 ? 'checked' : ''}>
-                    <strong>${p.name}</strong> (${getPosFull(p.pos)}) - <span class="player-ovr ${getOvrClass(p.ovr)}">${p.ovr} OVR</span>
-                </label>
-            </div>
-        `).join('');
+        container.innerHTML = partnerTeam.roster.map((p, idx) => {
+            return renderMaddenCard(p, {
+                topCheckHtml: `<input type="radio" name="draft-trade-target" value="${idx}" ${idx === 0 ? 'checked' : ''} style="margin-bottom:6px;">`
+            });
+        }).join('');
     }
 
     function executeInDraftTrade() {
@@ -971,21 +1173,16 @@
     function renderDraftRosterPreview() {
         const preview = document.getElementById('draft-roster-preview');
         let html = `<h3>${userTeam.name} Current Roster (${userTeam.roster.length} Players)</h3>`;
+        html += `<div class="card-grid-container">`;
         userTeam.roster.slice().sort((a,b) => b.ovr - a.ovr).forEach(p => {
-            html += `
-                <div class="player-item">
-                    <div>
-                        <strong>${p.name}</strong> (${getPosFull(p.pos)}) - OVR: ${p.ovr}
-                        <div class="stat-badge">${formatStatsString(p.stats)}</div>
-                    </div>
-                </div>
-            `;
+            html += renderMaddenCard(p);
         });
+        html += `</div>`;
         preview.innerHTML = html;
     }
 
     function switchDraftTab(tab) {
-        document.getElementById('draft-prospects-list').style.display = tab === 'prospects' ? 'block' : 'none';
+        document.getElementById('draft-prospects-list').style.display = tab === 'prospects' ? 'grid' : 'none';
         document.getElementById('draft-trade-view').style.display = tab === 'trade' ? 'block' : 'none';
         document.getElementById('draft-roster-preview').style.display = tab === 'roster' ? 'block' : 'none';
 
@@ -1025,16 +1222,10 @@
             cutList.innerHTML = '';
             
             userTeam.roster.forEach((p, idx) => {
-                const item = document.createElement('div');
-                item.className = 'player-item';
-                item.innerHTML = `
-                    <div>
-                        <strong>${p.name}</strong> (${getPosFull(p.pos)}) - OVR: ${p.ovr}
-                        <div class="stat-badge">${formatStatsString(p.stats)}</div>
-                    </div>
-                    <button class="btn-danger" onclick="cutPlayer(${idx})">Release / Cut</button>
-                `;
-                cutList.appendChild(item);
+                const cardHtml = renderMaddenCard(p, {
+                    actionBtnHtml: `<button class="btn-danger" onclick="cutPlayer(${idx})">Release / Cut</button>`
+                });
+                cutList.innerHTML += cardHtml;
             });
         } else {
             document.getElementById('cut-modal').style.display = 'none';
@@ -1066,40 +1257,23 @@
             renderLineupScreen();
         }
         else if (section === 'roster') {
-            let html = `<h2>${userTeam.name} Official Depth Chart (22 Players)</h2>`;
+            let html = `<h2>${userTeam.name} Madden Player Cards Roster (22 Players)</h2>`;
             html += `<p style="font-size:0.85em; color:#94a3b8;">Cap Remaining: $${getCapSpace(userTeam).toFixed(1)}M</p>`;
-            userTeam.roster.sort((a,b) => b.ovr - a.ovr).forEach((p, idx) => {
-                html += `
-                    <div class="player-item">
-                        <div>
-                            <strong>${p.name}</strong> (${getPosFull(p.pos)}) - <span class="player-ovr ${getOvrClass(p.ovr)}">${p.ovr} OVR</span>
-                            <div class="stat-badge">${formatStatsString(p.stats)}</div>
-                            <small style="color:#94a3b8;">$${p.salary}M/yr | Age: ${p.age}</small>
-                        </div>
-                        <button class="btn-danger" style="font-size:0.8em; padding:4px 8px;" onclick="cutPlayerDirect(${idx})">Cut</button>
-                    </div>
-                `;
+            html += `<div class="card-grid-container">`;
+            userTeam.roster.slice().sort((a,b) => b.ovr - a.ovr).forEach((p) => {
+                const realIdx = userTeam.roster.indexOf(p);
+                html += renderMaddenCard(p, {
+                    actionBtnHtml: `<button class="btn-danger" onclick="cutPlayerDirect(${realIdx})">Release Player</button>`
+                });
             });
+            html += `</div>`;
             view.innerHTML = html;
         } 
         else if (section === 'trade') {
             renderTradeCenter();
         } 
         else if (section === 'free-agency') {
-            let html = `<h2>Free Agency Market</h2>`;
-            freeAgents.forEach((p, idx) => {
-                html += `
-                    <div class="player-item">
-                        <div>
-                            <strong>${p.name}</strong> (${getPosFull(p.pos)}) - <span class="player-ovr ${getOvrClass(p.ovr)}">${p.ovr} OVR</span>
-                            <div class="stat-badge">${formatStatsString(p.stats)}</div>
-                            <small style="color:#94a3b8;">Salary Demand: $${p.salary}M/yr</small>
-                        </div>
-                        <button class="btn-success" onclick="signFreeAgent(${idx})">Sign Player</button>
-                    </div>
-                `;
-            });
-            view.innerHTML = html;
+            renderFreeAgencyMarket();
         }
     }
 
@@ -1110,6 +1284,46 @@
         autoSetBestLineup();
         updateDashboard();
         showSection('roster');
+    }
+
+    /* ---------------- FREE AGENCY MARKET SHOWCASE ---------------- */
+    function renderFreeAgencyMarket() {
+        const view = document.getElementById('content-view');
+        let html = `<h2>💼 Free Agency Market</h2>`;
+        html += `<p style="font-size:0.85em; color:#cbd5e1;">Available Cap Space: <strong style="color:#10b981;">$${getCapSpace(userTeam).toFixed(1)}M</strong></p>`;
+
+        const positions = ['ALL', 'QB', 'RB', 'WR', 'TE', 'DEF', 'K'];
+        html += `<div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:15px;">`;
+        positions.forEach(pos => {
+            const active = faFilterPos === pos ? 'background:#0284c7; border-color:#00f0ff;' : 'background:#334155;';
+            html += `<button onclick="filterFreeAgents('${pos}')" style="padding:6px 14px; font-size:0.82em; ${active}">${pos}</button>`;
+        });
+        html += `</div>`;
+
+        let filteredFA = freeAgents;
+        if (faFilterPos !== 'ALL') {
+            if (faFilterPos === 'DEF') {
+                filteredFA = freeAgents.filter(p => ["DE","DT","LB","CB","S"].includes(p.pos));
+            } else {
+                filteredFA = freeAgents.filter(p => p.pos === faFilterPos);
+            }
+        }
+
+        html += `<div class="card-grid-container">`;
+        filteredFA.forEach((p) => {
+            const realIdx = freeAgents.indexOf(p);
+            html += renderMaddenCard(p, {
+                actionBtnHtml: `<button class="btn-success" onclick="signFreeAgent(${realIdx})">Sign Contract</button>`
+            });
+        });
+        html += `</div>`;
+
+        view.innerHTML = html;
+    }
+
+    function filterFreeAgents(pos) {
+        faFilterPos = pos;
+        renderFreeAgencyMarket();
     }
 
     function signFreeAgent(idx) {
@@ -1126,16 +1340,16 @@
         freeAgents.splice(idx, 1);
         notify(`Signed ${target.name}!`);
         updateDashboard();
-        showSection('free-agency');
+        renderFreeAgencyMarket();
     }
 
-    // ---------------- TRADE CENTER ----------------
+    /* ---------------- MULTI-ASSET TRADE CENTER SHOWCASE ---------------- */
     function renderTradeCenter() {
         const view = document.getElementById('content-view');
         let otherTeams = allTeams.filter(t => t.name !== userTeam.name);
 
-        let html = `<h2>🔄 Multi-Asset & Draft Pick Trade Center</h2>`;
-        html += `<p style="font-size:0.85em; color:#cbd5e1;">Select multiple players and draft picks from both franchises to construct a deal.</p>`;
+        let html = `<h2>🔄 Multi-Asset Madden Trade Center</h2>`;
+        html += `<p style="font-size:0.85em; color:#cbd5e1;">Click player trading cards or draft picks on both sides to build a package.</p>`;
         
         html += `
             <label><strong>Select Partner Franchise:</strong></label>
@@ -1143,23 +1357,37 @@
                 ${otherTeams.map((t, idx) => `<option value="${idx}">${t.name} (${t.division})</option>`).join('')}
             </select>
 
-            <div class="trade-container">
-                <div class="trade-column">
-                    <h3 id="partner-trade-title" style="margin:0 0 10px 0;">Their Assets</h3>
-                    <div class="trade-section-title">Players</div>
-                    <div id="partner-players-list"></div>
-                    <div class="trade-section-title">Draft Picks</div>
+            <div class="trade-balance-meter">
+                <div>
+                    <span style="font-size:0.8em; color:#94a3b8; display:block;">YOUR OFFER VALUE</span>
+                    <strong id="user-trade-val-text" style="color:#38bdf8; font-size:1.1em;">0 PTS</strong>
+                </div>
+                <div style="text-align:center;">
+                    <div id="trade-status-indicator" style="background:#334155; padding:4px 12px; border-radius:12px; font-weight:800; font-size:0.85em; color:#94a3b8;">SELECT ASSETS</div>
+                </div>
+                <div style="text-align:right;">
+                    <span style="font-size:0.8em; color:#94a3b8; display:block;">THEIR REQUIRED VALUE</span>
+                    <strong id="partner-trade-val-text" style="color:#f59e0b; font-size:1.1em;">0 PTS</strong>
+                </div>
+            </div>
+
+            <div class="trade-showcase-grid">
+                <div class="trade-column-box">
+                    <h3 id="partner-trade-title" style="margin:0 0 10px 0;">Their Cards</h3>
+                    <h4>Players:</h4>
+                    <div id="partner-players-list" class="card-grid-container"></div>
+                    <h4>Draft Picks:</h4>
                     <div id="partner-picks-list"></div>
                 </div>
-                <div class="trade-column">
-                    <h3 style="margin:0 0 10px 0;">Your Offer (${userTeam.name})</h3>
-                    <div class="trade-section-title">Players</div>
-                    <div id="user-players-list"></div>
-                    <div class="trade-section-title">Draft Picks</div>
+                <div class="trade-column-box">
+                    <h3 style="margin:0 0 10px 0;">Your Cards (${userTeam.name})</h3>
+                    <h4>Players:</h4>
+                    <div id="user-players-list" class="card-grid-container"></div>
+                    <h4>Draft Picks:</h4>
                     <div id="user-picks-list"></div>
                 </div>
             </div>
-            <button onclick="executeMultiTradeProposal()" class="btn-success" style="width:100%; margin-top:15px; padding:12px; font-size:1em;">Propose Trade Package</button>
+            <button onclick="executeMultiTradeProposal()" class="btn-success" style="width:100%; margin-top:15px; padding:12px; font-size:1em; font-weight:bold;">Submit Trade Proposal Package</button>
         `;
         view.innerHTML = html;
         updateTradePartnerView();
@@ -1171,40 +1399,77 @@
         if (!partnerSelect) return;
         
         const partnerTeam = otherTeams[partnerSelect.value];
-        document.getElementById('partner-trade-title').innerText = `${partnerTeam.name} Assets`;
+        document.getElementById('partner-trade-title').innerText = `${partnerTeam.name} Cards`;
 
         const partnerPlayersEl = document.getElementById('partner-players-list');
         const partnerPicksEl = document.getElementById('partner-picks-list');
         const userPlayersEl = document.getElementById('user-players-list');
         const userPicksEl = document.getElementById('user-picks-list');
 
-        partnerPlayersEl.innerHTML = partnerTeam.roster.map((p, idx) => `
-            <div class="trade-checkbox-item">
-                <input type="checkbox" class="cb-partner-player" data-idx="${idx}">
-                <span><strong>${p.name}</strong> (${getPosFull(p.pos)}) - ${p.ovr} OVR</span>
-            </div>
-        `).join('');
+        partnerPlayersEl.innerHTML = partnerTeam.roster.map((p, idx) => {
+            return renderMaddenCard(p, {
+                topCheckHtml: `<input type="checkbox" class="cb-partner-player" data-idx="${idx}" onchange="recalculateTradeValues()">`
+            });
+        }).join('');
 
         partnerPicksEl.innerHTML = partnerTeam.draftPicks.map((pick, idx) => `
-            <div class="trade-checkbox-item">
-                <input type="checkbox" class="cb-partner-pick" data-idx="${idx}">
+            <div style="background:#1e293b; padding:8px; border-radius:6px; margin-bottom:6px;">
+                <input type="checkbox" class="cb-partner-pick" data-idx="${idx}" onchange="recalculateTradeValues()">
                 <span>🎟️ ${pick.name}</span>
             </div>
         `).join('');
 
-        userPlayersEl.innerHTML = userTeam.roster.map((p, idx) => `
-            <div class="trade-checkbox-item">
-                <input type="checkbox" class="cb-user-player" data-idx="${idx}">
-                <span><strong>${p.name}</strong> (${getPosFull(p.pos)}) - ${p.ovr} OVR</span>
-            </div>
-        `).join('');
+        userPlayersEl.innerHTML = userTeam.roster.map((p, idx) => {
+            return renderMaddenCard(p, {
+                topCheckHtml: `<input type="checkbox" class="cb-user-player" data-idx="${idx}" onchange="recalculateTradeValues()">`
+            });
+        }).join('');
 
         userPicksEl.innerHTML = userTeam.draftPicks.map((pick, idx) => `
-            <div class="trade-checkbox-item">
-                <input type="checkbox" class="cb-user-pick" data-idx="${idx}">
+            <div style="background:#1e293b; padding:8px; border-radius:6px; margin-bottom:6px;">
+                <input type="checkbox" class="cb-user-pick" data-idx="${idx}" onchange="recalculateTradeValues()">
                 <span>🎟️ ${pick.name}</span>
             </div>
         `).join('');
+
+        recalculateTradeValues();
+    }
+
+    function recalculateTradeValues() {
+        const otherTeams = allTeams.filter(t => t.name !== userTeam.name);
+        const partnerSelect = document.getElementById('trade-partner-select');
+        if (!partnerSelect) return;
+        const partnerTeam = otherTeams[partnerSelect.value];
+
+        const selPartnerPlayerIdxs = Array.from(document.querySelectorAll('.cb-partner-player:checked')).map(cb => parseInt(cb.dataset.idx));
+        const selPartnerPickIdxs = Array.from(document.querySelectorAll('.cb-partner-pick:checked')).map(cb => parseInt(cb.dataset.idx));
+
+        const selUserPlayerIdxs = Array.from(document.querySelectorAll('.cb-user-player:checked')).map(cb => parseInt(cb.dataset.idx));
+        const selUserPickIdxs = Array.from(document.querySelectorAll('.cb-user-pick:checked')).map(cb => parseInt(cb.dataset.idx));
+
+        const calcPlayerValue = (p) => Math.max(10, Math.pow(p.ovr - 50, 2) * 1.5);
+        const calcPickValue = (pick) => pick.value;
+
+        const partnerReqVal = selPartnerPlayerIdxs.reduce((s,i) => s + calcPlayerValue(partnerTeam.roster[i]), 0) + selPartnerPickIdxs.reduce((s,i) => s + calcPickValue(partnerTeam.draftPicks[i]), 0);
+        const userOfferVal = selUserPlayerIdxs.reduce((s,i) => s + calcPlayerValue(userTeam.roster[i]), 0) + selUserPickIdxs.reduce((s,i) => s + calcPickValue(userTeam.draftPicks[i]), 0);
+
+        document.getElementById('user-trade-val-text').innerText = `${Math.round(userOfferVal)} PTS`;
+        document.getElementById('partner-trade-val-text').innerText = `${Math.round(partnerReqVal)} PTS`;
+
+        const indicator = document.getElementById('trade-status-indicator');
+        if (partnerReqVal === 0 && userOfferVal === 0) {
+            indicator.innerText = "SELECT ASSETS";
+            indicator.style.background = "#334155";
+            indicator.style.color = "#94a3b8";
+        } else if (userOfferVal >= partnerReqVal * 0.92) {
+            indicator.innerText = "✅ ACCEPTABLE DEAL";
+            indicator.style.background = "#059669";
+            indicator.style.color = "#ffffff";
+        } else {
+            indicator.innerText = "⚠️ OFFER TOO LOW";
+            indicator.style.background = "#dc2626";
+            indicator.style.color = "#ffffff";
+        }
     }
 
     function executeMultiTradeProposal() {
@@ -1322,7 +1587,7 @@
                 <button onclick="executePlay('DEFENSE', 'BLITZ')" class="btn-danger">⚡ Heavy LB Blitz</button>
                 <button onclick="executePlay('DEFENSE', 'ZONE')" style="background:#0284c7;">🔒 Lockdown Zone</button>
                 <button onclick="executePlay('DEFENSE', 'RUN_STUFF')" style="background:#059669;">🧱 Run Stuff Box Stack</button>
-                <button onclick="executePlay('DEFENSE', 'MAN_COVERAGE')" class="btn-purple">🦅 Man-to-Man Coverage</button>
+                <button onclick="executePlay('DEFENSE', 'MAN_COVERAGE')" style="background:#8b5cf6;">🦅 Man-to-Man Coverage</button>
             `;
         }
     }
@@ -1422,7 +1687,7 @@
                 if (gameEngine.ballLoc >= 60) {
                     const fgDist = 100 - gameEngine.ballLoc + 17;
                     if (roll < 0.85 + (kicker.ovr - 75)*0.005) {
-                        gameEngine.userScore += 7;
+                        gameEngine.userScore += 3;
                         playMsg = `-> FIELD GOAL GOOD! ${kicker.name} drills ${fgDist}-yard FG (+3 PTS)!`;
                     } else {
                         playMsg = `-> MISSED FG! Kick sails wide.`;
